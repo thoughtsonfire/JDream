@@ -1,0 +1,9 @@
+# Ignore node_modules directory
+node_modules/
+.temp/
+.DS_Store
+dist
+dist-ssr
+cache
+.cache
+*.local
