@@ -2,7 +2,8 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
+  base:"/JdDream/",
+  head: [['link', { rel: 'icon', href: '/JDream/favicon.ico' }]],
   title: "JDream",
   description: "A VitePress Site",
   themeConfig: {
