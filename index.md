@@ -10,11 +10,11 @@ hero:
     src: /qdm.png
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: jdream-ui
+      link: /jdream-ui
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: uni-app
+      link: /uni-app
 
 features:
   - title: 学习笔记

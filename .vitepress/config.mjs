@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-
+import { set_sidebar } from "./utils/auto_sidebar.mjs";	// 改成自己的路径
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   base:"/JDream/",
@@ -8,25 +8,27 @@ export default defineConfig({
   description: "A VitePress Site",
   themeConfig: {
     logo:'/study.png',
+    outlineTitle:'目录',
     outline:[2,6],
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'JDream-ui使用文档', link: '/' },
+      { text: 'JDream-ui使用文档', link: '/jdream-ui/' },
       { text: '学习笔记', items:[
-        {text:'uni-app',link:'/'},
-        {text:'java',link:'/'}
+        {text:'uni-app',link:'/uni-app/'},
+        {text:'java',link:'/java/'},
+        {text:'文档编写',items:[
+          {text:'vitepress',link:'/vitepress/'},
+          {text:'vuepress',link:'vuepress'}
+        ]}
       ] }
     ],
 
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
-    ],
+    sidebar: {
+      "/jdream-ui/":set_sidebar("/jdream-ui/"),
+      "/java/":set_sidebar("/java/"),
+      "/uni-app/":set_sidebar("/uni-app/"),
+    },
+    
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/thoughtsonfire' }
@@ -58,4 +60,7 @@ export default defineConfig({
       }
     }
   },
+  optimizeDeps: {
+    include: ['vue/dist/vue.esm.js'] // 引入 Vue 2 的 ESM 版本
+  }
 })
