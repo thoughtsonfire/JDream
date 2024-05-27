@@ -18,7 +18,7 @@ export default defineConfig({
         {text:'java',link:'/java/'},
         {text:'文档编写',items:[
           {text:'vitepress',link:'/vitepress/'},
-          {text:'vuepress',link:'vuepress'}
+          {text:'vuepress',link:'/vuepress/'}
         ]}
       ] }
     ],
