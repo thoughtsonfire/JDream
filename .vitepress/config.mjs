@@ -16,11 +16,11 @@ export default defineConfig({
       { text: '学习笔记', items:[
         {text:'uni-app',link:'/uni-app/'},
         {text:'java',link:'/java/'},
-        {text:'文档编写',items:[
-          {text:'vitepress',link:'/vitepress/'},
-          {text:'vuepress',link:'/vuepress/'}
-        ]}
-      ] }
+      ] },
+      {text:'文档编写',items:[
+        {text:'vitepress',link:'/vitepress/'},
+        {text:'vuepress',link:'/vuepress/'}
+      ]}
     ],
 
     sidebar: {
