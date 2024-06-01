@@ -12,7 +12,8 @@ export default defineConfig({
     outline:[2,6],
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'JDream-ui使用文档', link: '/jdream-ui/' },
+      { text: 'JDream-plus使用文档', link: '/jdream-plus/' },
+      { text: 'JDream-ui使用文档', link: 'https://thoughtsonfire.github.io/jdream-ui-ed/' },
       { text: '学习笔记', items:[
         {text:'uni-app',link:'/uni-app/'},
         {text:'java',link:'/java/'},
@@ -24,9 +25,10 @@ export default defineConfig({
     ],
 
     sidebar: {
-      "/jdream-ui/":set_sidebar("/jdream-ui/"),
+      "/jdream-plus/":set_sidebar("/jdream-plus/"),
       "/java/":set_sidebar("/java/"),
       "/uni-app/":set_sidebar("/uni-app/"),
+      "/vuepress/":set_sidebar("/vuepress/"),
     },
     
 

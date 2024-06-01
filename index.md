@@ -10,8 +10,8 @@ hero:
     src: /qdm.png
   actions:
     - theme: brand
-      text: jdream-ui
-      link: /jdream-ui
+      text: jdream-plus
+      link: /jdream-plus
     - theme: alt
       text: uni-app
       link: /uni-app
@@ -19,7 +19,7 @@ hero:
 features:
   - title: 学习笔记
     details: 学习资料整理，常看常新
-  - title: JDream-ui
+  - title: JDream-plus
     details: JDream-ui组件库开发，使用文档更新
   - title: 个人空间
     details: 发展规划，记录生活
