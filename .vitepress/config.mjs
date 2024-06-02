@@ -20,7 +20,8 @@ export default defineConfig({
       ] },
       {text:'文档编写',items:[
         {text:'vitepress',link:'/vitepress/'},
-        {text:'vuepress',link:'/vuepress/'}
+        {text:'vuepress',link:'/vuepress/'},
+        {text:'vue2组件库快速搭建',link:'/vue2components/'}
       ]}
     ],
 
@@ -29,6 +30,7 @@ export default defineConfig({
       "/java/":set_sidebar("/java/"),
       "/uni-app/":set_sidebar("/uni-app/"),
       "/vuepress/":set_sidebar("/vuepress/"),
+      "/vitepress/":set_sidebar("/vitepress/"),
     },
     
 
