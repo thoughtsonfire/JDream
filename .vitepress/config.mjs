@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { set_sidebar } from "./utils/auto_sidebar.mjs";	// 改成自己的路径
+import { set_sidebar } from "./utils/auto_sidebar.mjs";	
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   base:"/JDream/",
