@@ -62,9 +62,12 @@ export default defineConfig({
           }
         }
       }
-    }
+    },
   },
   optimizeDeps: {
     include: ['vue/dist/vue.esm.js'] // 引入 Vue 2 的 ESM 版本
+  },
+  markdown: {
+    lineNumbers: true
   }
 })
