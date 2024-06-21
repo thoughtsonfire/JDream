@@ -17,6 +17,7 @@ export default defineConfig({
       { text: '学习笔记', items:[
         {text:'uni-app',link:'/uni-app/'},
         {text:'java',link:'/java/'},
+        {text:'english',link:'/english/'}
       ] },
       {text:'文档编写',items:[
         {text:'vitepress',link:'/vitepress/'},
@@ -25,14 +26,47 @@ export default defineConfig({
       ]}
     ],
 
-    sidebar: {
-      "/jdream-plus/":set_sidebar("/jdream-plus/"),
-      "/java/":set_sidebar("/java/"),
+    sidebar: 
+    {
+      "/jdream-plus/":{
+        text:'jdream-plus',items:[
+          {text:'jdream-plus',link:'/jdream-plus/'},
+          {text:'button',link:'/jdream-plus/button'},
+        ]
+      },
       "/uni-app/":set_sidebar("/uni-app/"),
-      "/vuepress/":set_sidebar("/vuepress/"),
-      "/vitepress/":set_sidebar("/vitepress/"),
-    },
-    
+      "/vuepress/":{
+        text:'vuepress',items:[
+          {text:'vuepress',link:'/vuepress/'},
+          {text:'vue2press快速上手',link:'/vuepress/vuepress2快速上手'},
+          {text:'vuepress1注意事项',link:'/vuepress/vuepress1注意事项'},
+          {text:'vuepress1组件展示插件',link:'/vuepress/vuepress1组件展示插件'},
+          {text:'搜索',link:'/vuepress/搜索'},
+          {text:'行号',link:'/vuepress/行号'},
+          {text:'修改样式',link:'/vuepress/修改样式'},
+        ]
+        },
+        "/vitepress/":{
+          text:'vitepress',items:[
+            {text:'vitepress',link:'/vitepress/'},
+            {text:'快速上手',link:'/vitepress/快速上手'},
+            {text:'搜索',link:'/vitepress/搜索'},
+          ]
+        },
+        "/english/":set_sidebar("/english/"),
+        //"/java/":set_sidebar("/java/"),//自动生成侧边栏，效果不佳
+        "/java/":{
+          text:'java',items:[
+            {text:'java',link:'/java/'},
+            {text:'常用cmd命令',link:'/java/常用cmd命令'},
+            {text:'常用字符',link:'/java/常用字符'},
+            {text:'jdk',link:'/java/jdk'},
+            {text:'IDEA',link:'/java/IDEA'},
+            {text:'数据类型',link:'/java/数据类型'},
+            {text:'switch',link:'/java/switch'},
+          ]
+        }
+      },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/thoughtsonfire' }
