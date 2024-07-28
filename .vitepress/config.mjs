@@ -108,7 +108,9 @@ export default defineConfig({
       pattern: 'https://github.com/thoughtsonfire/JDream/edit/master/:path',
       text: '在 GitHub 上编辑此页面',
     },
-    lastUpdated: true,
+    lastUpdated: {
+      text:'最后更新于'
+    }
   },
   optimizeDeps: {
     include: ['vue/dist/vue.esm.js'] // 引入 Vue 2 的 ESM 版本//可以不要了
