@@ -101,7 +101,9 @@ export default defineConfig({
     },
     editLink: {
       repo: 'JDream/docs',
-      text: '在 GitHub 上编辑此页面'
+      text: '在 GitHub 上编辑此页面',
+      docsBranch: 'master',
+      editLinks: true,
     }
   },
   optimizeDeps: {
