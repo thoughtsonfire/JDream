@@ -100,12 +100,12 @@ export default defineConfig({
       }
     },
     editLink: {
-      pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
+      pattern: 'https://thoughtsonfire.github.io/JDream/:path',
       text: '在 GitHub 上编辑此页面'
     }
   },
   optimizeDeps: {
-    include: ['vue/dist/vue.esm.js'] // 引入 Vue 2 的 ESM 版本
+    include: ['vue/dist/vue.esm.js'] // 引入 Vue 2 的 ESM 版本//可以不要了
   },
   markdown: {
     lineNumbers: true
