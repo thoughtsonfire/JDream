@@ -12,3 +12,15 @@
 
 - abbr:缩写
 
+<br>
+
+#### scanner    n.扫描仪
+
+<br>
+
+#### random     n.adj.adv 随机的
+
+<br>
+
+#### Terminal   n.命令行终端、航空站
+

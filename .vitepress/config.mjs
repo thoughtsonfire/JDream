@@ -64,6 +64,8 @@ export default defineConfig({
             {text:'IDEA',link:'/java/IDEA'},
             {text:'数据类型',link:'/java/数据类型'},
             {text:'switch',link:'/java/switch'},
+            {text:'常用方法',link:'/java/常用方法'},
+            {text:'抽象类和接口',link:'/java/抽象类和接口'},
           ]
         }
       },
@@ -97,6 +99,10 @@ export default defineConfig({
         }
       }
     },
+    editLink: {
+      pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
+      text: '在 GitHub 上编辑此页面'
+    }
   },
   optimizeDeps: {
     include: ['vue/dist/vue.esm.js'] // 引入 Vue 2 的 ESM 版本

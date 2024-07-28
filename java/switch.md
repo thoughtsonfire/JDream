@@ -70,3 +70,4 @@ switch (chooseValue) {
     default->System.out.println("默认选项");
 }
 ```
+#### break 跳出单层循环
