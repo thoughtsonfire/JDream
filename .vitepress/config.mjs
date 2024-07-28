@@ -17,7 +17,12 @@ export default defineConfig({
       { text: '学习笔记', items:[
         {text:'uni-app',link:'/uni-app/'},
         {text:'java',link:'/java/'},
-        {text:'english',link:'/english/'}
+        {text:'vue',link:'/vue/'},
+        {text:'html',link:'/html/'},
+        {text:'css',link:'/css/'},
+        {text:'js',link:'/js/'},
+        {text:'ol',link:'/ol/'},
+        {text:'english',link:'/english/'},
       ] },
       {text:'文档编写',items:[
         {text:'vitepress',link:'/vitepress/'},
@@ -102,7 +107,8 @@ export default defineConfig({
     editLink: {
       pattern: 'https://github.com/thoughtsonfire/JDream/edit/master/:path',
       text: '在 GitHub 上编辑此页面',
-    }
+    },
+    lastUpdated: true,
   },
   optimizeDeps: {
     include: ['vue/dist/vue.esm.js'] // 引入 Vue 2 的 ESM 版本//可以不要了
