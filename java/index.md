@@ -21,7 +21,7 @@ server.servlet.context-path=/start
 ```
 #### yml
 
--application.yml/application.yaml
+- application.yml/application.yaml
 
 ```java
 server:
