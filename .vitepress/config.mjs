@@ -100,10 +100,8 @@ export default defineConfig({
       }
     },
     editLink: {
-      repo: 'JDream/docs',
+      pattern: 'https://github.com/thoughtsonfire/JDream/edit/master/docs/:path',
       text: '在 GitHub 上编辑此页面',
-      docsBranch: 'master',
-      editLinks: true,
     }
   },
   optimizeDeps: {
