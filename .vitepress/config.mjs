@@ -100,7 +100,7 @@ export default defineConfig({
       }
     },
     editLink: {
-      pattern: 'https://github.com/thoughtsonfire/JDream/edit/master/docs/:path',
+      pattern: 'https://github.com/thoughtsonfire/JDream/edit/master/:path',
       text: '在 GitHub 上编辑此页面',
     }
   },
