@@ -1,5 +1,36 @@
 # java
 
+## 配置文件
+
+参考网址`https://springdoc.cn/spring-boot/application-properties.html#appendix.application-properties.server`
+
+#### properties
+
+- application.properties
+
+- 修改端口号
+
+```java
+server.port=9090
+```
+
+- 修改虚拟目录
+
+```java
+server.servlet.context-path=/start
+```
+#### yml
+
+-application.yml/application.yaml
+
+```java
+server:
+  port: 9091
+  servlet:
+    context-path: /start
+```
+* 注意`:`后面有个空格
+
 ## 注解
 
 #### @springBootApplication
@@ -93,3 +124,4 @@ public class ApiController {
     }
 }
 ```
+
