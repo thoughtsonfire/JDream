@@ -23,7 +23,7 @@ server.servlet.context-path=/start
 
 - application.yml/application.yaml
 
-```java
+```yml
 server:
   port: 9091
   servlet:
@@ -125,3 +125,36 @@ public class ApiController {
 }
 ```
 
+#### @Value
+
+- @Value("${键名}") 获取配置文件的值
+
+```yml
+email
+  user:15466
+  code:55444544
+```
+
+```java
+@component
+public class Email{
+  @Value("${email.user}")
+  public String user;
+
+  @value("${emial.code}")
+  public String code;
+}
+
+#### @ConfigurationProperties
+
+- @ConfigurationProperties(prefix="前缀")
+- 简化@Value注解 类里边的属性值必须和配置文件里的属性值一致
+
+```java
+@ConfigurationProperties(prefix="email")
+@Components
+public class Eamil{
+  public String user;
+
+  public String code;
+}
