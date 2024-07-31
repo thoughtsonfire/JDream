@@ -144,6 +144,7 @@ public class Email{
   @value("${emial.code}")
   public String code;
 }
+```
 
 #### @ConfigurationProperties
 
