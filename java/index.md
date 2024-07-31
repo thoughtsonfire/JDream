@@ -131,8 +131,8 @@ public class ApiController {
 
 ```yml
 email
-  user:15466
-  code:55444544
+  user: 15466
+  code: 55444544
 ```
 
 ```java
