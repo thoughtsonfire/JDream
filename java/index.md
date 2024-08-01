@@ -153,10 +153,62 @@ public class Email{
 
 ```java
 @ConfigurationProperties(prefix="email")
-@Components
+@Component
 public class Eamil{
   public String user;
 
   public String code;
 }
 ```
+#### @Component
+
+- 组件类
+- `@Component` 注解通常与其它特定用途的注解一起使用，如 `@Service`、`@Repository`、`@Controller` 等，这些注解是 `@Component` 的派生注解，用于标注特定类型的 `Spring` 组件。
+
+#### @Autowired
+
+- @Autowired 可以根据类型自动装配 Bean。Spring 会在上下文中寻找匹配类型的 Bean，并将其注入到被标记的字段、方法参数或构造方法参数中。
+- 除了 @Autowired，Spring 还提供了 `@Inject` 注解，它是 Java 的标准注解之一，功能类似于 @Autowired，但更加通用，可以用于任何 DI 框架。
+
+#### @Service
+
+在 Spring Framework 中，@Service 注解是一个专用的 @Component 派生注解，用于标识一个类是业务逻辑层（Service 层）的组件。与 @Component 注解类似，使用 @Service 注解可以告诉 Spring 框架该类需要被注册为 Spring 应用程序上下文中的一个服务类。
+
+1. 标识业务逻辑类：
+   - 将 @Service 注解放在一个类的声明上，指示该类是服务层组件，负责处理业务逻辑，通常用于与数据访问层（如 @Repository 标记的类）交互。
+
+     ```java
+       @Service
+      public class MyService {
+          // Class implementation
+      }
+     ```
+2. 自动扫描与组件扫描：
+   - 与 @Component 注解类似，Spring 需要通过组件扫描来发现被 @Service 标注的类。可以通过 @ComponentScan 注解或 XML 配置文件中的组件扫描配置来启用自动发现和注册服务类。
+     ```java
+     @Configuration
+     @ComponentScan("com.example.package")
+     public class AppConfig {
+        // Configuration details
+     }
+     ```
+3. 依赖注入和事务管理：
+   - 通常，@Service 注解的类用于定义业务逻辑，可以依赖注入其他组件（如数据访问层的 @Repository 注解的类），并且通常与事务管理（@Transactional 注解）结合使用，确保业务方法在事务控制下运行。
+     ```java
+      @Service
+      @Transactional
+      public class MyService {
+          @Autowired
+          private MyRepository repository;
+      
+          public void performBusinessLogic() {
+              // Use repository to perform business operations
+          }
+      }
+     ```
+4. 异常处理和业务逻辑：
+   - @Service 注解的类通常包含应用程序的核心业务逻辑，包括数据处理、算法实现等。它们可以通过 AOP（面向切面编程）和异常处理机制来增强应用程序的可靠性和安全性。
+
+#### @Mapper
+
+- 在 Spring 中，@Mapper 注解通常用于标识一个接口或者类是 MyBatis 的 Mapper 接口或者 XML 映射文件的代理类。这个注解告诉 Spring 框架扫描并创建这些接口的实例，使它们可以被注入到其他 Bean 中，从而在应用程序中使用 MyBatis 进行持久化操作。
