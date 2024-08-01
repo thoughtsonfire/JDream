@@ -237,3 +237,30 @@ public class Eamil{
 #### @Mapper
 
 - 在 Spring 中，@Mapper 注解通常用于标识一个接口或者类是 MyBatis 的 Mapper 接口或者 XML 映射文件的代理类。这个注解告诉 Spring 框架扫描并创建这些接口的实例，使它们可以被注入到其他 Bean 中，从而在应用程序中使用 MyBatis 进行持久化操作。
+
+#### @ComponentScan
+
+@ComponentScan 是 Spring 框架中用来指示 Spring 在特定的包路径下扫描组件的注解。它告诉 Spring 在指定的包及其子包中查找被 @Component 及其派生注解（如 @Repository、@Service、@Controller 等）标记的类，并将它们注册为 Spring 应用程序上下文中的 Bean。
+
+1. 基本用法
+- 使用 @ComponentScan 注解可以在任何标记了 @Configuration 注解的类上。通常情况下，它会与主配置类（如 Spring Boot 应用程序中的主类）结合使用，以确保 Spring 框架能够找到所有标记了 @Component 及其派生注解的类。
+  ```java
+  @Configuration
+  @ComponentScan("com.example.components")
+  public class AppConfig {
+      // Configuration details
+  }
+  ```
+  在上面的例子中，@ComponentScan("com.example.components") 告诉 Spring 框架在 com.example.components 包及其子包中扫描组件。
+2. 指定多个包路径：
+  ```java
+  @ComponentScan({"com.example.controllers", "com.example.services", "com.example.repositories"})
+  ```
+3. 过滤条件
+   - @ComponentScan 注解还支持使用 includeFilters 和 excludeFilters 属性来定义包扫描时的过滤条件。这允许开发者更精细地控制哪些类应该被 Spring 扫描并注册为 Bean。
+     ```java
+     @ComponentScan(basePackages = "com.example",
+               includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = {Controller.class, Service.class}),
+               excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*Test.*"))
+     ```
+     在上面的例子中，includeFilters 指定了只包括带有 @Controller 和 @Service 注解的类，而 excludeFilters 指定了排除所有包含 "Test" 字符串的类。
