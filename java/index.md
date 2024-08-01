@@ -30,7 +30,32 @@ server:
     context-path: /start
 ```
 * 注意`:`后面有个空格
+  
+##### 配置数据库
 
+- pom.xml 文件中
+  ```xml
+  <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <scope>runtime</scope>
+  </dependency>
+  <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <version>3.0.0</version>
+  </dependency>
+  ```
+  
+- application.yml文件中
+  ```yml
+  spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_test
+    username: root
+    password: 123456
+  ```
 ## 注解
 
 #### @springBootApplication
