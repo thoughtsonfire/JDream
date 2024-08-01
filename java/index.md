@@ -281,3 +281,6 @@ public class Eamil{
 |@Service|@Component的衍生注解|标注在业务类上|
 |@Repository|@Component的衍生注解|标注在数据访问类上（由于与mybatis整合，用的少）|
 
+- 如果要注册的bean对象来自第三方（不是自定义的），是无法用@Component及其衍生注解声明bean的
+- 第三方bean 可以使用`@bean`和`@Import`
+
