@@ -264,3 +264,20 @@ public class Eamil{
                excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*Test.*"))
      ```
      在上面的例子中，includeFilters 指定了只包括带有 @Controller 和 @Service 注解的类，而 excludeFilters 指定了排除所有包含 "Test" 字符串的类。
+
+## Bean
+
+#### Bean扫描
+
+- @ComponentScan
+- @springBootApplication 只扫描启动类所在包及其子包
+
+#### Bean注册
+
+|注解|说明|位置|
+|:--:|:--:|:--:|
+|@Component|声明bean的基础注解|不属于以下三类时，用此注解|
+|@Controller|@Component的衍生注解|标注在控制器类上|
+|@Service|@Component的衍生注解|标注在业务类上|
+|@Repository|@Component的衍生注解|标注在数据访问类上（由于与mybatis整合，用的少）|
+
