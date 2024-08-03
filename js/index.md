@@ -43,3 +43,75 @@
 - **幂等性：** 是幂等的，多次相同的 OPTIONS 请求会产生相同的结果。
 - **安全性：** 是安全的，因为它不会修改资源。
 - **示例：** 查看服务器支持的请求方法、检查资源是否存在等。
+
+## axios封装
+
+1. 创建一个 axios 实例
+
+```ts
+import axios, { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
+​
+const axiosInstance: AxiosInstance = axios.create({
+  baseURL: 'https://api.example.com/',
+  timeout: 5000,
+});
+​
+// 添加请求拦截器
+axiosInstance.interceptors.request.use(
+  (config: AxiosRequestConfig) => {
+    // 在发送请求之前做些什么
+    return config;
+  },
+  (error: any) => {
+    // 处理请求错误
+    return Promise.reject(error);
+  },
+);
+​
+// 添加响应拦截器
+axiosInstance.interceptors.response.use(
+  (response: AxiosResponse) => {
+    // 对响应数据做点什么
+    return response;
+  },
+  (error: any) => {
+    // 处理响应错误
+    return Promise.reject(error);
+  },
+);
+​
+export default axiosInstance;
+​```
+
+2. 创建一个封装模块
+
+```ts
+import axiosInstance from './axios-instance';
+​
+export interface ApiResult<T> {
+  code: number;
+  message: string;
+  data: T;
+}
+​
+export async function get<T>(url: string, params?: any): Promise<ApiResult<T>> {
+  const response = await axiosInstance.get<ApiResult<T>>(url, { params });
+  return response.data;
+}
+​
+export async function post<T>(url: string, data?: any): Promise<ApiResult<T>> {
+  const response = await axiosInstance.post<ApiResult<T>>(url, data);
+  return response.data;
+}
+​
+export async function put<T>(url: string, data?: any): Promise<ApiResult<T>> {
+  const response = await axiosInstance.put<ApiResult<T>>(url, data);
+  return response.data;
+}
+​
+export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
+  const response = await axiosInstance.delete<ApiResult<T>>(url, { params });
+  return response.data;
+}
+```
+***仅供参考，须要详细配置和封装***
