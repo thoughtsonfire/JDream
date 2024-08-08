@@ -54,6 +54,6 @@ import VueQr from 'vue-qr'
 <br>
 
 - 禁用vuter volar 插件
-- 
+  
 - 使用Vue - Official插件
 
