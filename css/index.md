@@ -6,6 +6,7 @@
 - -ms-text-size-adjust: 100%; /* 不允许IE浏览器自动调整文本大小 */
 - -ms-overflow-style: scrollbar; /* 在IE浏览器中显示滚动条 */
 - -webkit-tap-highlight-color: rgba(0, 0, 255, 0.5);/*在移动设备上，当用户点击或触摸页面上的链接或其他可点击元素时，浏览器会默认显示一个高亮效果，以提示用户已经成功点击了这个元素。 设置高亮颜色为半透明的蓝色 */
+- left: unset;在 CSS 中，left: unset; 是用来重置元素的左侧位置属性的设置。它的作用是取消任何通过 CSS 显式设置的 left 属性，使元素恢复到其默认的布局行为或从父元素继承的值。
 
 ## flex
 
