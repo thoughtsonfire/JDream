@@ -49,3 +49,11 @@ import VueQr from 'vue-qr'
 |bgSrc|Background url to embed in the QR code. 欲嵌入的背景图地址|
 |size|Width as well as the height of the output QR code, includes margin. 尺寸, 长宽一致, 包含外边距|
 
+## vue3 ts vscode爆红
+
+<br>
+
+- 禁用vuter volar 插件
+- 
+- 使用Vue - Official插件
+
