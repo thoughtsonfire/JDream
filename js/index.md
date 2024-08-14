@@ -119,3 +119,8 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 }
 ```
 ***仅供参考，须要详细配置和封装***
+
+#### 获取元素
+- document.querySelector()  返回第一个元素或者null
+- document.querySelectorAll()  返回所有匹配项
+- document.getElementsByClassName  返回所有匹配项
