@@ -44,7 +44,7 @@
 
 <br>
 
-##### flex-shrink
+#### flex-shrink
 
 **作用**
 
@@ -56,7 +56,7 @@
 - 如果希望某些项目在容器空间不足时不收缩（即固定大小），可以将它们的 flex-shrink 设置为 0。这样这些项目不会在空间不足时自动缩小，而是保持其原始大小。
 - 如果希望某些项目相对于其他项目更多地收缩，可以将它们的 flex-shrink 设置为一个大于 1 的值。这样它们会比其他项目更快地缩小，以填充剩余空间。
 
-##### flex-direction
+#### flex-direction
 
 **作用**
 
@@ -68,3 +68,88 @@
 2. `row-reverse`：主轴水平，从右到左。
 3. `column`：主轴垂直，从上到下。
 4. `column-reverse`：主轴垂直，从下到上。
+
+
+## grid
+
+<br>
+
+####  grid-template-columns
+
+`grid-template-columns` 是 CSS Grid 布局中的一个属性，用于定义网格容器的列结构。这一属性设定了列的数量和每列的宽度。它的基本用法和功能包括：
+
+**基本语法**
+
+```css
+.container {
+  display: grid;
+  grid-template-columns: <track-size> ...;
+}
+```
+
+- `<track-size>` 可以是绝对单位（如 `px`、`em`）、相对单位（如 `%`），也可以是 `fr` 单位或者其他特殊的函数（如 `auto`、`minmax()`）。
+
+**示例**
+
+1. 定义固定宽度的列
+   
+   ```css
+   .container {
+     display: grid;
+     grid-template-columns: 100px 200px 300px;
+   }
+   ```
+   这段代码创建了一个网格容器，包含三列，列宽分别为 100px、200px 和 300px。
+   
+2. 使用相对单位（fr）
+
+   ```css
+   .container {
+     display: grid;
+     grid-template-columns: 1fr 2fr 1fr;
+   }
+   ```
+   这里定义了三个列，第一列和第三列各占容器宽度的 1fr，第二列占 2fr。第二列宽度是第一列和第三列的两倍。
+
+3. 使用 auto 自动调整宽度
+
+   ```css
+   .container {
+     display: grid;
+     grid-template-columns: auto auto;
+   }
+   ```
+   这里创建了两个列，它们的宽度会自动调整以适应其内容。
+
+4. 使用 `repeat()` 简化代码
+
+   ```css
+   .container {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+   }
+   ```
+   repeat(3, 1fr) 表示创建三个列，每列宽度相等，占据容器宽度的三分之一。
+
+5. 使用 minmax() 设定范围
+
+   ```css
+   .container {
+     display: grid;
+     grid-template-columns: repeat(3, minmax(100px, 1fr));
+   }
+   ```
+   每列的最小宽度为 100px，最大宽度为 1fr，即每列会根据可用空间进行调整，但不会小于 100px。
+
+6. 组合与嵌套
+
+   ```css
+   .container {
+     display: grid;
+     grid-template-columns: 200px repeat(3, 1fr) 100px;
+   }
+   ```
+   这段代码创建了一个包含五列的网格布局，其中第一列宽度固定为 200px，接下来的三列各占据剩余空间的 1fr，最后一列宽度固定为 100px。
+
+
+   
