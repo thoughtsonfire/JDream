@@ -28,3 +28,7 @@
 
 #### reference  n.标记、索引、参考
 
+<br>
+
+#### channel    n.频道
+
