@@ -133,4 +133,5 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 
 #### document.documentElement.scrollTop不适配
 
+`document.documentElement` 代表文档的根元素，在大多数现代浏览器中，它对应于 `<html>` 元素。通常，`document.documentElement.scrollTop` 被用来获取页面的垂直滚动位置。然而，在某些情况下，它可能无法按预期工作，主要原因包括：
 
