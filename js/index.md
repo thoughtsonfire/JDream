@@ -128,6 +128,7 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 
 
 ## 动画过渡滚动相关
+<br>
 
 #### document.documentElement.scrollTop不适配
 
@@ -195,17 +196,18 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
   ```
   
   ```js
-  function animate() {
-      // 更新动画状态或绘制内容
-      console.log('Animating...');
-  
-      // 请求下一帧
-      requestAnimationFrame(animate);
-  }
-  
-  // 启动动画
-  requestAnimationFrame(animate);
-```
+   function animate() {
+       // 更新动画状态或绘制内容
+       console.log('Animating...');
+   
+       // 请求下一帧
+       requestAnimationFrame(animate);
+   }
+   
+   // 启动动画
+   requestAnimationFrame(animate);
+   
+  ```
 
 **主要特点**
 
