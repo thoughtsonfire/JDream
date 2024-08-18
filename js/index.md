@@ -157,3 +157,69 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 一些浏览器可能在滚动计算时有非标准的行为。例如，在早期的 IE 浏览器中，scrollTop 的计算可能与标准有所不同。这些浏览器可能更倾向于使用 document.body.scrollTop。
 
  
+**解决方案**
+
+- 使用 `window.scrollY` 或 `window.pageYOffset`:
+  
+  ```js
+  const scrollPosition = window.scrollY || window.pageYOffset;
+  ```
+
+#### requestAnimationFrame
+
+
+`requestAnimationFrame` 是一个浏览器 API，用于在下一个重绘之前执行指定的回调函数。这个机制可以帮助你创建平滑的动画效果，因为它允许你在浏览器的重绘周期中运行动画代码，从而避免了直接使用 `setTimeout` 或 `setInterval` 的潜在问题，比如不一致的帧率和性能问题。
+
+**如何使用**
+
+1. 定义回调函数：
+
+回调函数会在下一次浏览器重绘之前执行，通常用于更新动画状态或重新绘制图形。
+
+2. 请求下一帧：
+
+使用 `requestAnimationFrame` 向浏览器请求下一帧的绘制。浏览器会在适当的时候调用你的回调函数。
+
+**代码实例**
+
+```ts
+let ticking = false;
+const handleScroll = () => {
+ if (!ticking) {
+   window.requestAnimationFrame(() => {
+     if (window.scrollY >= 64) {
+       isFixHeaderBar.value = true;
+     } else {
+       isFixHeaderBar.value = false;
+     }
+     ticking = false;
+   });
+   ticking = true;
+ }
+};
+```
+ 
+```js
+ function animate() {
+     // 更新动画状态或绘制内容
+     console.log('Animating...');
+ 
+     // 请求下一帧
+     requestAnimationFrame(animate);
+ }
+ 
+ // 启动动画
+ requestAnimationFrame(animate);
+ 
+```
+
+**主要特点**
+
+1. 帧率优化
+
+ `requestAnimationFrame` 会根据浏览器的刷新率（通常是每秒 60 帧）来调节动画的帧率，使得动画更平滑。大多数现代浏览器的刷新率是 60 Hz，这意味着每秒 60 帧。
+
+2. 节能
+
+ 如果动画所在的页面被隐藏或不可见，`requestAnimationFrame` 会暂停动画的执行，帮助节省计算资源。这对移动设备和桌面浏览器都能提高性能和节能。
+
