@@ -142,5 +142,5 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 
 2. CSS 和文档结构
 
-在某些情况下，CSS 样式可能影响滚动行为。例如，如果页面的根元素（<html>）上设置了 `overflow: hidden` 或 `overflow: auto`，这可能会影响 `scrollTop` 的值。此外，如果 html 元素的高度不为 100% 或 `overflow` 属性被更改，也可能导致 `scrollTop` 行为异常。
+在某些情况下，`CSS` 样式可能影响滚动行为。例如，如果页面的根元素（`<html>`）上设置了 `overflow: hidden` 或 `overflow: auto`，这可能会影响 `scrollTop` 的值。此外，如果 html 元素的高度不为 100% 或 `overflow` 属性被更改，也可能导致 `scrollTop` 行为异常。
 
