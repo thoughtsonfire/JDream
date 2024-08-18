@@ -142,9 +142,18 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 
 2. CSS 和文档结构
 
-   在某些情况下，CSS 样式可能影响滚动行为。例如，如果页面的根元素（<html>）上设置了 overflow: hidden 或 overflow: auto，这可能会影响 scrollTop 的值。此外，如果 html 元素的高度不为 100% 或 overflow 属性被更改，也可能导致 scrollTop 行为异常。
+在某些情况下，CSS 样式可能影响滚动行为。例如，如果页面的根元素（<html>）上设置了 overflow: hidden 或 overflow: auto，这可能会影响 scrollTop 的值。此外，如果 html 元素的高度不为 100% 或 overflow 属性被更改，也可能导致 scrollTop 行为异常。
 
 3. 滚动容器
 
-   `document.documentElement.scrollTop` 通常适用于根文档，但如果你的页面有特定的滚动容器（例如一个 div 元素），这个容器的滚动位置应该用容器自身的 scrollTop 属性来访问。如果你想获取整个页面的滚动位置，而不仅仅是某个容器的，可能需要调整你的代码来处理具体的容器。
+`document.documentElement.scrollTop` 通常适用于根文档，但如果你的页面有特定的滚动容器（例如一个 div 元素），这个容器的滚动位置应该用容器自身的 scrollTop 属性来访问。如果你想获取整个页面的滚动位置，而不仅仅是某个容器的，可能需要调整你的代码来处理具体的容器。
 
+4. 移动设备和视口
+
+在移动设备上，视口的滚动行为与桌面浏览器可能有所不同。移动设备上的滚动处理有时可能会涉及视口和布局的不同处理方式。例如，一些移动浏览器可能会将 `document.documentElement.scrollTop` 和 `document.body.scrollTop` 进行不同的计算或处理。
+
+5. 标准和非标准行为
+
+一些浏览器可能在滚动计算时有非标准的行为。例如，在早期的 IE 浏览器中，scrollTop 的计算可能与标准有所不同。这些浏览器可能更倾向于使用 document.body.scrollTop。
+
+ 
