@@ -126,6 +126,7 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 - document.querySelectorAll()  返回所有匹配项
 - document.getElementsByClassName  返回所有匹配项
 
+<br>
 
 ## 动画过渡滚动相关
 
