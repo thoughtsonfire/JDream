@@ -128,9 +128,12 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 
 
 ## 动画过渡滚动相关
+
 <br>
 
 #### document.documentElement.scrollTop不适配
+
+<br>
 
 `document.documentElement` 代表文档的根元素，在大多数现代浏览器中，它对应于 `<html>` 元素。通常，`document.documentElement.scrollTop` 被用来获取页面的垂直滚动位置。然而，在某些情况下，它可能无法按预期工作，主要原因包括：
 
@@ -161,8 +164,10 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
   ```js
   const scrollPosition = window.scrollY || window.pageYOffset;
   ```
-  
+
+<br>
 #### requestAnimationFrame
+<br>
 
   `requestAnimationFrame` 是一个浏览器 API，用于在下一个重绘之前执行指定的回调函数。这个机制可以帮助你创建平滑的动画效果，因为它允许你在浏览器的重绘周期中运行动画代码，从而避免了直接使用 `setTimeout` 或 `setInterval` 的潜在问题，比如不一致的帧率和性能问题。
 
