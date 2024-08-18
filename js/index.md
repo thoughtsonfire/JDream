@@ -131,16 +131,7 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 ## 动画过渡滚动相关
 
 
-
-**总结**
-
-`requestAnimationFrame` 是一种用于创建平滑动画的现代 API，它通过与浏览器的重绘周期同步来优化性能，并能有效节省计算资源。它适用于需要高性能动画的场景，如游戏、图形绘制和界面动画。
-
-<br>
-
 #### document.documentElement.scrollTop不适配
-
-<br>
 
 `document.documentElement` 代表文档的根元素，在大多数现代浏览器中，它对应于 `<html>` 元素。通常，`document.documentElement.scrollTop` 被用来获取页面的垂直滚动位置。然而，在某些情况下，它可能无法按预期工作，主要原因包括：
 
@@ -164,5 +155,123 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 
    一些浏览器可能在滚动计算时有非标准的行为。例如，在早期的 IE 浏览器中，scrollTop 的计算可能与标准有所不同。这些浏览器可能更倾向于使用 document.body.scrollTop。
  
+**解决方案**
+
+- 使用 `window.scrollY` 或 `window.pageYOffset`:
+  
+  ```js
+  const scrollPosition = window.scrollY || window.pageYOffset;
+  ```
+
+#### requestAnimationFrame
 
 
+`requestAnimationFrame` 是一个浏览器 API，用于在下一个重绘之前执行指定的回调函数。这个机制可以帮助你创建平滑的动画效果，因为它允许你在浏览器的重绘周期中运行动画代码，从而避免了直接使用 `setTimeout` 或 `setInterval` 的潜在问题，比如不一致的帧率和性能问题。
+
+**如何使用**
+
+1. 定义回调函数：
+
+回调函数会在下一次浏览器重绘之前执行，通常用于更新动画状态或重新绘制图形。
+
+2. 请求下一帧：
+
+使用 `requestAnimationFrame` 向浏览器请求下一帧的绘制。浏览器会在适当的时候调用你的回调函数。
+
+**代码实例**
+
+```ts
+let ticking = false;
+const handleScroll = () => {
+ if (!ticking) {
+   window.requestAnimationFrame(() => {
+     if (window.scrollY >= 64) {
+       isFixHeaderBar.value = true;
+     } else {
+       isFixHeaderBar.value = false;
+     }
+     ticking = false;
+   });
+   ticking = true;
+ }
+};
+```
+ 
+```js
+ function animate() {
+     // 更新动画状态或绘制内容
+     console.log('Animating...');
+ 
+     // 请求下一帧
+     requestAnimationFrame(animate);
+ }
+ 
+ // 启动动画
+ requestAnimationFrame(animate);
+ 
+```
+
+**主要特点**
+
+1. 帧率优化：
+
+`requestAnimationFrame` 会根据浏览器的刷新率（通常是每秒 60 帧）来调节动画的帧率，使得动画更平滑。大多数现代浏览器的刷新率是 60 Hz，这意味着每秒 60 帧。
+
+2. 节能：
+
+如果动画所在的页面被隐藏或不可见，`requestAnimationFrame` 会暂停动画的执行，帮助节省计算资源。这对移动设备和桌面浏览器都能提高性能和节能。
+
+3. 与浏览器重绘同步：
+
+使用 `requestAnimationFrame` 的回调函数会在浏览器下一次重绘之前执行，这样可以减少渲染过程中产生的视觉抖动或不连贯的效果。
+
+4. 动画链：
+
+`requestAnimationFrame` 可以用来创建动画链。当动画完成一帧后，它会自动请求下一帧，这样你就可以创建连续的动画效果，而无需手动管理计时器。
+
+**性能比较**
+
+与 `setTimeout` 或 `setInterval` 相比，`requestAnimationFrame` 更适合处理动画，因为它与浏览器的渲染周期同步，从而避免了不必要的计算和过度的 CPU 使用。`setTimeout` 或 `setInterval` 的时间间隔可能不与浏览器的刷新率对齐，导致动画的卡顿或不平滑。
+
+**注意事项**
+
+1. 回调函数：
+
+`requestAnimationFrame` 的回调函数通常会接收一个时间戳参数（timestamp），表示当前时间，这对于实现动画效果和时间控制非常有用。
+
+```js
+javascript
+function animate(timestamp) {
+    // 使用 timestamp 进行动画计算
+    console.log('Animating at time:', timestamp);
+
+    // 请求下一帧
+    requestAnimationFrame(animate);
+}
+```
+
+2. 停止动画：
+ 
+ 要停止动画，可以使用 `cancelAnimationFrame` 方法。你需要在调用 `requestAnimationFrame` 时保存返回的 ID，然后用它来取消动画。
+
+ ```js
+ let animationId;
+
+ function animate() {
+     // 更新动画状态或绘制内容
+     console.log('Animating...');
+ 
+     // 请求下一帧
+     animationId = requestAnimationFrame(animate);
+ }
+
+ // 启动动画
+ animationId = requestAnimationFrame(animate);
+ 
+ // 停止动画
+ cancelAnimationFrame(animationId);
+ ```
+
+**总结**
+
+`requestAnimationFrame` 是一种用于创建平滑动画的现代 API，它通过与浏览器的重绘周期同步来优化性能，并能有效节省计算资源。它适用于需要高性能动画的场景，如游戏、图形绘制和界面动画。
