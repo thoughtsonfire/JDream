@@ -164,12 +164,5 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 
    一些浏览器可能在滚动计算时有非标准的行为。例如，在早期的 IE 浏览器中，scrollTop 的计算可能与标准有所不同。这些浏览器可能更倾向于使用 document.body.scrollTop。
  
-**解决方案**
-
-- 使用 `window.scrollY` 或 `window.pageYOffset`:
-  
-  ```js
-  const scrollPosition = window.scrollY || window.pageYOffset;
-  ```
 
 
