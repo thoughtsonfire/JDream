@@ -161,8 +161,8 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
   ```js
   const scrollPosition = window.scrollY || window.pageYOffset;
   ```
-
-  #### requestAnimationFrame
+  
+#### requestAnimationFrame
 
   `requestAnimationFrame` 是一个浏览器 API，用于在下一个重绘之前执行指定的回调函数。这个机制可以帮助你创建平滑的动画效果，因为它允许你在浏览器的重绘周期中运行动画代码，从而避免了直接使用 `setTimeout` 或 `setInterval` 的潜在问题，比如不一致的帧率和性能问题。
 
