@@ -69,6 +69,26 @@
 3. `column`：主轴垂直，从上到下。
 4. `column-reverse`：主轴垂直，从下到上。
 
+#### align-self
+
+**作用**
+
+- `align-self` 是 CSS `Flexbox` 和 `Grid` 布局中的一个属性，用于设置单个项目在其容器内的对齐方式。它允许你覆盖父容器中定义的对齐方式，为该项目提供单独的对齐选项。
+
+**语法**
+
+`align-self: auto | flex-start | flex-end | center | baseline | stretch;`
+
+**属性值**
+
+- `auto`：使用父容器的 `align-items` 属性的值。默认值。
+- `flex-start`：将项目对齐到容器的起始边缘（在弹性盒子布局中是容器的起始边缘）。
+- `flex-end`：将项目对齐到容器的结束边缘（在弹性盒子布局中是容器的结束边缘）。
+- `center`：将项目对齐到容器的中心。
+- `baseline`：将项目对齐到父容器的基线。
+- `stretch`：使项目填充整个容器的交叉轴。默认值，适用于 `Flexbox` 和 `Grid` 布局。
+
+<br>
 
 ## grid
 
