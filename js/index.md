@@ -332,8 +332,8 @@ element?.style.backgroundColor = 'blue'; // 如果 element 为 null，则不会�
 <br>
 
 - `Element` 类型：
- - 范围：`Element` 是一个更广泛的接口，代表了文档中的任何元素，包括 `HTML` 元素、`SVG` 元素、甚至 `XML` 元素等。
- - 适用性：它可以表示任何类型的 DOM 元素节点，不限于 `HTML`。`Element` 也不特定于节点类型，比如可以包括 `HTML` 和 `SVG` 这样的节点类型。
+  - 范围：`Element` 是一个更广泛的接口，代表了文档中的任何元素，包括 `HTML` 元素、`SVG` 元素、甚至 `XML` 元素等。
+  - 适用性：它可以表示任何类型的 DOM 元素节点，不限于 `HTML`。`Element` 也不特定于节点类型，比如可以包括 `HTML` 和 `SVG` 这样的节点类型。
 
 - `HTMLElement` 类型：
   - 范围：`HTMLElement` 是 `Element` 的一个子接口，专门用于表示 `HTML` 元素。它在 `Element` 的基础上添加了与 `HTML` 相关的属性和方法。
