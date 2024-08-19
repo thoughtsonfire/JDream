@@ -292,6 +292,7 @@ const handleScroll = () => {
 
 #### 非空断言操作符（!）and 选项链操作符（?.）
 
+<br>
 
 在 TypeScript 中，document.querySelector 方法可能返回 null，这就是为什么你会遇到“不能将类型 HTMLElement | null 分配给类型 HTMLElement”的错误。要解决这个问题，你需要确保你处理了可能为 null 的情况。
 
@@ -323,3 +324,19 @@ if (header) {
 const element = document.querySelector('header');
 element?.style.backgroundColor = 'blue'; // 如果 element 为 null，则不会执行
 ```
+
+<br>
+
+#### Element 和 HTMLElement 的区别理解
+
+<br>
+
+- `Element` 类型：
+ - 范围：`Element` 是一个更广泛的接口，代表了文档中的任何元素，包括 `HTML` 元素、`SVG` 元素、甚至 `XML` 元素等。
+ - 适用性：它可以表示任何类型的 DOM 元素节点，不限于 `HTML`。`Element` 也不特定于节点类型，比如可以包括 `HTML` 和 `SVG` 这样的节点类型。
+
+- `HTMLElement` 类型：
+  - 范围：`HTMLElement` 是 `Element` 的一个子接口，专门用于表示 `HTML` 元素。它在 `Element` 的基础上添加了与 `HTML` 相关的属性和方法。
+  - 适用性：`HTMLElement` 仅适用于 `HTML` 文档中的元素，而不适用于 SVG 或其他 XML 元素。它代表的是 `HTML` 文档中的节点元素（即 `<div>`, `<span>`, `<a>` 等）。
+
+ 
