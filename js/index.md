@@ -126,6 +126,8 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 - document.querySelectorAll()  返回所有匹配项
 - document.getElementsByClassName  返回所有匹配项
 
+## 最常用处理数据api，简单常见用法，详细复杂用法具体查
+
 #### replace() 字符串中替换字符
 
 将`,`替换成字符串
@@ -133,13 +135,28 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 string.replace(/,/,"/")
 ```
 
-#### split()
+#### split() 将字符串分割成数组
 
 将字符串按`,`分割成数组
 ```js
 string.split(,)
 ```
+#### slice() 截取子串，截取数组
+
+···js
+string.slice(0,4) //start到end 不包括end，即0，1，2，3
+···
+
+#### join() 将数组拼接成字符串
+
+···js
+arr.join(",")
+```
+
+#### splice() 删除数组部分 会修改原数组
+
 <br>
+
 
 ## 动画过渡滚动相关
 
