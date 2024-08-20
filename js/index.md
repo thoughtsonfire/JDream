@@ -146,6 +146,7 @@ string.replace(/,/,"/")
 string.split(,)
 ```
 <br>
+
 #### slice() 截取子串，截取数组
 
 ···js
@@ -153,13 +154,15 @@ string.slice(0,4) //start到end 不包括end，即0，1，2，3
 ···
 
 <br>
+
 #### join() 将数组拼接成字符串
 
-···js
+```js
 arr.join(",")
 ```
 
 <br>
+
 #### splice() 删除数组部分 会修改原数组
 
 <br>
