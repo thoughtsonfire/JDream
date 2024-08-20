@@ -125,7 +125,20 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 - document.querySelector()  返回第一个元素或者null
 - document.querySelectorAll()  返回所有匹配项
 - document.getElementsByClassName  返回所有匹配项
-- 
+
+#### replace() 字符串中替换字符
+
+将`,`替换成字符串
+```js
+string.replace(/,/,"/")
+```
+
+#### split()
+
+将字符串按`,`分割成数组
+```js
+string.split(,)
+```
 <br>
 
 ## 动画过渡滚动相关
