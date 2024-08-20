@@ -49,7 +49,11 @@ import VueQr from 'vue-qr'
 |bgSrc|Background url to embed in the QR code. 欲嵌入的背景图地址|
 |size|Width as well as the height of the output QR code, includes margin. 尺寸, 长宽一致, 包含外边距|
 
-## vue3 ts vscode爆红
+## vue3 
+
+<br>
+
+#### ts vscode爆红
 
 <br>
 
@@ -57,3 +61,109 @@ import VueQr from 'vue-qr'
   
 - 使用Vue - Official插件
 
+#### ref和reactive
+
+在 `Vue 3` 中，`ref` 和 `reactive` 都用于创建响应式数据，但它们在处理深层次嵌套对象和数组时的行为有所不同。特别是在处理复杂嵌套结构时，`ref` 可能会出现一些响应式的“陷阱”，而 `reactive` 则能更好地处理这些情况。以下是具体的例子和说明。
+
+**ref 的陷阱**
+
+`ref` 主要用于处理单个基本值、对象、或数组的响应式，但其处理嵌套结构时的行为需要小心。`ref` 会为单一值（包括对象和数组）创建响应式引用，但如果对对象或数组进行深层次的操作，可能会遇到意外的行为。
+
+- 示例
+假设我们使用 ref 创建一个对象，并尝试修改其深层属性：
+
+```ts
+import { ref } from 'vue';
+
+const state = ref({
+  user: {
+    name: 'Alice',
+    address: {
+      city: 'Wonderland',
+      zip: '12345'
+    }
+  }
+});
+
+// 修改深层次属性
+state.value.user.address.city = 'New Wonderland';
+
+// 这个修改不会触发视图更新，因为 Vue 不会追踪深层次的变化
+```
+
+在上述示例中，虽然我们修改了 state.value.user.address.city 的值，但是由于 ref 主要关注对 .value 的修改，并不会深入追踪其内部对象的变化，因此视图不会更新。
+
+**reactive 的优势**
+
+`reactive` 对象在处理深层次嵌套时能够自动跟踪所有嵌套的属性，并确保所有级别的属性都能触发视图更新。
+
+- 示例
+  同样的结构使用 reactive 处理如下：
+  
+  ```ts
+  import { reactive } from 'vue';
+  
+  const state = reactive({
+    user: {
+      name: 'Alice',
+      address: {
+        city: 'Wonderland',
+        zip: '12345'
+      }
+    }
+  });
+  
+  // 修改深层次属性
+  state.user.address.city = 'New Wonderland';
+  
+  // 这个修改会自动触发视图更新，因为 reactive 会递归追踪所有嵌套的属性
+  ```
+  在上述示例中，由于 `reactive` 能够深入追踪所有嵌套属性的变化，因此修改 `state.user.address.city` 会正确地触发视图更新。
+
+**总结**
+
+  -  `ref` 主要关注对 `.value` 的修改，并不会深入追踪其内部对象的变化，因此视图不会更新。`reactive` 能够深入追踪所有嵌套属性的变化，因此修改会正确地触发视图更新。
+  -  当对象很深或包含多个嵌套层级时，使用 ref 可能会显得复杂。你必须记住要在访问嵌套属性时始终使用 `.value`，这可能会导致代码变得繁琐。
+  -  确保不会修改内部属性的引用数据类型用`ref`更方便，需要修改内部属性的一定要用`reactive`
+
+**注意**
+  - 当你向使用 `reactive` 创建的对象添加新属性时，这些新属性默认情况下 <font style="color:red">会</font> 自动成为响应式的。
+  - 数组和对象的处理：对于 Vue 3 中的数组或对象，直接修改数组或对象的内容（比如使用 push、splice 或添加对象属性）都会被 Vue 的响应式系统自动追踪。
+  - vue2中需要用set,来保证响应
+    Vue.set 方法接受三个参数：
+    1. 对象：需要添加新属性的目标对象。
+    2. 属性名：新属性的键名。
+    3. 属性值：新属性的值。
+       
+    ```js
+     data() {
+      return {
+          items: ['a', 'b', 'c']
+        };
+    },
+    methods: {
+      updateItem() {
+        // 使用 Vue.set 更新数组中的项
+        Vue.set(this.items, 1, 'z');
+      }
+    }
+  ```
+
+  ```js
+   data() {
+      return {
+        user: {
+          name: 'Alice',
+          address: {
+            street: 'Main St'
+          }
+        }
+      };
+    },
+    methods: {
+      updateAddress() {
+        // 使用 Vue.set 更新嵌套对象中的属性
+        Vue.set(this.user.address, 'city', 'Wonderland');
+      }
+    }
+  ```
