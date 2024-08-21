@@ -107,7 +107,7 @@
 
 <br>
 
-- `padding` 的百分比是相对于<font style="color:red">包含块的宽度</font>计算的，这对保持元素的纵横比非常有用。
+- `padding` 的百分比是相对于<span style="color:red">包含块的宽度</span>计算的，这对保持元素的纵横比非常有用。
 - `margin` 的百分比在水平和垂直方向上计算方式不同：
   - 水平 margin: 相对于包含块的宽度。
   - 垂直 margin: 相对于元素自身的宽度。
