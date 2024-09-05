@@ -167,3 +167,17 @@ state.value.user.address.city = 'New Wonderland';
       }
     }
   ```
+#### vue3 引入
+
+- 引入地址
+
+```ts
+const videoUrl = ref<string>(new URL('@/assets/video/flower.webm', import.meta.url).href)
+```
+
+- 引入json数据
+  
+```ts
+import dmJson from '@/assets/json/dm.json'
+const dmList = reactive(dmJson)  
+```
