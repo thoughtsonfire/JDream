@@ -49,4 +49,4 @@ type 属性允许你为 <source> 元素的 srcset 属性指向的资源指定一
 
 #### video
 
-- 自动播放，不论是添加`autoplay`属性，还是通过函数播放，都需要在`video`标签中添加`muted`属性（有些浏览器不需要添加muted）
+- 自动播放，不论是添加`autoplay`属性，还是通过函数播放，都需要在`video`标签中添加`muted`属性（有些浏览器不需要添加muted，谷歌新版需要）
