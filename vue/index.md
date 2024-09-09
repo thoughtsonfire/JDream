@@ -200,3 +200,13 @@ const videoUrl = ref<string>(new URL('@/assets/video/flower.webm', import.meta.u
 import dmJson from '@/assets/json/dm.json'
 const dmList = reactive(dmJson)  
 ```
+- vue3 文件引入，被引入的文件只有隐式any类型，提示找不到引入文件的类型声明文件
+  - 创建 shims-vue.d.ts 文件
+    ```ts
+    // shims-vue.d.ts
+    declare module '*.vue' {
+      import { DefineComponent } from 'vue';
+      const component: DefineComponent<{}, {}, any>;
+      export default component;
+    }
+    ```
