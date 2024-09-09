@@ -135,6 +135,16 @@
 
 <br>
 
+##### 跳转到指定元素
+
+<br>
+
+```js
+element.scrollIntoView({behavior:'smooth'})
+```
+
+<br>
+
 ## flex
 
 <br>
