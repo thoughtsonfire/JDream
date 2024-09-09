@@ -112,6 +112,27 @@
   - 水平 margin: 相对于包含块的宽度。
   - 垂直 margin: 相对于元素自身的宽度。
 
+  <br>
+
+  #### 平滑滚动
+
+  <br>
+
+  ##### 滚动到列表顶部
+
+- 给滚动元素设置scrollTop为0
+  
+  ```js
+  element.scrollTop=0
+  ```
+- 给滚动元素设置 scroll-behavior
+
+  ```css
+  element{
+   scroll-behavior:smooth;
+  }
+  ```
+
 <br>
 
 ## flex
