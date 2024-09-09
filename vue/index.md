@@ -128,6 +128,7 @@ state.value.user.address.city = 'New Wonderland';
 
 **注意**
   - 当你向使用 `reactive` 创建的对象添加新属性时，这些新属性默认情况下 <font style="color:red">会</font> 自动成为响应式的。
+  - `reactive`对象直接重新赋值会失去响应性，应该改变`reacitive`对象的属性，可以使用object.assign(),或者根据具体需求，自己写方法。
   - 数组和对象的处理：对于 Vue 3 中的数组或对象，直接修改数组或对象的内容（比如使用 push、splice 或添加对象属性）都会被 Vue 的响应式系统自动追踪。
   - vue2中需要用set,来保证响应
     Vue.set 方法接受三个参数：
@@ -135,7 +136,7 @@ state.value.user.address.city = 'New Wonderland';
     2. 属性名：新属性的键名。
     3. 属性值：新属性的值。
        
-    ```js
+  ```js
      data() {
       return {
           items: ['a', 'b', 'c']
