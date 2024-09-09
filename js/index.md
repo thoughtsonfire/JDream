@@ -167,6 +167,32 @@ arr.join(",")
 
 <br>
 
+#### Object.assign
+
+Object.assign 是一个 JavaScript 方法，用于将一个或多个源对象的所有可枚举属性复制到目标对象
+
+```js
+Object.assign(target, ...sources)
+```
+
+- `target`: 目标对象，属性会被复制到这里。
+- `...sources`: 一个或多个源对象，从中复制属性到目标对象。
+- 示例
+  ```js
+  const target = { a: 1 };
+  const source1 = { b: 2 };
+  const source2 = { c: 3 };
+  
+  Object.assign(target, source1, source2);
+  
+  console.log(target); // { a: 1, b: 2, c: 3 }
+  ```
+- 特性
+  - 浅拷贝: 只拷贝对象的第一层属性，嵌套对象不会被深拷贝。
+  - 覆盖: 如果目标对象和源对象有相同的属性，源对象的值会覆盖目标对象的值。
+
+<br>
+
 ## 动画过渡滚动相关
 
 <br>
