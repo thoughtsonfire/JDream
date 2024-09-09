@@ -167,7 +167,7 @@ arr.join(",")
 
 <br>
 
-#### Object.assign()
+#### Object.assign() 更新对象属性
 
 Object.assign 是一个 JavaScript 方法，用于将一个或多个源对象的所有可枚举属性复制到目标对象
 
@@ -190,6 +190,29 @@ Object.assign(target, ...sources)
 - 特性
   - 浅拷贝: 只拷贝对象的第一层属性，嵌套对象不会被深拷贝。
   - 覆盖: 如果目标对象和源对象有相同的属性，源对象的值会覆盖目标对象的值。
+
+<br>
+
+#### sort 对象数组排序
+
+```js
+const users = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 30 },
+  { name: 'Charlie', age: 22 }
+];
+
+// 按年龄升序排序
+users.sort((a, b) => a.age - b.age);
+
+console.log(users);
+// 输出:
+// [
+//   { name: 'Charlie', age: 22 },
+//   { name: 'Alice', age: 25 },
+//   { name: 'Bob', age: 30 }
+// ]
+```
 
 <br>
 
