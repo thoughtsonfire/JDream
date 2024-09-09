@@ -167,7 +167,7 @@ arr.join(",")
 
 <br>
 
-#### Object.assign
+#### Object.assign()
 
 Object.assign 是一个 JavaScript 方法，用于将一个或多个源对象的所有可枚举属性复制到目标对象
 
