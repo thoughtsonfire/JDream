@@ -212,3 +212,12 @@ const dmList = reactive(dmJson)
       export default component;
     }
     ```
+    - declare module '*.vue':
+      这段代码告诉 TypeScript，任何以 .vue 结尾的文件都是一个模块。这样，TypeScript 可以识别和处理 .vue 文件。
+    - const component: DefineComponent<{}, {}, any>:
+      这里定义了一个名为 component 的常量，其类型是 DefineComponent<{}, {}, any>。DefineComponent 是 Vue 3 提供的一个类型，代表 Vue 组件的类型。
+    - {}: 组件的 Props 类型，这里用空对象表示组件没有定义 Props。
+    - {}: 组件的 Emits 类型，这里用空对象表示组件没有自定义事件。
+    - any: 组件的 Slots 类型，any 表示任何类型的插槽。
+    - export default component:
+      将 component 常量作为模块的默认导出。这意味着在导入 .vue 文件时，你会得到一个 Vue 组件实例。
