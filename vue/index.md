@@ -201,7 +201,9 @@ import dmJson from '@/assets/json/dm.json'
 const dmList = reactive(dmJson)  
 ```
 - vue3 文件引入，被引入的文件只有隐式any类型，提示找不到引入文件的类型声明文件
-  - 创建 shims-vue.d.ts 文件
+  - 创建 在src文件下shims-vue.d.ts 文件
+  - TypeScript 的编译器在解析项目文件时会自动处理 tsconfig.json 中配置的 include 和 exclude 选项。
+  - 定义了一个基础的类型声明，让 TypeScript 知道如何处理 .vue 文件的导入。在实际的 .vue 文件中，script 部分定义的具体类型会提供更详细的信息。
     ```ts
     // shims-vue.d.ts
     declare module '*.vue' {
