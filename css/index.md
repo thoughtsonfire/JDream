@@ -437,4 +437,36 @@ element.scrollIntoView({behavior:'smooth'})
 ```
 这将使每一列之间的水平间距为 15px。
 
+## sass 
+
+<br>
+
+### sass 中的逻辑运算符
+
+1. `@for`
+   - sass 代码
+   ```sass
+   @for $i from 1 through 3 {
+     .item-#{$i} {
+       width: 20px * $i;
+     }
+   }
+   ```
+   - 对应css代码
+   ```css
+   .item-1 {
+     width: 20px;
+   }
+   
+   .item-2 {
+     width: 40px;
+   }
+   
+   .item-3 {
+     width: 60px;
+   }
+   ```
+
+
+
 
