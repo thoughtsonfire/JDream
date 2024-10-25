@@ -441,7 +441,7 @@ element.scrollIntoView({behavior:'smooth'})
 
 <br>
 
-### sass 中的逻辑运算符
+### sass 中的运算符
 
 1. `@for`
    - sass 代码
@@ -519,6 +519,84 @@ element.scrollIntoView({behavior:'smooth'})
    }
    ```
 
+4. `@else if`
+   - sass 代码
+   ```
+   @mixin example($value) {
+     @if $value == 1 {
+       color: blue;
+     } @else if $value == 2 {
+       color: green;
+     } @else {
+       color: red;
+     }
+   }
+   
+   .test-1 {
+     @include example(1);
+   }
+   
+   .test-2 {
+     @include example(2);
+   }
+   
+   .test-3 {
+     @include example(3);
+   }
+   ```
+   - 对应css代码
+   ```
+   .test-1 {
+     color: blue;
+   }
+   
+   .test-2 {
+     color: green;
+   }
+   
+   .test-3 {
+     color: red;
+   }
+
+   ```
+
+5. 逻辑运算符
+   - sass
+   ```
+   @mixin example($value) {
+     @if $value == 1 or $value == 2 {
+       color: blue;
+     } @else {
+       color: red;
+     }
+   }
+   
+   .test-1 {
+     @include example(1);
+   }
+   
+   .test-2 {
+     @include example(2);
+   }
+   
+   .test-3 {
+     @include example(3);
+   }
+   ```
+   - 对应css
+   ```
+   .test-1 {
+     color: blue;
+   }
+   
+   .test-2 {
+     color: blue;
+   }
+   
+   .test-3 {
+     color: red;
+   }
+   ```
 
 
 
