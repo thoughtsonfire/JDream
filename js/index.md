@@ -427,4 +427,28 @@ element?.style.backgroundColor = 'blue'; // 如果 element 为 null，则不会�
   - 范围：`HTMLElement` 是 `Element` 的一个子接口，专门用于表示 `HTML` 元素。它在 `Element` 的基础上添加了与 `HTML` 相关的属性和方法。
   - 适用性：`HTMLElement` 仅适用于 `HTML` 文档中的元素，而不适用于 SVG 或其他 XML 元素。它代表的是 `HTML` 文档中的节点元素（即 `<div>`, `<span>`, `<a>` 等）。
 
- 
+ ## axios
+
+ Axios 在处理请求时，会检查传入的 URL。具体来说，它会通过以下步骤来识别：
+
+1. **URL 格式判断**：当你调用请求方法（如 `get`、`post` 等）时，Axios 会首先检查传入的 URL 是否是一个完整的 URL。完整的 URL 通常是以 `http://` 或 `https://` 开头。
+
+2. **优先级**：如果 URL 是完整的，Axios 将直接使用该 URL 进行请求，不会使用配置的 `baseURL`。这是因为完整 URL 明确指向了一个特定的资源。
+
+3. **相对路径**：如果传入的是相对路径（例如 `/endpoint`），Axios 会将该路径与 `baseURL` 结合，形成完整的请求 URL。
+
+### 示例
+
+```javascript
+// baseURL 被设置为 'https://api.example.com'
+
+// 使用完整路径
+axios.get('https://another-api.com/endpoint');
+// 直接请求 'https://another-api.com/endpoint'
+
+// 使用相对路径
+axios.get('/endpoint');
+// 请求 'https://api.example.com/endpoint'
+```
+
+这种设计使得 Axios 更加灵活，可以适应不同的请求需求。
