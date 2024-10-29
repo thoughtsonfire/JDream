@@ -621,5 +621,22 @@ $app-list:'qq','wechat','weibo','baidu';
 <span class="app-icon qq"></span>
 ```
 
+2. 超出字符省略显示
+
+```
+@mixin text-ellipsis($line: 1){
+   overflow: hidden;
+   text-overflow: ellipsis;
+   @if $line == 1{
+      white-space: nowrap;
+   } @else{
+      word-wrap: break-word;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: $line;
+      display: -webkit-box; 
+   }
+}
+```
+
 
 
