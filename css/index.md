@@ -598,6 +598,28 @@ element.scrollIntoView({behavior:'smooth'})
    }
    ```
 
+### sass 常用公共样式
+
+1. **应用图标**
+
+```
+$app-list:'qq','wechat','weibo','baidu';
+
+.app-icon{
+   width: 16px;
+   height: 16px;
+   display: inline-block;
+   background-size: 100% 100%;
+   @each $app in $app-list{
+      &.#{#app}{
+         background-image: url("~@/assets/imgs/app-icons/#{$app}.png")
+      }
+   }
+}
+```
+```
+<span class="app-icon qq"></span>
+```
 
 
 
