@@ -17,13 +17,13 @@ export default defineConfig({
       { text: '学习笔记', items:[
         {text:'uni-app',link:'/uni-app/'},
         {text:'java',link:'/java/'},
+        {text:'sql',link:'/sql/'},
         {text:'vue',link:'/vue/'},
         {text:'html',link:'/html/'},
         {text:'css',link:'/css/'},
         {text:'js',link:'/js/'},
         {text:'ol',link:'/ol/'},
         {text:'english',link:'/english/'},
-        {text:'sql',link:'/sql/'},
       ] },
       {text:'文档编写',items:[
         {text:'vitepress',link:'/vitepress/'},
