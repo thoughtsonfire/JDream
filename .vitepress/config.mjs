@@ -24,6 +24,7 @@ export default defineConfig({
         {text:'js',link:'/js/'},
         {text:'ol',link:'/ol/'},
         {text:'english',link:'/english/'},
+        {text:'blender',link:'/blender/'},
       ] },
       {text:'文档编写',items:[
         {text:'vitepress',link:'/vitepress/'},
