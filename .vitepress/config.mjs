@@ -23,8 +23,9 @@ export default defineConfig({
         {text:'css',link:'/css/'},
         {text:'js',link:'/js/'},
         {text:'ol',link:'/ol/'},
-        {text:'english',link:'/english/'},
+        {text:'three.js',link:'/three-js/'},
         {text:'blender',link:'/blender/'},
+        {text:'english',link:'/english/'},
       ] },
       {text:'文档编写',items:[
         {text:'vitepress',link:'/vitepress/'},
