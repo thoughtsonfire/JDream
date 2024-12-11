@@ -47,49 +47,69 @@ npm install --save-dev webpack-merge
 使用 webpack-merge：
  - webpack.common.js（公共配置）
    ```js
+  // webpack.common.js
    const path = require('path');
-
-    module.exports = {
-      entry: './src/index.js',
-      output: {
-        filename: 'index.js',
-        path: path.resolve(__dirname, 'dist'),
-      },
-      module: {
-        rules: [
-          {
-            test: /\.js$/,
-            use: 'babel-loader',
-            exclude: /node_modules/,
-          },
-          ],
-      },
-    };
+   
+   module.exports = {
+     entry: './src/index.ts', // 入口文件
+     output: {
+       filename: 'index.js',   // 使用动态名称（如：chunk名称 + contenthash）
+       path: path.resolve(__dirname, 'dist'), // 输出路径
+       clean: true, // 自动清理 dist 文件夹
+       publicPath: '/', // 确保访问时使用正确的根路径
+     },
+     module: {
+       rules: [
+         {
+           test: /\.js$/,
+           exclude: /node_modules/,
+           use: 'babel-loader', // 使用 Babel 转换 JavaScript
+         },
+         {
+           test: /\.css$/,
+           use: ['style-loader', 'css-loader'], // 处理 CSS 文件
+         },
+         {
+           test: /\.(png|jpg|gif|svg)$/,
+           use: ['file-loader'], // 处理图片文件
+         },
+       ],
+     },
+     resolve: {
+       extensions: ['.js', '.json', '.css'], // 默认解析文件扩展名
+     },
+     optimization: {
+       splitChunks: false, // 禁用代码拆分
+       // splitChunks: {
+       //   chunks: 'all', // 自动拆分共享代码
+         
+       // },
+     },
+   };
    ```
  - webpack.dev.js（开发环境配置）
    ```js
+   // webpack.prod.js
    const { merge } = require('webpack-merge');
-    const common = require('./webpack.common.js');
-    
-    module.exports = merge(common, {
-      mode: 'development',
-      devtool: 'inline-source-map',
-      devServer: {
-        contentBase: './dist',
-      },
-    });
-   ```
- - webpack.prod.js（生产环境配置）
-  ```js
-  const { merge } = require('webpack-merge');
-  const common = require('./webpack.common.js');
-  
-  module.exports = merge(common, {
-    mode: 'production',
-    optimization: {
-      minimize: true,
-    },
-  });
+   const commonConfig = require('./webpack.common');
+   const TerserPlugin = require('terser-webpack-plugin'); // 用于压缩 JavaScript
+   
+   module.exports = merge(commonConfig, {
+     mode: 'production', // 设置生产模式
+     devtool: 'source-map', // 配置生产环境的源映射
+     optimization: {
+       minimize: true, // 启用最小化
+       minimizer: [
+         new TerserPlugin({
+           terserOptions: {
+             compress: {
+               drop_console: true, // 删除 console.log 语句
+             },
+           },
+         }),
+       ],
+     },
+   });
   ```
  package.json 中定义不同的构建命令来运行开发或生产环境的构建：
  ```json
@@ -107,4 +127,37 @@ npm install --save-dev webpack-merge
   ts-loader 是一个 Webpack 加载器，用于将 TypeScript 编译成 JavaScript。如果你正在使用 Webpack 来构建项目，并且希望集成 TypeScript，使用 ts-loader 是一个常见的做法。
   ```bash
   npm install --save-dev ts-loader
+  ```
+- 根目录下创建tsconfig.json
+  ```json
+  {
+    "compilerOptions": {
+      "target": "es5", // 编译成 ES5 兼容的代码
+      "module": "esnext", // 使用 ES6 模块
+      "outDir": "./dist", // 输出目录
+      "rootDir": "./src", // 源文件目录
+      "strict": true, // 开启严格模式
+      "esModuleInterop": true, // 允许使用默认导入
+      "skipLibCheck": true, // 跳过库的类型检查
+      "forceConsistentCasingInFileNames": true // 确保文件名一致性
+    },
+    "include": [
+      "src/**/*.ts"
+    ]
+  }
+  ```
+- 创建public文件夹，下创建index.html
+  ```
+  <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>ThreeGame</title>
+   </head>
+   <body>
+       <!-- dist文件夹下路径,webpack中设置了publicPath: '/',所以直接/,运行dev时并不会实际写入dist,但内存中的虚拟文件系统（内存中存储的文件）提供文件，所以能找到 -->
+       <script src="/index.js"></script>
+   </body>
+   </html>
   ```
