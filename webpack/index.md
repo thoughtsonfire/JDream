@@ -34,9 +34,9 @@ npm install --save-dev babel-loader @babel/core @babel/preset-env webpack-dev-se
 
 - webpack-merge 是一个用于合并多个 Webpack 配置文件的工具，特别适用于当你需要在不同环境（如开发环境和生产环境）中使用不同配置时。
 在 Webpack 项目中，通常会有多个配置文件，比如：
-webpack.common.js：包含所有环境都通用的配置。
-webpack.dev.js：包含开发环境的特有配置。
-webpack.prod.js：包含生产环境的特有配置。
+ - webpack.common.js：包含所有环境都通用的配置。
+ - webpack.dev.js：包含开发环境的特有配置。
+ - webpack.prod.js：包含生产环境的特有配置。
 这些配置文件可以通过 webpack-merge 进行合并，这样你就不需要手动在每个配置中复制粘贴通用的设置，也可以根据环境需要灵活地修改配置。
 安装 webpack-merge：
 
