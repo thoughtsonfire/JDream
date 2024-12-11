@@ -47,7 +47,7 @@ npm install --save-dev webpack-merge
 使用 webpack-merge：
  - webpack.common.js（公共配置）
    ```js
-  // webpack.common.js
+   // webpack.common.js
    const path = require('path');
    
    module.exports = {
