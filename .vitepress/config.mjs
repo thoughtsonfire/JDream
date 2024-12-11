@@ -24,6 +24,7 @@ export default defineConfig({
         {text:'js',link:'/js/'},
         {text:'ol',link:'/ol/'},
         {text:'three.js',link:'/three-js/'},
+        {text:'webpack',link:'/webpack/'},
         {text:'blender',link:'/blender/'},
         {text:'english',link:'/english/'},
       ] },
