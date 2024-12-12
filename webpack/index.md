@@ -47,7 +47,7 @@ npm install --save-dev webpack-merge
 使用 webpack-merge：
  - webpack.common.js（公共配置）
    ```js
-   // webpack.common.js
+    // webpack.common.js
    const path = require('path');
    
    module.exports = {
@@ -55,11 +55,17 @@ npm install --save-dev webpack-merge
      output: {
        filename: 'index.js',   // 使用动态名称（如：chunk名称 + contenthash）
        path: path.resolve(__dirname, 'dist'), // 输出路径
+       libraryTarget: 'umd',//libraryTarget: 'umd' 使得你的库能够兼容浏览器、Node.js 和 AMD 等多种模块加载系统
        clean: true, // 自动清理 dist 文件夹
        publicPath: '/', // 确保访问时使用正确的根路径
      },
      module: {
        rules: [
+         {
+           test: /\.ts$/, // 匹配所有 .ts 文件
+           use: 'ts-loader', // 使用 ts-loader 处理 TypeScript 文件
+           exclude: /node_modules/, // 排除 node_modules 目录
+         },
          {
            test: /\.js$/,
            exclude: /node_modules/,
@@ -76,7 +82,7 @@ npm install --save-dev webpack-merge
        ],
      },
      resolve: {
-       extensions: ['.js', '.json', '.css'], // 默认解析文件扩展名
+       extensions: ['.js', '.json', '.css','.ts'], // 默认解析文件扩展名
      },
      optimization: {
        splitChunks: false, // 禁用代码拆分
@@ -130,21 +136,20 @@ npm install --save-dev webpack-merge
   ```
 - 根目录下创建tsconfig.json
   ```json
-  {
-    "compilerOptions": {
-      "target": "es5", // 编译成 ES5 兼容的代码
-      "module": "esnext", // 使用 ES6 模块
-      "outDir": "./dist", // 输出目录
-      "rootDir": "./src", // 源文件目录
-      "strict": true, // 开启严格模式
-      "esModuleInterop": true, // 允许使用默认导入
-      "skipLibCheck": true, // 跳过库的类型检查
-      "forceConsistentCasingInFileNames": true // 确保文件名一致性
-    },
-    "include": [
-      "src/**/*.ts"
-    ]
-  }
+   {
+       "compilerOptions": {
+         "module": "commonjs",
+         "target": "es5",
+         "moduleResolution": "node",
+         "declaration": true,
+         "declarationDir": "dist/types",
+         "baseUrl": ".",
+         "esModuleInterop": true
+       },
+       "include": [
+         "src/**/*.ts"
+       ]
+     }
   ```
 - 创建public文件夹，下创建index.html
   ```
