@@ -26,6 +26,8 @@ export default defineConfig({
         {text:'three.js',link:'/three-js/'},
         {text:'vite',link:'/vite/'},
         {text:'webpack',link:'/webpack/'},
+        {text:'antv_x6',link:'/antv_x6/'},
+        {text:'svg',link:'/svg/'},
         {text:'blender',link:'/blender/'},
         {text:'english',link:'/english/'},
       ] },
