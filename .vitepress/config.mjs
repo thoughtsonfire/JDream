@@ -78,6 +78,7 @@ export default defineConfig({
             {text:'switch',link:'/java/switch'},
             {text:'常用方法',link:'/java/常用方法'},
             {text:'抽象类和接口',link:'/java/抽象类和接口'},
+            {text:'easylive_study',link:'/java/easylive_study'},
           ]
         }
       },
