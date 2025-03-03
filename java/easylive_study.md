@@ -27,3 +27,4 @@
     		return getSuccessResponseVO(myCheckCode.equalsIgnoreCase(checkCode));
     	}
     ```
+    请求头cookie中传入Set-Cookie存的JSESSIONID
