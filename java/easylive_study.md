@@ -1,5 +1,9 @@
 # **easylive_study**
 
+### @RestControllerAdvice全局的异常处理器
+
+可以在全局处理时，直接返回 JSON 或者其他响应体内容。
+
 ### 登录
 
 #### 验证码
