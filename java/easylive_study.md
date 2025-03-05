@@ -6,6 +6,7 @@
 
 ### 登录
 
+
 #### 验证码
 
 - 使用`captcha`包生成验证码
@@ -126,3 +127,20 @@ public enum UserStatusEnum {
 
 }
 ```
+
+## MyBatis 的 XML 映射
+
+```
+ <trim prefix="(" suffix=")" suffixOverrides=",">
+  <if test="bean.userId != null">
+     user_id,
+  </if>
+  <if test="bean.nickName != null">
+     nick_name,
+  </if>
+ </trim>
+```
+
+- `trim` 删除多余的
+   
+
