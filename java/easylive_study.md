@@ -73,3 +73,15 @@
     	}
     ```
 #### 使用`Validated`包进行表单验证
+
+- 在类上加注解`@Validated`
+- 方法参数里
+  ```java
+  public ResponseVO reqisterUseRedis(@NotEmpty @Email @Size(max = 150) String email,
+                     @NotEmpty @Size(max = 20) String nickName,
+                     @NotEmpty @Pattern(regexp = Constants.REGEX_PASSWORD) String registerPassword,
+                     @NotEmpty String checkCodeKey,
+                     @NotEmpty String checkCode){
+    return null;
+  }
+  ```
