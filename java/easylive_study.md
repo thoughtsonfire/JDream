@@ -85,3 +85,44 @@
     return null;
   }
   ```
+#### `java`中的枚举
+- values() 方法：获取所有枚举常量的数组，方便遍历。
+- valueOf() 方法：通过字符串值获取对应的枚举常量。
+- ordinal() 方法：获取枚举常量的索引值。
+```java
+public enum UserStatusEnum {
+
+    DISABLE(0,"禁用"),
+    ENABLE(1,"启用");
+
+    private Integer status;
+    private String desc;
+
+    UserStatusEnum(Integer status, String desc){
+        this.status = status;
+        this.desc = desc;
+    }
+
+    public static UserStatusEnum getByStatus(Integer status){
+        for(UserStatusEnum item : UserStatusEnum.values()){
+            if(item.getStatus().equals(status)){
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public Integer getStatus(){
+        return status;
+    }
+
+    public String getDesc(String desc){
+        return desc;
+    }
+
+    public void setDesc(String desc){
+        this.desc = desc;
+    }
+
+}
+```
