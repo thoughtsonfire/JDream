@@ -9,3 +9,6 @@
  package(包)
  
  class(类)
+
+## IDEA常用快捷键
+ - 代码生成菜单 `Alt`+`Insert`
