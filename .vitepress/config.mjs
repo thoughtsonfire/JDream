@@ -34,7 +34,9 @@ export default defineConfig({
       {text:'文档编写',items:[
         {text:'vitepress',link:'/vitepress/'},
         {text:'vuepress',link:'/vuepress/'},
-        {text:'vue2组件库快速搭建',link:'/vue2components/'}
+        {text:'vue2组件库快速搭建',link:'/vue2components/'},
+        {text:'markdown',link:'/markdown/'},
+        {text:'面试题',link:'/interview/'}
       ]}
     ],
 
