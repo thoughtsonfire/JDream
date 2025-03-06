@@ -89,7 +89,7 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/thoughtsonfire' }
     ],
     footer:{
-      copyright:"Copyright @ 2024-present My Name"
+      copyright:"Copyright © 2024-present JDREAM"
     },
     search: {
       provider: 'local',
