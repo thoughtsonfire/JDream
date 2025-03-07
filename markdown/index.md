@@ -145,11 +145,26 @@ ___
 
  `[^1]:注脚1跳转位置`
 
+ *vitepress无法直接显示，插件需要*
+
 ### 流程图
 
 - 代办事项
 
-  -[x] 已办事项  
-  -[ ] 未办事项
+  - [x] 已办事项  
+  - [ ] 未办事项
+ *vitepress无法直接显示*
 
+- 流程图
+- 
+  ``` flow
+  st=>start: 开始
+  opl=>operation: My Operation
+  c=>condition: Yes or No?
+  e=>end: 结束
+
+  st->opl->c
+  c(yes)->e
+  c(no)->opl
+  ```
 
