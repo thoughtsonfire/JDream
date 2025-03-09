@@ -1,9 +1,14 @@
 import { defineConfig } from 'vitepress'
+import { MermaidMarkdown, MermaidPlugin } from 'vitepress-plugin-mermaid';
 import { set_sidebar } from "./utils/auto_sidebar.mjs";	
-// https://vitepress.dev/reference/site-config
+import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
+import taskLists from 'markdown-it-task-checkbox'
 export default defineConfig({
   base:"/JDream/",
-  head: [['link', { rel: 'icon', href: '/JDream/favicon.ico' }]],
+  head: [
+    ['script', { src: '/JDream/live2d.js' }],
+    ['link', { rel: 'icon', href: '/JDream/favicon.ico' }],
+  ],
   title: "JDream",
   description: "A VitePress Site",
   themeConfig: {
@@ -120,12 +125,38 @@ export default defineConfig({
     },
     lastUpdated: {
       text:'最后更新于'
-    }
+    },
+    returnToTopLabel:'返回顶部',
   },
   optimizeDeps: {
     include: ['vue/dist/vue.esm.js'] // 引入 Vue 2 的 ESM 版本//可以不要了
   },
   markdown: {
-    lineNumbers: true
-  }
+    lineNumbers: true,
+    image: {
+      // 开启图片懒加载
+      lazyLoading: true
+    },
+    config: (md) => {
+      // 启用 Mermaid 配置
+      md.use(MermaidMarkdown); 
+
+      md.use(groupIconMdPlugin) //代码组图标
+
+      md.use(taskLists ) //todo
+    }
+  },
+  vite: {
+    plugins: [
+      MermaidPlugin(),
+      groupIconVitePlugin() //代码组图标
+    ],
+    optimizeDeps: {
+      include: ['mermaid'],
+    },
+    ssr: {
+      noExternal: ['mermaid'],
+    },
+  },
+
 })

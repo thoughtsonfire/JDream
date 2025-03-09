@@ -1,0 +1,16 @@
+/* .vitepress/theme/style/var.css */
+
+.medium-zoom-overlay {
+    z-index: 30;
+}
+  
+.medium-zoom-image {
+    z-index: 9999 !important;/* 给的值是21，但是实测盖不住，直接999 */
+}
+  /* .vitepress/theme/style/var.css */
+.VPDoc h1 {
+    background: -webkit-linear-gradient(10deg, #bd34fe 5%, #e43498 15%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
