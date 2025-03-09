@@ -6,7 +6,7 @@ import jdreamUI from 'jdream-ui'
 import 'jdream-ui/lib/index.css'
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
-import { useLive2d } from 'vitepress-theme-website'
+// import { useLive2d } from 'vitepress-theme-website'
 import backtotop from "./component/backtotop.vue"
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
@@ -17,25 +17,25 @@ export default {
   setup() {
     //看板娘 //
     // useLive2d()
-    useLive2d({
-      enable: true,
-      model: {
-        url: "https://raw.githubusercontent.com/iCharlesZ/vscode-live2d-models/master/model-library/kesshouban/model.json"
-      },
-      display: {
-        position: 'left',
-        width: '135px',
-        height: '300px',
-        xOffset: '35px',
-        yOffset: '5px'
-      },
-      mobile: {
-        show: true
-      },
-      react: {
-        opacity: 0.8
-      }
-    })
+    // useLive2d({
+    //   enable: true,
+    //   model: {
+    //     url: "https://raw.githubusercontent.com/iCharlesZ/vscode-live2d-models/master/model-library/kesshouban/model.json"
+    //   },
+    //   display: {
+    //     position: 'left',
+    //     width: '135px',
+    //     height: '300px',
+    //     xOffset: '35px',
+    //     yOffset: '5px'
+    //   },
+    //   mobile: {
+    //     show: true
+    //   },
+    //   react: {
+    //     opacity: 0.8
+    //   }
+    // })
 
     const route = useRoute();
     const initZoom = () => {
