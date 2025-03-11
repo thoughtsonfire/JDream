@@ -16,7 +16,7 @@
 1. **默认插槽（Default Slot）**
 
   默认插槽是最基本的插槽，允许你向组件传递一个内容块，且该内容块会被插入到插槽的位置。
-  :::code-group
+  ::: code-group
   <!-- ParentComponent.vue -->
   <template>
     <ChildComponent>
@@ -35,7 +35,8 @@
 2. **具名插槽（Named Slots）**
    
   具名插槽允许你为插槽指定名字，从而在多个插槽之间插入不同的内容。
-  :::code-group
+  
+  ::: code-group
   <!-- ParentComponent.vue -->
   <template>
     <ChildComponent>
@@ -57,13 +58,13 @@
       <footer><slot name="footer"></slot></footer> <!-- 具名插槽位置 -->
     </div>
   </template>
-
   :::  
 
 3. **作用域插槽（Scoped Slots）**
 
    作用域插槽是具名插槽的扩展，它允许父组件访问子组件的数据。通过作用域插槽，父组件可以接收到子组件传递的数据，并将其作为插槽内容的一部分。
-   :::code-group
+   
+   ::: code-group
    <!-- ParentComponent.vue -->
     <template>
       <ChildComponent>
@@ -89,5 +90,4 @@
       }
     }
     </script>
-  
    :::
