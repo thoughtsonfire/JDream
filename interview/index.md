@@ -17,6 +17,7 @@
 
   默认插槽是最基本的插槽，允许你向组件传递一个内容块，且该内容块会被插入到插槽的位置。
   ::: code-group
+  
   <!-- ParentComponent.vue -->
   <template>
     <ChildComponent>
@@ -30,5 +31,5 @@
       <slot></slot>  <!-- 这里是默认插槽的位置 -->
     </div>
   </template>
-  :::
+  ::: 
 
