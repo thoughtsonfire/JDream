@@ -69,36 +69,36 @@
 
 3. **作用域插槽（Scoped Slots）**
 
-   作用域插槽是具名插槽的扩展，它允许父组件访问子组件的数据。通过作用域插槽，父组件可以接收到子组件传递的数据，并将其作为插槽内容的一部分。
+ 作用域插槽是具名插槽的扩展，它允许父组件访问子组件的数据。通过作用域插槽，父组件可以接收到子组件传递的数据，并将其作为插槽内容的一部分。
 
-   ::: code-group
+ ::: code-group
 
-   ```vue
-   <!-- ParentComponent.vue -->
-    <template>
-      <ChildComponent>
-        <template v-slot:default="slotProps">
-          <p>收到子组件的数据：{{ slotProps.message }}</p>
-        </template>
-      </ChildComponent>
-    </template>
-    
-    <!-- ChildComponent.vue -->
-    <template>
-      <div>
-        <slot :message="message"></slot>  <!-- 传递数据给父组件 -->
-      </div>
-    </template>
-    
-    <script>
-    export default {
-      data() {
-        return {
-          message: 'Hello from ChildComponent!'
-        };
-      }
+ ```vue
+ <!-- ParentComponent.vue -->
+  <template>
+    <ChildComponent>
+      <template v-slot:default="slotProps">
+        <p>收到子组件的数据：{{ slotProps.message }}</p>
+      </template>
+    </ChildComponent>
+  </template>
+  
+  <!-- ChildComponent.vue -->
+  <template>
+    <div>
+      <slot :message="message"></slot>  <!-- 传递数据给父组件 -->
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        message: 'Hello from ChildComponent!'
+      };
     }
-    </script>
-   ```
-   :::
+  }
+  </script>
+ ```
+ :::
 
