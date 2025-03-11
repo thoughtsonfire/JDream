@@ -102,5 +102,40 @@
   }
   </script>
  ```
- :::
+ :::  
 
+#### **vue中的常用指令**
+
+##### **v-cloak**  
+
+- **原理：** 在vue程序编译完成之前，将绑定的DOM元素添加一个`display:none`,避免未解析的模板直接显示在用户面前，通常和css配合使用
+- **作用：** 主要用来防止闪烁， `v-cloak` 是一个专门用于解决 Vue 编译延迟的指令。它通常与 CSS 一起使用，以确保在 Vue 完全编译并处理完模板之前，页面不会显示 Vue 特有的占位符标记（如 {{ message }}）。
+
+::: code-group
+
+```html
+<style>
+[v-cloak] { display: none; }
+</style>
+
+<div v-cloak>
+  {{ message }}
+</div>
+
+```
+:::
+
+#### **v-pre**  
+
+- **原理：** v-pre指令告诉VUE 忽略这个节点及其所以子节点的编译过程。
+- **作用：** 减少了不必要的计算量，提升了性能，避免干扰。
+
+::: code-group
+
+```html
+<div v-pre>
+  {{ rawMustache }}  <!-- 这里的内容将会直接输出为 {{ rawMustache }} 而不是进行数据绑定 -->
+</div>
+
+```
+:::
