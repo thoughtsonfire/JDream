@@ -37,33 +37,33 @@
   具名插槽允许你为插槽指定名字，从而在多个插槽之间插入不同的内容。
   
   ::: code-group
-  <!-- ParentComponent.vue -->
-  <template>
-    <ChildComponent>
-      <template v-slot:header>
-        <h1>这是头部内容</h1>
-      </template>
-  
-      <template v-slot:footer>
-        <p>这是底部内容</p>
-      </template>
-    </ChildComponent>
-  </template>
-  
-  <!-- ChildComponent.vue -->
-  <template>
-    <div>
-      <header><slot name="header"></slot></header> <!-- 具名插槽位置 -->
-      <main><slot></slot></main>  <!-- 默认插槽位置 -->
-      <footer><slot name="footer"></slot></footer> <!-- 具名插槽位置 -->
-    </div>
-  </template>
+    <!-- ParentComponent.vue -->
+    <template>
+      <ChildComponent>
+        <template v-slot:header>
+          <h1>这是头部内容</h1>
+        </template>
+    
+        <template v-slot:footer>
+          <p>这是底部内容</p>
+        </template>
+      </ChildComponent>
+    </template>
+    
+    <!-- ChildComponent.vue -->
+    <template>
+      <div>
+        <header><slot name="header"></slot></header> <!-- 具名插槽位置 -->
+        <main><slot></slot></main>  <!-- 默认插槽位置 -->
+        <footer><slot name="footer"></slot></footer> <!-- 具名插槽位置 -->
+      </div>
+    </template>
   :::  
 
 3. **作用域插槽（Scoped Slots）**
 
    作用域插槽是具名插槽的扩展，它允许父组件访问子组件的数据。通过作用域插槽，父组件可以接收到子组件传递的数据，并将其作为插槽内容的一部分。
-   
+
    ::: code-group
    <!-- ParentComponent.vue -->
     <template>
