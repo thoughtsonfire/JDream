@@ -140,9 +140,67 @@
 ```
 :::
 
-#### **VUE Router 中如何获取路由传递过来的参数**   
+#### **Vue Router 中如何获取路由传递过来的参数**   
 
 在Vue Router 中有两种常见的获取参数的方式
 1. 动态路由匹配（param）例如`/users/:id` `users/123`
 2. 参数查询（query，可以在url中不显示，在request body 中）例如：`/search?q=apple&type=fruit`，这里的 `q` 和 `type` 是查询参数。
+
+### **Vue中的过滤器**  
+
+**回答重点**  
+
+过滤器在Vue中主要用于文本格式化。通常用在模板表达式中，将数据进行转换，格式化。  
+1. 日期格式化：将后端返回的时间戳转化成常见的日期格式。
+2. 文本格式化：将文字转换为大小写或者截取一定长度等。
+3. 数值格式化：对货币、百分比等数值进行格式化显示。
+
+在Vue3中过滤器已经被移除，官放推荐用方法（methods）或者计算属性（computed）来代替。
+
+- 使用过滤器（Vue2）
+
+  :::code-group
+  
+  ```vue2
+  Vue.filter('capitalize', function (value) {
+    if (!value) return '';
+    value = value.toString();
+    return value.charAt(0).toUpperCase() + value.slice(1);
+  });
+  ```
+  :::
+
+- 在模板中使用
+
+  :::code-group
+  ```vue2
+  <p>{{ message | capitalize }}</p>
+  ```
+  :::
+
+- 替代方法（Vue3）
+
+  :::code-group
+  ```vue3
+  export default {
+    methods: {
+      capitalize(value) {
+        if (!value) return '';
+        value = value.toString();
+        return value.charAt(0).toUpperCase() + value.slice(1);
+      }
+    }
+  }
+  ```
+  :::
+
+- 在模板中使用
+
+  :::code-group
+  ```vue3
+  <p>{{ capitalize(message) }}</p>
+  ```
+  :::
+
+
 
