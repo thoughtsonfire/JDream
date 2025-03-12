@@ -137,6 +137,14 @@ export default defineConfig({
       // 开启图片懒加载
       lazyLoading: true
     },
+    // 使用 `!!code` 防止转换
+    codeTransformers: [
+      {
+        postprocess(code) {
+          return code.replace(/\[\!\!code/g, '[!code')
+        }
+      }
+    ],
     config: (md) => {
       // 启用 Mermaid 配置
       md.use(MermaidMarkdown); 
