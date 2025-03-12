@@ -194,7 +194,7 @@ export default defineConfig({
 export default defineConfig({
   lang: 'zh-CN',
   title: "VitePress",
-  description: "我的vitpress文档教程", // [!code focus]
+  description: "我的vitpress文档教程", // [!!code focus]
   titleTemplate: '另起标题覆盖title' ,
 })
 
