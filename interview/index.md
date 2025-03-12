@@ -203,4 +203,44 @@
   :::
 
 
+### **Vue Router 中配置404页面**  
+
+**回答重点**  
+
+配置一个路径`/404` 指向404页面，再用通配符`*`配置路径，重定向到`/404`,保证url路径和页面路径一致。  
+
+:::code-group
+
+```vue
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '@/components/Home.vue';
+import NotFound from '@/components/NotFound.vue'; // 这是你的 404 页面组件
+
+Vue.use(VueRouter);
+
+const routes = [
+  {
+    path: '/',
+    component: Home
+  },
+  {
+    path: '/404',
+    component: NotFound
+  },
+  {
+    path: '*', // 通配符，一定要放在最后
+    redirect: "/404"
+  }
+];
+
+const router = new VueRouter({
+  mode: 'history', // 使用 HTML5 History 模式
+  routes
+});
+
+export default router;
+
+```
+:::
 
