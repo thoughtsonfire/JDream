@@ -244,3 +244,14 @@ export default router;
 ```
 :::
 
+
+### **Vue的template标签有什么用**  
+
+**回答重点**  
+
+template 主要是作为一个占位符去使用，在Vue2和Vue3中template的表现有一些区别：   
+
+Vue2：作为一个占位符或插槽内容，无论什么情况，template在compiler后会被去除。   
+
+Vue3：用法同Vue2，但如果不使用v-if、v-else-if、v-else、v-solt、v-for的时候，Vue不会处理，会直接渲染成一个HTML原生的template标签。
+
