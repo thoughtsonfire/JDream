@@ -11,7 +11,7 @@ import backtotop from "./component/backtotop.vue"
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import { useData,useRoute } from 'vitepress';
-import giscusTalk from 'vitepress-plugin-comment-with-giscus';
+// import giscusTalk from 'vitepress-plugin-comment-with-giscus';
 /** @type {import('vitepress').Theme} */
 export default {
   extends: DefaultTheme,
