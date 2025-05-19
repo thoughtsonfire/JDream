@@ -1,7 +1,7 @@
 // https://vitepress.dev/guide/custom-theme
-import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import './style/index.css'
+import { h } from 'vue'
 import jdreamUI from 'jdream-ui'
 import 'jdream-ui/lib/index.css'
 import ElementPlus from "element-plus";
@@ -12,7 +12,6 @@ import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import giscusTalk from 'vitepress-plugin-comment-with-giscus';
 import { useData, useRoute } from 'vitepress';
-/** @type {import('vitepress').Theme} */
 export default {
   extends: DefaultTheme,
   setup() {

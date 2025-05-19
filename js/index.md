@@ -119,7 +119,34 @@ export async function del<T>(url: string, params?: any): Promise<ApiResult<T>> {
 }
 ```
 ***仅供参考，须要详细配置和封装***
+- 项目中
+```ts
+import axiosInstance from "./axiosInstance"
+import type { AxiosRequestConfig } from 'axios';
+const http = {
+    async get<T>(url: string, params?: any): Promise<T> {
+        const response = await axiosInstance.get<T>(url, { params });
+        return response.data;
+    },
 
+    async post<T>(url: string, data?:any, config?: AxiosRequestConfig): Promise<T> {
+        const response = await axiosInstance.post<T>(url, data,{ ...config });
+        return response.data;
+    },
+
+    async  put<T>(url: string, data?: any): Promise<T> {
+        const response = await axiosInstance.put<T>(url, data);
+        return response.data;
+    },
+
+    async  del<T>(url: string, params?: any): Promise<T> {
+        const response = await axiosInstance.delete<T>(url, { params });
+        return response.data;
+    },
+}
+export default http
+
+```
 
 #### 获取元素
 - document.querySelector()  返回第一个元素或者null

@@ -11,6 +11,8 @@ export default defineConfig({
   ],
   title: "JDream",
   description: "A VitePress Site",
+    //启用深色模式
+  appearance: 'dark',
   themeConfig: {
     logo:'/study.png',
     outlineTitle:'目录',
@@ -47,6 +49,43 @@ export default defineConfig({
 
     sidebar: 
     {
+      "/js/":[
+        {
+          text:"介绍",
+          collapsed:false,
+          items:[
+            {text:"前言",link:"/js/introduce/foreword.md"}
+          ]
+        },
+        {
+          text:"基础知识",
+          collapsed:false,
+          items:[
+            {text:"请求方法",link:"/js/"}
+          ]
+        },
+        {
+          text:"常用封装",
+          collapsed:false,
+          items:[
+            {text:"axios封装",link:"/js/commonEncapsulation/axios.md"}
+          ]
+        },
+        {
+          text:"实用方法",
+          collapsed:false,
+          items:[
+            {text:"实用方法",link:"/js/"}
+          ]
+        },
+        {
+          text:"TS",
+          collapsed:false,
+          items:[
+            {text:"实用方法",link:"/js/"}
+          ]
+        },
+      ],
       "/jdream-plus/":{
         text:'jdream-plus',items:[
           {text:'jdream-plus',link:'/jdream-plus/'},
