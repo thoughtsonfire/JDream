@@ -8,6 +8,8 @@ import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 // import { useLive2d } from 'vitepress-theme-website'
 import backtotop from "./component/backtotop.vue"
+import update from "./component/update.vue"
+import ArticleMetadata from "./component/ArticleMetadata.vue"
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import giscusTalk from 'vitepress-plugin-comment-with-giscus';
@@ -81,6 +83,8 @@ export default {
     // ...
     app.use(ElementPlus)
     app.use(jdreamUI)
+    app.component('ArticleMetadata' , ArticleMetadata)
+    app.component('update' , update)
   },
 }
 

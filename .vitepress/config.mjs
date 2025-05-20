@@ -19,16 +19,17 @@ export default defineConfig({
     outline:[2,6],
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'JDream-plus使用文档', link: '/jdream-plus/' },
-      { text: 'JDream-ui使用文档', link: 'https://thoughtsonfire.github.io/jdream-ui-ed/' },
+      { text: '首页', link: '/' },
+      // { text: 'JDream-plus使用文档', link: '/jdream-plus/' },
+      // { text: 'JDream-ui使用文档', link: 'https://thoughtsonfire.github.io/jdream-ui-ed/' },
       { text: '学习笔记', items:[
-        {text:'uni-app',link:'/uni-app/'},
-        {text:'java',link:'/java/'},
-        {text:'sql',link:'/sql/'},
-        {text:'vue',link:'/vue/'},
         {text:'html',link:'/html/'},
         {text:'css',link:'/css/'},
         {text:'js',link:'/js/'},
+        {text:'vue',link:'/vue/'},
+        {text:'uni-app',link:'/uni-app/'},
+        {text:'java',link:'/java/'},
+        {text:'sql',link:'/sql/'},
         {text:'ol',link:'/ol/'},
         {text:'three.js',link:'/three-js/'},
         {text:'vite',link:'/vite/'},
@@ -61,7 +62,7 @@ export default defineConfig({
           text:"基础知识",
           collapsed:false,
           items:[
-            {text:"请求方法",link:"/js/"}
+            {text:"常见概念",link:"/js/basicKnowledge/commonConcepts.md"}
           ]
         },
         {
@@ -75,7 +76,7 @@ export default defineConfig({
           text:"实用方法",
           collapsed:false,
           items:[
-            {text:"实用方法",link:"/js/"}
+            {text:"导出",link:"/js/practicalMethod/export.md"}
           ]
         },
         {
@@ -191,6 +192,12 @@ export default defineConfig({
       md.use(groupIconMdPlugin) //代码组图标
 
       md.use(taskLists ) //todo
+
+      md.renderer.rules.heading_close = (tokens, idx, options, env, slf) => {
+          let htmlResult = slf.renderToken(tokens, idx, options);
+          if (tokens[idx].tag === 'h1') htmlResult += `<ArticleMetadata />`; 
+          return htmlResult;
+      }
     }
   },
   vite: {
