@@ -33,6 +33,22 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* 文档h2标题样式 */
+.VPDoc h2 {
+  background: -webkit-linear-gradient(10deg, #34fef1 5%, #34e460 15%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 文档h3标题样式 */
+.VPDoc h3 {
+  background: -webkit-linear-gradient(10deg, #2893d6 5%, #6069ba 15%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /* medium样式 */
 .medium-zoom-overlay {
   z-index: 30;

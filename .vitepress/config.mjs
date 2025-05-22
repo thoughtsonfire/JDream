@@ -25,7 +25,7 @@ export default defineConfig({
       { text: '学习笔记', items:[
         {text:'html',link:'/html/'},
         {text:'css',link:'/css/'},
-        {text:'js',link:'/js/'},
+        {text:'js',link:'/js/introduce/foreword.md'},
         {text:'vue',link:'/vue/'},
         {text:'uni-app',link:'/uni-app/'},
         {text:'java',link:'/java/'},
@@ -62,7 +62,9 @@ export default defineConfig({
           text:"基础知识",
           collapsed:false,
           items:[
-            {text:"常见概念",link:"/js/basicKnowledge/commonConcepts.md"}
+            {text:"常见概念",link:"/js/basicKnowledge/commonConcepts.md"},
+            {text:"对象方法",link:"/js/basicKnowledge/object.md"},
+            {text:"数组方法",link:"/js/basicKnowledge/array.md"},
           ]
         },
         {
@@ -83,7 +85,7 @@ export default defineConfig({
           text:"TS",
           collapsed:false,
           items:[
-            {text:"实用方法",link:"/js/"}
+            {text:"常见情况",link:"/js/ts/commonSituations.md"}
           ]
         },
       ],

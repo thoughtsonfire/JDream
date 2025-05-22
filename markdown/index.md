@@ -17,6 +17,82 @@
 撤销|Ctrl + Z
 重做|Ctrl + Y
 
+
+## 美化字符  
+
+✅  
+
+✔️  
+
+❌  
+
+🔚  
+
+📌  
+
+🔷  
+
+🔶  
+
+🔹  
+
+🔸  
+
+🔺  
+
+🔻  
+
+🔵  
+
+🔴  
+
+⚫  
+
+⚪  
+
+🔍  
+
+🔧  
+
+🔁  
+
+🚫  
+
+👨  
+
+⚠️  
+
+💡  
+
+📦  
+
+🗂️  
+
+📋  
+
+🔢  
+
+🥇  
+
+🥈  
+
+🥉  
+
+🔟  
+
+⏱️  
+
+🔥  
+
+📎  
+
+ℹ️  
+
+✳️  
+
+🔒
+
+
 ## 基本语法
 
 ### 字体
@@ -246,6 +322,52 @@ yarn -v
 :::
 ````
 
+### 折叠
+
+<details>
+  <summary>点我展开</summary>
+  Markdown默认折叠语法，Vitepress可以使用容器折叠语法，更加美观
+</details>
+
+```md
+<details>
+  <summary>点我展开</summary>
+  Markdown默认折叠语法，Vitepress可以使用容器折叠语法，更加美观
+</details>
+```
+
+::: details 点我展开
+Vitepress可以使用容器折叠语法，更加美观
+
+Vitepress可以使用容器折叠语法，更加美观
+
+* 区别：Vitepress可以使用容器折叠语法，更加美观
+:::  
+
+```md
+::: details 点我展开
+Vitepress可以使用容器折叠语法，更加美观
+
+Vitepress可以使用容器折叠语法，更加美观
+
+* 区别：Vitepress可以使用容器折叠语法，更加美观
+:::
+```
+
+### Badge组件
+
+* VitePress <Badge type="info" text="default" />
+* VitePress <Badge type="tip" text="^1.9.0" />
+* VitePress <Badge type="warning" text="beta" />
+* VitePress <Badge type="danger" text="caution" />
+
+
+```md
+* VitePress <Badge type="info" text="default" />
+* VitePress <Badge type="tip" text="^1.9.0" />
+* VitePress <Badge type="warning" text="beta" />
+* VitePress <Badge type="danger" text="caution" />
+```
 
 ### 注脚
 
