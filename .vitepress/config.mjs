@@ -4,7 +4,8 @@ import { set_sidebar } from "./utils/auto_sidebar.mjs";
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 import taskLists from 'markdown-it-task-checkbox'
 export default defineConfig({
-  base:"/JDream/",
+  base:"/JDream/",//github上部署
+  // base:"/",//nginx 上部署
   head: [
     ['script', { src: '/JDream/live2d.js' }],
     ['link', { rel: 'icon', href: '/JDream/favicon.ico' }],
@@ -45,7 +46,7 @@ export default defineConfig({
         {text:'vue2组件库快速搭建',link:'/vue2components/'},
         {text:'markdown',link:'/markdown/'},
         {text:'面试题',link:'/interview/'}
-      ]}
+      ]},
     ],
 
     sidebar: 
@@ -106,17 +107,17 @@ export default defineConfig({
           {text:'行号',link:'/vuepress/行号'},
           {text:'修改样式',link:'/vuepress/修改样式'},
         ]
-        },
-        "/vitepress/":{
+      },
+      "/vitepress/":{
           text:'vitepress',items:[
             {text:'vitepress',link:'/vitepress/'},
             {text:'快速上手',link:'/vitepress/快速上手'},
             {text:'搜索',link:'/vitepress/搜索'},
           ]
-        },
-        "/english/":set_sidebar("/english/"),
+      },
+      "/english/":set_sidebar("/english/"),
         //"/java/":set_sidebar("/java/"),//自动生成侧边栏，效果不佳
-        "/java/":{
+      "/java/":{
           text:'java',items:[
             {text:'java',link:'/java/'},
             {text:'常用cmd命令',link:'/java/常用cmd命令'},
@@ -129,8 +130,12 @@ export default defineConfig({
             {text:'抽象类和接口',link:'/java/抽象类和接口'},
             {text:'easylive_study',link:'/java/easylive_study'},
           ]
-        }
       },
+      "/shortcut":[
+        {text:'vscdoe',link:'/shortcut/vscode'},
+        {text:'chorme',link:'/shortcut/chorme'}
+      ]
+    },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/thoughtsonfire' }

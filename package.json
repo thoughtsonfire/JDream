@@ -16,6 +16,8 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "animejs": "3.2.2",
+    "canvas-confetti": "^1.9.3",
     "element-plus": "^2.7.3",
     "jdream-ui": "^0.1.3"
   }

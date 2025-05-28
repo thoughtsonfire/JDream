@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      animejs:
+        specifier: 3.2.2
+        version: 3.2.2
+      canvas-confetti:
+        specifier: ^1.9.3
+        version: 1.9.3
       element-plus:
         specifier: ^2.7.3
         version: 2.7.3(vue@3.5.14)
@@ -786,6 +792,9 @@ packages:
     resolution: {integrity: sha512-wjfzqruxovJyDqga8M6Xk5XtfuVg3igrWjhjgkRya87+WwfEa1kg+IluujBLzgAiMSd6rO6jqRb7czjgeeSYgQ==}
     engines: {node: '>= 14.0.0'}
 
+  animejs@3.2.2:
+    resolution: {integrity: sha512-Ao95qWLpDPXXM+WrmwcKbl6uNlC5tjnowlaRYtuVDHHoygjtIPfDUoK9NthrlZsQSKjZXlmji2TrBUAVbiH0LQ==}
+
   async-validator@4.2.5:
     resolution: {integrity: sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==}
 
@@ -794,6 +803,9 @@ packages:
 
   birpc@0.2.19:
     resolution: {integrity: sha512-5WeXXAvTmitV1RqJFppT5QtUiz2p1mRSYU000Jkft5ZUCLJIk4uQriYNO50HknxKwM6jd8utNc66K1qGIwwWBQ==}
+
+  canvas-confetti@1.9.3:
+    resolution: {integrity: sha512-rFfTURMvmVEX1gyXFgn5QMn81bYk70qa0HLzcIOSVEyl57n6o9ItHeBtUSWdvKAPY0xlvBHno4/v3QPrT83q9g==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -2223,11 +2235,15 @@ snapshots:
       '@algolia/requester-fetch': 5.20.4
       '@algolia/requester-node-http': 5.20.4
 
+  animejs@3.2.2: {}
+
   async-validator@4.2.5: {}
 
   autosize@6.0.1: {}
 
   birpc@0.2.19: {}
+
+  canvas-confetti@1.9.3: {}
 
   ccount@2.0.1: {}
 

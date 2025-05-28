@@ -10,6 +10,9 @@ import "element-plus/dist/index.css";
 import backtotop from "./component/backtotop.vue"
 import update from "./component/update.vue"
 import ArticleMetadata from "./component/ArticleMetadata.vue"
+import HomeUnderLine from './component/HomeUnderLine.vue'
+import confetti from './component/confetti.vue'
+import MyLayout from './component/MyLayout.vue'
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import giscusTalk from 'vitepress-plugin-comment-with-giscus';
@@ -74,17 +77,33 @@ export default {
     );
 
   },
-  Layout: () => {
-    return h(DefaultTheme.Layout, null, {
-      'doc-footer-before': () => h(backtotop), // 使用doc-footer-before插槽
-    })
+  Layout:  () => {
+    const props = {}
+    // 获取 frontmatter
+    const { frontmatter } = useData()
+
+    /* 添加自定义 class */
+    if (frontmatter.value?.layoutClass) {
+      props.class = frontmatter.value.layoutClass
+    }
+
+    // return h(DefaultTheme.Layout, props, {
+    //   'layout-bottom': () => h(bsz), //不蒜子layout-bottom插槽
+    //   'doc-footer-before': () => h(backtotop), // 返回顶部doc-footer-before插槽
+    //   'layout-top': () => h(notice), // 公告layout-top插槽
+    // })
+
+    return h(MyLayout,props)
   },
   enhanceApp({ app, router, siteData }) {
     // ...
     app.use(ElementPlus)
     app.use(jdreamUI)
     app.component('ArticleMetadata' , ArticleMetadata)
+    app.component('HomeUnderLine' , HomeUnderLine)
     app.component('update' , update)
+    app.component('confetti' , confetti)
+    app.component('MyLayout' , MyLayout)
   },
 }
 

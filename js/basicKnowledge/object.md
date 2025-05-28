@@ -1093,3 +1093,10 @@ for (let item of obj) {
 | Map    | ✅ 是              |
 | Set    | ✅ 是              |
 | Object | ❌ 否（需转成 entries） |
+
+
+### object.valueOf() 与 array.valueOf()
+
+- object.valueOf() 在object有原始值时，为原始值，没有原始值时，是object自身
+
+- array.valueOf() 是array自身

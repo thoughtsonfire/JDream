@@ -687,6 +687,37 @@ console.log(result); // true
 
 ```  
 
+
+## some  
+
+`Array.prototype.some()` 是 `JavaScript` 数组的一个方法，用于判断是否存在至少一个满足条件的元素。 
+
+🔍 **语法**  
+
+```js
+array.some((value, index, array) => {
+  return condition;
+});
+```
+- value：当前元素
+
+- index：索引（可选）
+
+- array：原始数组（可选）
+
+- 返回值：只要有一个元素满足条件，则返回 true；全部不满足返回 false
+
+🔶 **示例**  
+
+```js
+const nums = [1, 3, 5, 6];
+
+const hasEven = nums.some(num => num % 2 === 0);
+console.log(hasEven); // true
+
+```
+
+
 ## find  
 
 `Array.find(callback, thisArg)`     查找并返回第一个满足条件的元素。  
@@ -839,6 +870,125 @@ console.log(index); // 2（6 是第一个 > 5 的）
 ```
 
 
+## indexOf  
+
+`indexOf` 是 `JavaScript` 中用于查找元素在数组或字符串中的第一个索引位置的常用方法。  
+
+🔍 **语法**  
+
+`array.indexOf(searchElement, fromIndex);`  
+
+- searchElement：要查找的值
+
+- fromIndex：从哪个索引开始找（默认是 0）  
+
+🔶 **示例**  
+
+```js
+const nums = [10, 20, 30, 20];
+
+nums.indexOf(20);      // 1（第一次出现 20 的位置）
+nums.indexOf(20, 2);   // 3（从 index 2 往后找）
+nums.indexOf(100);     // -1（找不到返回 -1）
+```
+
+⚠️ **注意：只适用于基础类型匹配**  
+
+对于数组中包含对象，indexOf 用的是引用相等（===），所以几乎总是失败：  
+
+```js
+const arr = [{ id: 1 }, { id: 2 }];
+arr.indexOf({ id: 1 }); // -1 ❌ 因为引用地址不同
+
+```  
+
+🔧 **数组去重示例（用 indexOf）**  
+
+```js
+const arr = [1, 2, 2, 3];
+const unique = arr.filter((item, index) => arr.indexOf(item) === index);
+console.log(unique); // [1, 2, 3]
+```  
+
+## lastIndexOf  
+
+`lastIndexOf` 是 `JavaScript` 数组和字符串的一个方法，用于从后往前查找元素，返回其最后一次出现的索引。如果没找到，则返回 `-1`。  
+
+🔍 **语法**  
+
+`array.lastIndexOf(searchElement, fromIndex);`  
+
+- searchElement: 要查找的元素
+
+- fromIndex（可选）: 从哪个索引开始倒着查找（默认是 array.length - 1）
+
+🔶 **示例**  
+
+```js
+const arr = [1, 2, 3, 2, 1];
+
+arr.lastIndexOf(2);        // 3
+arr.lastIndexOf(2, 2);     // 1
+arr.lastIndexOf(4);        // -1
+```
+
+⚠️ **注意：**  
+
+- `lastIndexOf` 是 严格相等 (===) 比较
+
+- 不能用于对象内容比较，只适合基础类型值  
+
+```js
+[NaN].lastIndexOf(NaN); // -1 ❌（因为 NaN !== NaN）
+```  
+
+## includes  
+
+`includes` 是 `JavaScript` 中用来判断一个数组或字符串是否包含某个指定值的方法，返回值是布尔值 `true` 或 `false`。  
+
+🔍 **语法**  
+
+`array.includes(valueToFind, fromIndex);`  
+
+- valueToFind：要查找的元素
+
+- fromIndex（可选）：从哪个索引开始查找（默认为 0）  
+
+🔶 **示例**   
+
+```js
+const arr = [1, 2, 3, NaN];
+
+arr.includes(2);      // true
+arr.includes(4);      // false
+arr.includes(NaN);    // ✅ true，indexOf/lastIndexOf 无法匹配 NaN
+
+arr.includes(2, 2);   // false（从索引2开始查找）
+```  
+
+**特点**  
+
+- 使用 严格相等（类似 ===） 比较，但 能识别 NaN
+
+- 不会做类型转换：  
+
+```js
+[1, 2, 3].includes('2'); // false ❌
+```  
+
+⚠️ **注意：对象数组不能直接用 includes 判断是否存在**  
+
+```js
+const objs = [{ id: 1 }, { id: 2 }];
+objs.includes({ id: 1 }); // false ❌，因为引用不同
+```  
+
+👉 需要改用 `.some()` 或 `.find()`：  
+
+```js
+objs.some(obj => obj.id === 1); // ✅ true
+```
+
 ## map  
 
 `Array.map()`     会遍历数组的每一项，将每一项通过回调函数“映射”为一个新值，并返回一个新数组。原数组不会被修改  
@@ -966,7 +1116,145 @@ const context = {
 // 👉 a
 // 👉 b
 // 👉 c
+```  
+
+## filter  
+
+`Array.prototype.filter()` 是 `JavaScript` 中用于筛选数组中满足条件的元素的常用方法。   
+
+🔍 **语法**  
+
+```js
+const newArray = array.filter((value, index, array) => {
+  return condition;
+});
+
+```  
+
+- value：当前元素的值
+
+- index：当前元素的索引（可选）
+
+- array：原始数组（可选）
+
+- condition：返回 true 的元素会被保留在新数组中  
+
+🔶 **示例**  
+
+:::details 示例：保留偶数
+```js
+const numbers = [1, 2, 3, 4, 5, 6];
+
+const evens = numbers.filter(num => num % 2 === 0);
+console.log(evens); // [2, 4, 6]
+
 ```
+:::  
+
+:::details 示例：筛选对象数组
+```js
+const users = [
+  { name: 'Alice', active: true },
+  { name: 'Bob', active: false },
+  { name: 'Carol', active: true }
+];
+
+const activeUsers = users.filter(user => user.active);
+console.log(activeUsers);
+// 输出：[{ name: 'Alice', active: true }, { name: 'Carol', active: true }]
+
+```
+:::  
+
+**与其他方法对比**  
+
+| 方法          | 用途            | 返回值               |
+| ----------- | ------------- | ----------------- |
+| `filter()`  | **筛选**满足条件的元素 | 新数组               |
+| `map()`     | 映射每个元素为新值     | 新数组               |
+| `forEach()` | 遍历执行操作，无返回值   | `undefined`       |
+| `find()`    | 返回第一个满足条件的元素  | 单个元素或 `undefined` |
+| `reduce()`  | 聚合为一个值        | 任意类型              |
+
+
+## reduce  
+
+`Array.prototype.reduce()` 是 `JavaScript` 中非常强大的一个数组方法，用于将数组“归约”成一个值，这个值可以是：数字、对象、数组、字符串、甚至 `Promise` 或函数。  
+
+🔍 **语法**  
+
+```js
+array.reduce((accumulator, currentValue, index, array) => {
+  return newAccumulator;
+}, initialValue);
+
+```  
+
+| 参数             | 说明                  |
+| -------------- | ------------------- |
+| `accumulator`  | 累加器，保存上一次回调返回的值     |
+| `currentValue` | 当前正在处理的元素           |
+| `index`        | 当前索引（可选）            |
+| `array`        | 原始数组（可选）            |
+| `initialValue` | 初始值，必须提供（否则会用第一个元素） |
+
+🔶 **示例**  
+
+:::details 示例一：数组求和
+```js
+const nums = [1, 2, 3, 4];
+
+const sum = nums.reduce((acc, cur) => acc + cur, 0);
+console.log(sum); // 10
+
+```
+:::  
+
+:::details 示例二：统计字符串出现次数
+```
+const letters = ['a', 'b', 'a', 'c', 'b', 'a'];
+
+const count = letters.reduce((acc, char) => {
+  acc[char] = (acc[char] || 0) + 1;
+  return acc;
+}, {});
+
+console.log(count); // { a: 3, b: 2, c: 1 }
+```
+:::  
+
+:::details 示例三：扁平化二维数组
+```
+const arr = [[1, 2], [3, 4], [5]];
+
+const flat = arr.reduce((acc, cur) => acc.concat(cur), []);
+console.log(flat); // [1, 2, 3, 4, 5]
+```
+:::
+
+:::details 示例四：实现 map 的效果（仅演示）
+```
+const nums = [1, 2, 3];
+
+const doubled = nums.reduce((acc, cur) => {
+  acc.push(cur * 2);
+  return acc;
+}, []);
+
+console.log(doubled); // [2, 4, 6]
+```
+:::
+
+
+❗ 注意：`initialValue` 很重要！ 
+
+如果不传 `initialValue`，`reduce` 会用数组的第一个元素作为初始值：
+
+```js
+[1, 2, 3].reduce((a, b) => a + b); // 6
+[].reduce((a, b) => a + b); // ❌ 报错：Reduce of empty array with no initial value
+```
+
 
 ## 笔记  
 
@@ -979,7 +1267,161 @@ const context = {
 >
 >- 用 `toString()` 当你只是快速查看数组（调试输出）。
 >
->- 用 `toLocaleString()` 当数组中包含 Date 或 Number 并希望格式化展示。
+>- 用 `toLocaleString()` 当数组中包含 Date 或 Number 并希望格式化展示。 
+
+### for...of  
+
+🔧 **作用**  
+
+- `for...of` 遍历的是 值，而不是键名。
+- `for...of`是 `ES6` 引入的一种 遍历“可迭代对象”的语法，非常适合用于遍历数组、字符串、Map、Set 等 具备 `[Symbol.iterator]` 接口的结构。  
+
+🔶 **用法**
+
+:::details ✅ **用法示例（遍历数组）**  
+
+```js
+const arr = ['a', 'b', 'c'];
+
+for (let value of arr) {
+  console.log(value);
+}
+
+```
+:::
+
+:::details ✅ **用法示例（遍历字符串）**  
+
+```js
+const str = 'hello';
+
+for (let char of str) {
+  console.log(char);
+}
+
+```  
+:::
+
+:::details ✅ **用法示例（遍历 Map）**  
+
+```js
+const map = new Map([
+  ['name', 'Alice'],
+  ['age', 25]
+]);
+
+for (let [key, value] of map) {
+  console.log(key, value);
+}
+
+```
+:::
+
+:::details ✅ **用法示例（遍历 Set）**  
+
+```js
+const set = new Set(['x', 'y', 'z']);
+
+for (let item of set) {
+  console.log(item);
+}
+
+```
+:::
+
+
+⚠️ **注意**  
+
+- for...of 遍历的是 值，而不是键名。
+
+- 它 不能用来遍历普通对象，因为对象默认不是可迭代的。  
+
+:::details ❌ 错误用法：不能直接用 for...of 遍历普通对象
+```js
+const obj = { a: 1, b: 2 };
+
+// ❌ 会报错：obj is not iterable
+for (let item of obj) {
+  console.log(item);
+}
+
+```
+:::  
+
+:::details ✅ 正确用法：配合 Object.entries()
+```js
+const obj = { a: 1, b: 2 };
+
+// ❌ 会报错：obj is not iterable
+for (let item of obj) {
+  console.log(item);
+}
+
+```
+:::
+
+💡 **总结：for...of 适用于哪些？**  
+
+| 类型     | 是否适用 `for...of`  |
+| ------ | ---------------- |
+| Array  | ✅ 是              |
+| String | ✅ 是              |
+| Map    | ✅ 是              |
+| Set    | ✅ 是              |
+| Object | ❌ 否（需转成 entries） |
+
+
+### every some find findIndex  
+
+| 方法            | 作用               | 返回值                  | 短路  | 找不到返回       |
+| ------------- | ---------------- | -------------------- | --- | ----------- |
+| `every()`     | 是否**全部**满足条件     | 布尔值：`true` 或 `false` | ✅ 是 | `false`     |
+| `some()`      | 是否**至少一个**满足条件   | 布尔值：`true` 或 `false` | ✅ 是 | `false`     |
+| `find()`      | 找到**第一个满足条件的元素** | 元素 或 `undefined`     | ✅ 是 | `undefined` |
+| `findIndex()` | 找到**第一个满足条件的索引** | 索引 或 `-1`            | ✅ 是 | `-1`        |  
+
+
+### every...比较  
+
+✅ **方法对比总览表**  
+
+| 方法            | 返回值类型           | 适用类型        | 判断方式        | 返回内容             | 找不到时返回      | 是否支持回调 |
+| ------------- | --------------- | ----------- | ----------- | ---------------- | ----------- | ------ |
+| `every`       | `Boolean`       | 任意          | 所有都满足条件？    | `true` / `false` | —           | ✅      |
+| `some`        | `Boolean`       | 任意          | 有一个满足条件？    | `true` / `false` | —           | ✅      |
+| `find`        | 元素或 `undefined` | 任意          | 查找第一个满足条件的项 | 元素               | `undefined` | ✅      |
+| `findIndex`   | 数字              | 任意          | 查找第一个满足条件的项 | 索引               | `-1`        | ✅      |
+| `indexOf`     | 数字              | 基础类型        | 值相等（===）    | 第一个出现的索引         | `-1`        | ❌      |
+| `lastIndexOf` | 数字              | 基础类型        | 值相等（===）    | 最后一个出现的索引        | `-1`        | ❌      |
+| `includes`    | `Boolean`       | 基础类型（含 NaN） | 值相等（===）    | 是否包含某值           | `false`     | ❌      |
+
+
+✅ **适用场景对比**  
+
+| 场景                    | 推荐方法            | 示例                                     |
+| --------------------- | --------------- | -------------------------------------- |
+| 是否**所有元素都满足**条件       | `every`         | `[1,2,3].every(n => n > 0)` → `true`   |
+| 是否**至少一个元素满足**条件      | `some`          | `[1,2,3].some(n => n > 2)` → `true`    |
+| 查找第一个满足条件的元素          | `find`          | `arr.find(item => item.id === 1)`      |
+| 查找第一个满足条件的元素的索引       | `findIndex`     | `arr.findIndex(item => item.id === 1)` |
+| 查找**基础类型值**的位置（从前往后）  | `indexOf`       | `[1, 2, 3].indexOf(2)` → `1`           |
+| 查找**基础类型值**的位置（从后往前）  | `lastIndexOf`   | `[1, 2, 1].lastIndexOf(1)` → `2`       |
+| 判断是否包含某基础值（含 `NaN`）   | `includes`      | `[1, 2, NaN].includes(NaN)` → `true`   |
+| 查找是否**存在某对象**（需自定义条件） | `some` / `find` | `arr.some(item => item.id === 1)`      |
+
+
+✅ **注意事项总结**  
+
+| 方法            | 注意事项                   |
+| ------------- | ---------------------- |
+| `indexOf`     | 无法判断 `NaN`，也无法用于对象比较   |
+| `includes`    | 可判断 `NaN`，不能用于对象判断     |
+| `find`        | 找的是**元素本身**，而非索引       |
+| `some`        | 一旦命中即停止（性能优）           |
+| `every`       | 一旦遇到不满足即停止             |
+| `findIndex`   | 找不到返回 `-1`             |
+| `lastIndexOf` | 只能匹配**值相等**的基础类型，不能用回调 |
+
 
 
 
