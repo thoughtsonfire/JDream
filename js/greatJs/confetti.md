@@ -26,7 +26,7 @@ yarn add canvas-confetti
 description="https://www.kirilv.com/canvas-confetti/" />  
 
 <LinkCard url="https://github.com/catdad/canvas-confetti" title="GitHub 仓库" 
-description="https://github.com/catdad/canvas-confetti" logo="/imgs/logo/github.png" />
+description="https://github.com/catdad/canvas-confetti" logo="/JDream/imgs/logo/github.png" />
 
 <LinkCard url="https://www.npmjs.com/package/canvas-confetti" title="NPM 包页面" 
-description="https://www.npmjs.com/package/canvas-confetti" logo="/imgs/logo/npm.png" />
+description="https://www.npmjs.com/package/canvas-confetti" logo="/JDream/imgs/logo/npm.png" />
