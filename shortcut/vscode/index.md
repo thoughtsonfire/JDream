@@ -3,6 +3,7 @@
 ## 快捷键
 
 <div id="content_views" class="htmledit_views tomorrow-night">
+    <h3 id="articleHeader1"><a name="t0"></a><a name="t0" title=""></a><a title=""></a>最常用</h3>
     <div class="table-box">
         <table>
             <thead>
@@ -12,6 +13,42 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>Ctrl+C</td>
+                    <td>复制行（空选定）Copy line (empty selection)</td>
+                </tr>
+                <tr>
+                    <td>Ctrl+X</td>
+                    <td>剪切行（空选定） Cut line (empty selection)</td>
+                </tr>
+                <tr>
+                    <td>Ctrl+Shift+K</td>
+                    <td>删除行 Delete line</td>
+                </tr>
+                <tr>
+                    <td>Alt+ ↑ / ↓</td>
+                    <td>向上/向下移动行 Move line up/down</td>
+                </tr>
+                <tr>
+                    <td>Shift+Alt + ↓ / ↑</td>
+                    <td>向上/向下复制行 Copy line up/down</td>
+                </tr>
+                <tr>
+                    <td>Ctrl+Shift+\</td>
+                    <td>跳到匹配的括号 Jump to matching bracket</td>
+                </tr>
+                <tr>
+                    <td>Alt +单击</td>
+                    <td>插入光标 Insert cursor</td>
+                </tr>
+                <tr>
+                    <td>Ctrl + Alt +↑/↓</td>
+                    <td>在上/下插入光标 Insert cursor above / below</td>
+                </tr>
+                <tr>
+                    <td>Ctrl + U</td>
+                    <td>撤消上一个光标操作 Undo last cursor operation</td>
+                </tr>
                 <tr>
                     <td>Ctrl + Shift + P，F1</td>
                     <td>显示命令面板 Show Command Palette</td>

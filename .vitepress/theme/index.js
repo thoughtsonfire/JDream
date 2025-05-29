@@ -1,4 +1,4 @@
-// https://vitepress.dev/guide/custom-theme
+import 'virtual:group-icons.css' //代码组样式 //
 import DefaultTheme from 'vitepress/theme'
 import './style/index.css'
 import { h } from 'vue'
@@ -6,13 +6,12 @@ import jdreamUI from 'jdream-ui'
 import 'jdream-ui/lib/index.css'
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
-// import { useLive2d } from 'vitepress-theme-website'
-import backtotop from "./component/backtotop.vue"
 import update from "./component/update.vue"
 import ArticleMetadata from "./component/ArticleMetadata.vue"
 import HomeUnderLine from './component/HomeUnderLine.vue'
 import confetti from './component/confetti.vue'
 import MyLayout from './component/MyLayout.vue'
+import LinkCard from './component/LinkCard.vue'
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import giscusTalk from 'vitepress-plugin-comment-with-giscus';
@@ -20,28 +19,6 @@ import { useData, useRoute } from 'vitepress';
 export default {
   extends: DefaultTheme,
   setup() {
-    //看板娘 //
-    // useLive2d()
-    // useLive2d({
-    //   enable: true,
-    //   model: {
-    //     url: "https://raw.githubusercontent.com/iCharlesZ/vscode-live2d-models/master/model-library/kesshouban/model.json"
-    //   },
-    //   display: {
-    //     position: 'left',
-    //     width: '135px',
-    //     height: '300px',
-    //     xOffset: '35px',
-    //     yOffset: '5px'
-    //   },
-    //   mobile: {
-    //     show: true
-    //   },
-    //   react: {
-    //     opacity: 0.8
-    //   }
-    // })
-
     const route = useRoute();
     const initZoom = () => {
       mediumZoom('.main img', { background: 'var(--vp-c-bg)' }); // 不显式添加{data-zoomable}的情况下为所有图像启用此功能
@@ -104,6 +81,7 @@ export default {
     app.component('update' , update)
     app.component('confetti' , confetti)
     app.component('MyLayout' , MyLayout)
+    app.component('LinkCard',LinkCard)
   },
 }
 

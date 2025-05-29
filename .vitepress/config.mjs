@@ -1,14 +1,16 @@
 import { defineConfig } from 'vitepress'
 import { MermaidMarkdown, MermaidPlugin } from 'vitepress-plugin-mermaid';
-import { set_sidebar } from "./utils/auto_sidebar.mjs";	
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
+import { vitepressDemoPlugin } from 'vitepress-demo-plugin'; 
 import taskLists from 'markdown-it-task-checkbox'
+import nav  from './config/nav';
+import sidebar from './config/sidebar';
 export default defineConfig({
   base:"/JDream/",//github上部署
   // base:"/",//nginx 上部署
   head: [
-    ['script', { src: '/JDream/live2d.js' }],
-    ['link', { rel: 'icon', href: '/JDream/favicon.ico' }],
+    ['link', { rel: 'icon', href: '/JDream/favicon.ico' }],//github上部署
+    // ['link', { rel: 'icon', href: '/favicon.ico' }],//nginx上部署
   ],
   title: "JDream",
   description: "A VitePress Site",
@@ -18,124 +20,9 @@ export default defineConfig({
     logo:'/study.png',
     outlineTitle:'目录',
     outline:[2,6],
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: '首页', link: '/' },
-      // { text: 'JDream-plus使用文档', link: '/jdream-plus/' },
-      // { text: 'JDream-ui使用文档', link: 'https://thoughtsonfire.github.io/jdream-ui-ed/' },
-      { text: '学习笔记', items:[
-        {text:'html',link:'/html/'},
-        {text:'css',link:'/css/'},
-        {text:'js',link:'/js/introduce/foreword.md'},
-        {text:'vue',link:'/vue/'},
-        {text:'uni-app',link:'/uni-app/'},
-        {text:'java',link:'/java/'},
-        {text:'sql',link:'/sql/'},
-        {text:'ol',link:'/ol/'},
-        {text:'three.js',link:'/three-js/'},
-        {text:'vite',link:'/vite/'},
-        {text:'webpack',link:'/webpack/'},
-        {text:'antv_x6',link:'/antv_x6/'},
-        {text:'svg',link:'/svg/'},
-        {text:'blender',link:'/blender/'},
-        {text:'english',link:'/english/'},
-      ] },
-      {text:'文档编写',items:[
-        {text:'vitepress',link:'/vitepress/'},
-        {text:'vuepress',link:'/vuepress/'},
-        {text:'vue2组件库快速搭建',link:'/vue2components/'},
-        {text:'markdown',link:'/markdown/'},
-        {text:'面试题',link:'/interview/'}
-      ]},
-    ],
+    nav,
 
-    sidebar: 
-    {
-      "/js/":[
-        {
-          text:"介绍",
-          collapsed:false,
-          items:[
-            {text:"前言",link:"/js/introduce/foreword.md"}
-          ]
-        },
-        {
-          text:"基础知识",
-          collapsed:false,
-          items:[
-            {text:"常见概念",link:"/js/basicKnowledge/commonConcepts.md"},
-            {text:"对象方法",link:"/js/basicKnowledge/object.md"},
-            {text:"数组方法",link:"/js/basicKnowledge/array.md"},
-          ]
-        },
-        {
-          text:"常用封装",
-          collapsed:false,
-          items:[
-            {text:"axios封装",link:"/js/commonEncapsulation/axios.md"}
-          ]
-        },
-        {
-          text:"实用方法",
-          collapsed:false,
-          items:[
-            {text:"导出",link:"/js/practicalMethod/export.md"}
-          ]
-        },
-        {
-          text:"TS",
-          collapsed:false,
-          items:[
-            {text:"常见情况",link:"/js/ts/commonSituations.md"}
-          ]
-        },
-      ],
-      "/jdream-plus/":{
-        text:'jdream-plus',items:[
-          {text:'jdream-plus',link:'/jdream-plus/'},
-          {text:'button',link:'/jdream-plus/button'},
-        ]
-      },
-      "/uni-app/":set_sidebar("/uni-app/"),
-      "/vuepress/":{
-        text:'vuepress',items:[
-          {text:'vuepress',link:'/vuepress/'},
-          {text:'vue2press快速上手',link:'/vuepress/vuepress2快速上手'},
-          {text:'vuepress1注意事项',link:'/vuepress/vuepress1注意事项'},
-          {text:'vuepress1组件展示插件',link:'/vuepress/vuepress1组件展示插件'},
-          {text:'搜索',link:'/vuepress/搜索'},
-          {text:'行号',link:'/vuepress/行号'},
-          {text:'修改样式',link:'/vuepress/修改样式'},
-        ]
-      },
-      "/vitepress/":{
-          text:'vitepress',items:[
-            {text:'vitepress',link:'/vitepress/'},
-            {text:'快速上手',link:'/vitepress/快速上手'},
-            {text:'搜索',link:'/vitepress/搜索'},
-          ]
-      },
-      "/english/":set_sidebar("/english/"),
-        //"/java/":set_sidebar("/java/"),//自动生成侧边栏，效果不佳
-      "/java/":{
-          text:'java',items:[
-            {text:'java',link:'/java/'},
-            {text:'常用cmd命令',link:'/java/常用cmd命令'},
-            {text:'常用字符',link:'/java/常用字符'},
-            {text:'jdk',link:'/java/jdk'},
-            {text:'IDEA',link:'/java/IDEA'},
-            {text:'数据类型',link:'/java/数据类型'},
-            {text:'switch',link:'/java/switch'},
-            {text:'常用方法',link:'/java/常用方法'},
-            {text:'抽象类和接口',link:'/java/抽象类和接口'},
-            {text:'easylive_study',link:'/java/easylive_study'},
-          ]
-      },
-      "/shortcut":[
-        {text:'vscdoe',link:'/shortcut/vscode'},
-        {text:'chorme',link:'/shortcut/chorme'}
-      ]
-    },
+    sidebar,
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/thoughtsonfire' }
@@ -199,6 +86,8 @@ export default defineConfig({
       md.use(groupIconMdPlugin) //代码组图标
 
       md.use(taskLists ) //todo
+
+      md.use(vitepressDemoPlugin)  //代码demo
 
       md.renderer.rules.heading_close = (tokens, idx, options, env, slf) => {
           let htmlResult = slf.renderToken(tokens, idx, options);

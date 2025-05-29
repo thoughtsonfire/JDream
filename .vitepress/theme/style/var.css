@@ -58,3 +58,21 @@
   z-index: 9999 !important;
   /* 给的值是21，但是实测盖不住，直接999 */
 }
+
+/* 通过开发者模式定位到的元素 */
+/* 基础样式 */
+.VPLink.link.no-icon.VPFeature {
+  transition: transform 0.3s ease-in-out; /* 添加过渡动画 */
+}
+
+/* Hover时的变换效果 */
+.VPLink.link.no-icon.VPFeature:hover {
+  transform: scale(1.05) translateY(-10px); /* 缩放 + 垂直位移 */
+  z-index: 10; /* 防止被其他元素遮挡 */
+  cursor: pointer;
+}
+
+/* 如果需要同时控制内部链接 */
+.VPLink.link.no-icon.VPFeature {
+  transform: scale(1.02); /* 内部元素的联动缩放 */
+}
