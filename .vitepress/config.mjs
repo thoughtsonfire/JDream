@@ -15,7 +15,7 @@ export default defineConfig({
     //启用深色模式
   appearance: 'dark',
   themeConfig: {
-    logo:'/study.png',
+    logo:'/favicon.ico',
     outlineTitle:'目录',
     outline:[2,6],
     nav,

@@ -8,7 +8,7 @@ description="https://thoughtsonfire.github.io/JDream/" logo="/JDream/favicon.ico
 ## 使用  
 
 ```md
-<Linkcard url="你的网址" title="标题" description="描述" logo="logo图片路径"/>
+<LinkCard url="你的网址" title="标题" description="描述" logo="logo图片路径"/>
 ```  
 
 ## 参数
