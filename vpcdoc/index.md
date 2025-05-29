@@ -62,9 +62,9 @@ export default defineConfig({
 description="https://vitepress-demo.fe-dev.cn/" />  
 
 <LinkCard url="https://github.com/zh-lx/vitepress-demo-plugin" title="GitHub 仓库" 
-description="https://github.com/zh-lx/vitepress-demo-plugin" logo="/imgs/logo/github.png" />
+description="https://github.com/zh-lx/vitepress-demo-plugin" logo="/JDream/imgs/logo/github.png" />
 
 <LinkCard url="https://www.npmjs.com/package/vitepress-demo-plugin" title="NPM 包页面" 
-description="https://www.npmjs.com/package/vitepress-demo-plugin" logo="/imgs/logo/npm.png" />
+description="https://www.npmjs.com/package/vitepress-demo-plugin" logo="/JDream/imgs/logo/npm.png" />
 
 

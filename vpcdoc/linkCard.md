@@ -3,7 +3,7 @@
 ## 效果
 
 <LinkCard url="https://thoughtsonfire.github.io/JDream/" title="JDream 个人网站" 
-description="https://thoughtsonfire.github.io/JDream/" logo="/favicon.ico" />
+description="https://thoughtsonfire.github.io/JDream/" logo="/JDream/favicon.ico" />
 
 ## 使用  
 

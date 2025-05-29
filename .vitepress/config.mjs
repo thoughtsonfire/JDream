@@ -6,11 +6,9 @@ import taskLists from 'markdown-it-task-checkbox'
 import nav  from './config/nav';
 import sidebar from './config/sidebar';
 export default defineConfig({
-  base:"/JDream/",//github上部署
-  // base:"/",//nginx 上部署
+  base:"/JDream/",
   head: [
-    ['link', { rel: 'icon', href: '/JDream/favicon.ico' }],//github上部署
-    // ['link', { rel: 'icon', href: '/favicon.ico' }],//nginx上部署
+    ['link', { rel: 'icon', href: '/JDream/favicon.ico' }],
   ],
   title: "JDream",
   description: "A VitePress Site",
