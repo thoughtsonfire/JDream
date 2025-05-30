@@ -359,7 +359,7 @@ class User {
 const user = new User('Tom')
 console.log(user.getToken()) // abc123
 ```
->✅ 外部访问不到 token，安全 ✅  
+>✅ 外部访问不到 token，安全 ✅    
 >❗️当 user 不再使用时，_private 中数据会自动 GC
 :::
 
@@ -436,7 +436,7 @@ let weakmap = new WeakMap()
 let obj = { name: 'Alice' }
 // 假设内存地址为 0x123456
 
-weakmap.set(obj, 'value') // Map 保存了对 0x123456 的引用   obj对应的是地址0x123456
+weakmap.set(obj, 'value') // WeakMap 保存了对 0x123456 的引用   obj对应的是地址0x123456
 
 obj = null  //obj对应值 null
 

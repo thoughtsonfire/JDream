@@ -16,12 +16,13 @@ export default defineConfig({
   appearance: 'dark',
   themeConfig: {
     logo:'/favicon.ico',
-    outlineTitle:'目录',
+    outlineTitle:'大纲',
     outline:[2,6],
     nav,
 
     sidebar,
-
+    //侧边栏文字更改(移动端) //
+    sidebarMenuLabel:'目录', 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/thoughtsonfire' }
     ],
