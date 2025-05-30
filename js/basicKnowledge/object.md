@@ -1076,11 +1076,9 @@ for (let item of obj) {
 ```js
 const obj = { a: 1, b: 2 };
 
-// ❌ 会报错：obj is not iterable
-for (let item of obj) {
-  console.log(item);
+for (let [key,value] of Object.entries(obj)) {
+  console.log(key,value);
 }
-
 ```
 :::
 

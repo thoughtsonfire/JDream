@@ -16,6 +16,16 @@ const sidebar =
             {text:"常见概念",link:"/js/basicKnowledge/commonConcepts.md"},
             {text:"对象方法",link:"/js/basicKnowledge/object.md"},
             {text:"数组方法",link:"/js/basicKnowledge/array.md"},
+            {text:"函数方法",link:"/js/basicKnowledge/function.md"},
+          ]
+        },
+        {
+          text:"函数",
+          collapsed:false,
+          items:[
+             {text:"this",link:"/js/function/this.md"},
+             {text:"闭包",link:"/js/function/closure.md"},
+             {text:"垃圾回收",link:"/js/function/GC.md"},
           ]
         },
         {
@@ -35,14 +45,14 @@ const sidebar =
         },
         {
           text:"简便JS包",
-          collapsed:false,
+          collapsed:true,
           items:[
             {text:"纸屑",link:"/js/greatJs/confetti.md"}
           ]
         },
         {
           text:"TS",
-          collapsed:false,
+          collapsed:true,
           items:[
             {text:"常见情况",link:"/js/ts/commonSituations.md"}
           ]
@@ -91,7 +101,8 @@ const sidebar =
       },
       "/shortcut":[
         {text:'vscdoe',link:'/shortcut/vscode'},
-        {text:'chorme',link:'/shortcut/chorme'}
+        {text:'chorme',link:'/shortcut/chorme'},
+        {text:'markdown',link:'/shortcut/markdown'}
       ],
       "/vpcdoc/":[
        {
