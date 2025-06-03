@@ -17,6 +17,8 @@ const sidebar =
             {text:"对象方法",link:"/js/basicKnowledge/object.md"},
             {text:"数组方法",link:"/js/basicKnowledge/array.md"},
             {text:"函数方法",link:"/js/basicKnowledge/function.md"},
+            {text:"ES6",link:"/js/basicKnowledge/es6.md"},
+             {text:"HTML5",link:"/js/basicKnowledge/html5.md"},
           ]
         },
         {
@@ -26,6 +28,9 @@ const sidebar =
              {text:"this",link:"/js/function/this.md"},
              {text:"闭包",link:"/js/function/closure.md"},
              {text:"垃圾回收",link:"/js/function/GC.md"},
+             {text:"arguments和...args",link:"/js/function/args.md"},
+             {text:"防抖、节流",link:"/js/function/DebounceAndThrottle.md"},
+             {text:"Promise",link:"/js/function/promise.md"},
           ]
         },
         {

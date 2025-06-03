@@ -58,14 +58,65 @@ obj.say(); // undefined（不是 obj）
 const obj = {
   name: "Jack",
   sayLater: function () {
+    // ✅ 这里的 this === obj
     setTimeout(function () {
-      console.log(this.name);
+      console.log(this.name);  
+      //这里的this 属于fuction，function被setTimeout调用，setTimeout被window调用
     }, 1000);
   },
 };
 obj.sayLater(); // undefined（在 setTimeout 中 this 指向 window）
 ```
-- 普通函数内的回调 this 不自动绑定外部对象,指向 window。  
+```js
+function debounce(fn, delay = 300) {
+  let timer = null;  // 用于保存定时器ID
+  return function (...args) {  // 返回一个新的函数，使用剩余参数收集实参
+    if (timer) clearTimeout(timer);  // 如果上次的计时器还没触发，清除它
+
+    timer = setTimeout(() => {
+      fn.apply(this, args);  // 延迟执行目标函数 fn
+    }, delay);  // 设置新的延时
+  };
+}
+const debounced = debounce(function () {
+  console.log(this); // 👉 window
+});
+
+debounced();  // 没有绑定，this 默认是 window（非严格模式）  
+
+const obj = {
+  name: 'MyObj',
+  sayHi: debounce(function () {
+    console.log(this.name);
+  })
+};
+
+obj.sayHi();  // 👉 this 是 obj，不是 window
+```
+
+```js
+setTimeout(fn,delay)
+
+//fn 为普通函数 里面的this指向undefined或者window
+//fn 为箭头函数 里面的this指向setTimeout的外部环境
+```
+
+
+>[!NOTE]setTimeout 本身不改变 this，它调用的函数（普通 or 箭头）中的 this 是由函数自身的定义方式决定的。
+>
+>也就是说：
+>
+>   - setTimeout 本身没有“自己的 this”。
+>
+>   - 如果你传入的是普通函数，它的 this 在浏览器中默认是 window。
+>
+>   - 如果你传入的是箭头函数，它的 this 是来自定义时的外层作用域（而不是 setTimeout）。
+
+| 函数类型 | `this` 来自哪里？        | 向上找什么？              |
+| ---- | ------------------- | ------------------- |
+| 普通函数 | 谁调用它，它的 `this` 就是谁  | ❗ **调用栈** 向上找（不是词法） |
+| 箭头函数 | 定义时所处的外部作用域的 `this` | ✅ **词法作用域** 向上找     |
+
 
 ### 6、匿名函数  
 

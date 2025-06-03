@@ -39,3 +39,11 @@
 <br>
 
 #### graph    n.图、图表
+
+<br>
+
+#### debounce   n.防抖
+
+<br>
+
+#### throttle   n.节流
