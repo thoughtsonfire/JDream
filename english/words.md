@@ -47,3 +47,7 @@
 <br>
 
 #### throttle   n.节流
+
+<br>
+
+#### communication  n.通讯、交流

@@ -34,6 +34,14 @@ const sidebar =
           ]
         },
         {
+          text:"通讯",
+          collapsed:false,
+          items:[
+             {text:"WebSocket",link:"/js/communication/websocket.md"},
+             {text:"postMessage",link:"/js/communication/postMessage.md"},
+          ]
+        },
+        {
           text:"常用封装",
           collapsed:false,
           items:[
@@ -105,7 +113,7 @@ const sidebar =
           ]
       },
       "/shortcut":[
-        {text:'vscdoe',link:'/shortcut/vscode'},
+        {text:'vscode',link:'/shortcut/vscode'},
         {text:'chorme',link:'/shortcut/chorme'},
         {text:'markdown',link:'/shortcut/markdown'}
       ],
