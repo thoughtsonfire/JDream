@@ -17,8 +17,9 @@ const sidebar =
             {text:"对象方法",link:"/js/basicKnowledge/object.md"},
             {text:"数组方法",link:"/js/basicKnowledge/array.md"},
             {text:"函数方法",link:"/js/basicKnowledge/function.md"},
+            {text:"元素",link:"/js/basicKnowledge/element.md"},
             {text:"ES6",link:"/js/basicKnowledge/es6.md"},
-             {text:"HTML5",link:"/js/basicKnowledge/html5.md"},
+            {text:"HTML5",link:"/js/basicKnowledge/html5.md"},
           ]
         },
         {
@@ -39,6 +40,7 @@ const sidebar =
           items:[
              {text:"WebSocket",link:"/js/communication/websocket.md"},
              {text:"postMessage",link:"/js/communication/postMessage.md"},
+             {text:"BroadcastChannel",link:"/js/communication/broadcastChannel.md"},
           ]
         },
         {
@@ -115,7 +117,8 @@ const sidebar =
       "/shortcut":[
         {text:'vscode',link:'/shortcut/vscode'},
         {text:'chorme',link:'/shortcut/chorme'},
-        {text:'markdown',link:'/shortcut/markdown'}
+        {text:'markdown',link:'/shortcut/markdown'},
+        {text:'cmd',link:'/shortcut/cmd'}
       ],
       "/vpcdoc/":[
        {

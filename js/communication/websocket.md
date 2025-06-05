@@ -110,6 +110,12 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 npm install ws
 ```
 
+- 运行
+
+```bash 
+node server.js
+```
+
 :::code-group
 ```html [index.html]
 <!DOCTYPE html>
