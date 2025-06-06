@@ -4,11 +4,14 @@
 
 **详细属性事件去看mdn**
 
+<LinkCard url="https://developer.mozilla.org/zh-CN/" title="MDN" description="https://developer.mozilla.org/zh-CN/" logo="https://developer.mozilla.org/favicon.ico"/>
+
 <br>
 
 #### picture
 
 <br>
+
 ##### media 属性
 
 media 属性允许你提供一个用于给用户代理作为选择 <source> 元素的依据的媒体条件 (media condition)（类似于媒体查询）。如果这个媒体条件匹配结果为 false，那么这个 <source> 元素会被跳过。

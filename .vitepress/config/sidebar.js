@@ -73,6 +73,39 @@ const sidebar =
           ]
         },
       ],
+      "/css":[
+        {
+          text:"介绍",
+          collapsed:false,
+          items:[
+            {text:"前言",link:"/css/introduce/foreword.md"}
+          ]
+        },
+        {
+          text:"基础知识",
+          collapsed:false,
+          items:[
+            {text:"常见概念",link:"/css/basicKnowledge/commonConcepts.md"},
+            {text:"选择器",link:"/css/basicKnowledge/selector.md"}
+          ]
+        },
+        {
+          text:"布局",
+          collapsed:false,
+          items:[
+            {text:"Flex",link:"/css/layout/flex.md"},
+            {text:"Grid",link:"/css/layout/grid.md"},
+          ]
+        },
+        {
+          text:"Sass",
+          collapsed:false,
+          items:[
+            {text:"运算符",link:"/css/sass/operator.md"},
+            {text:"公共样式",link:"/css/sass/commonStyle.md"},
+          ]
+        },
+      ],
       "/jdream-plus/":{
         text:'jdream-plus',items:[
           {text:'jdream-plus',link:'/jdream-plus/'},

@@ -94,47 +94,54 @@ npm install --save-dev webpack-merge
    };
    ```
  - webpack.dev.js（开发环境配置）
-   ```js
-   // webpack.prod.js
-   const { merge } = require('webpack-merge');
-   const commonConfig = require('./webpack.common');
-   const TerserPlugin = require('terser-webpack-plugin'); // 用于压缩 JavaScript
-   
-   module.exports = merge(commonConfig, {
-     mode: 'production', // 设置生产模式
-     devtool: 'source-map', // 配置生产环境的源映射
-     optimization: {
-       minimize: true, // 启用最小化
-       minimizer: [
-         new TerserPlugin({
-           terserOptions: {
-             compress: {
-               drop_console: true, // 删除 console.log 语句
-             },
-           },
-         }),
-       ],
-     },
-   });
-  ```
- package.json 中定义不同的构建命令来运行开发或生产环境的构建：
- ```json
-  {
-    "scripts": {
-      "dev": "webpack --config webpack.dev.js",
-      "prod": "webpack --config webpack.prod.js"
-    }
-  }
- ```
-- 安装ts
-  ```bash
+    ```js
+    // webpack.prod.js
+    const { merge } = require('webpack-merge');
+    const commonConfig = require('./webpack.common');
+    const TerserPlugin = require('terser-webpack-plugin'); // 用于压缩 JavaScript
+    
+    module.exports = merge(commonConfig, {
+      mode: 'production', // 设置生产模式
+      devtool: 'source-map', // 配置生产环境的源映射
+      optimization: {
+        minimize: true, // 启用最小化
+        minimizer: [
+          new TerserPlugin({
+            terserOptions: {
+              compress: {
+                drop_console: true, // 删除 console.log 语句
+              },
+            },
+          }),
+        ],
+      },
+    });
+    ```
+ - package.json 中定义不同的构建命令来运行开发或生产环境的构建：
+
+    ```json
+      {
+        "scripts": {
+          "dev": "webpack --config webpack.dev.js",
+          "prod": "webpack --config webpack.prod.js"
+        }
+      }
+    ```
+
+- 安装ts  
+
+  ```bash  
   npm install --save-dev typescript
-  ```
-  ts-loader 是一个 Webpack 加载器，用于将 TypeScript 编译成 JavaScript。如果你正在使用 Webpack 来构建项目，并且希望集成 TypeScript，使用 ts-loader 是一个常见的做法。
+  ```  
+
+  ts-loader 是一个 Webpack 加载器，用于将 TypeScript 编译成 JavaScript。如果你正在使用 Webpack 来构建项目，并且希望集成 TypeScript，使用 ts-loader 是一个常见的做法。  
+
+
   ```bash
   npm install --save-dev ts-loader
   ```
-- 根目录下创建tsconfig.json
+- 根目录下创建tsconfig.json  
+
   ```json
    {
        "compilerOptions": {
@@ -150,8 +157,10 @@ npm install --save-dev webpack-merge
          "src/**/*.ts"
        ]
      }
-  ```
-- 创建public文件夹，下创建index.html
+  ```  
+
+- 创建public文件夹，下创建index.html  
+
   ```
   <!DOCTYPE html>
    <html lang="en">

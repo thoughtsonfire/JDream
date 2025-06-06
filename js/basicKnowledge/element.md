@@ -1,5 +1,33 @@
 # 元素  
 
+## `nodeType` 常量列表  
+
+| 常量名                           | 值    | 描述                      |
+| ----------------------------- | ---- | ----------------------- |
+| `ELEMENT_NODE`                | `1`  | 元素节点                    |
+| `ATTRIBUTE_NODE`（废弃）          | `2`  | 属性节点（已弃用，请勿使用）          |
+| `TEXT_NODE`                   | `3`  | 文本节点                    |
+| `CDATA_SECTION_NODE`          | `4`  | CDATA 区段节点（仅限 XML）      |
+| `ENTITY_REFERENCE_NODE`       | `5`  | 实体引用节点（已弃用）             |
+| `ENTITY_NODE`                 | `6`  | 实体节点（已弃用）               |
+| `PROCESSING_INSTRUCTION_NODE` | `7`  | 处理指令节点（如 XML 声明）        |
+| `COMMENT_NODE`                | `8`  | 注释节点                    |
+| `DOCUMENT_NODE`               | `9`  | 文档根节点（`document`）       |
+| `DOCUMENT_TYPE_NODE`          | `10` | DOCTYPE 节点              |
+| `DOCUMENT_FRAGMENT_NODE`      | `11` | 文档片段节点                  |
+| `NOTATION_NODE`               | `12` | 表示 DTD 中的 notation（已弃用） |
+>⚠️ 2、5、6、12 等节点类型基本已废弃或仅用于 XML。
+
+✅ 实际开发你只需要记住这些常用的：
+
+| 类型名                      | nodeType | 用途                      |
+| ------------------------ | -------- | ----------------------- |
+| `ELEMENT_NODE`           | `1`      | HTML 元素，如 `<div>`       |
+| `TEXT_NODE`              | `3`      | 文本，如 `"Hello"`          |
+| `COMMENT_NODE`           | `8`      | 注释，如 `<!-- comment -->` |
+| `DOCUMENT_NODE`          | `9`      | 整个文档对象 `document`       |
+| `DOCUMENT_FRAGMENT_NODE` | `11`     | 用于性能优化的 DOM 片段          |
+
 ## 一、获取元素
 
 ### 1. querySelector()  
@@ -17,7 +45,6 @@
 
 
 ### 2. getElementById()  
-
 
 >[!TIP]document.getElementById()  
 >
@@ -77,35 +104,6 @@
 
 
 ## 二、获取父子兄弟元素  
-
-### `nodeType` 常量列表  
-
-| 常量名                           | 值    | 描述                      |
-| ----------------------------- | ---- | ----------------------- |
-| `ELEMENT_NODE`                | `1`  | 元素节点                    |
-| `ATTRIBUTE_NODE`（废弃）          | `2`  | 属性节点（已弃用，请勿使用）          |
-| `TEXT_NODE`                   | `3`  | 文本节点                    |
-| `CDATA_SECTION_NODE`          | `4`  | CDATA 区段节点（仅限 XML）      |
-| `ENTITY_REFERENCE_NODE`       | `5`  | 实体引用节点（已弃用）             |
-| `ENTITY_NODE`                 | `6`  | 实体节点（已弃用）               |
-| `PROCESSING_INSTRUCTION_NODE` | `7`  | 处理指令节点（如 XML 声明）        |
-| `COMMENT_NODE`                | `8`  | 注释节点                    |
-| `DOCUMENT_NODE`               | `9`  | 文档根节点（`document`）       |
-| `DOCUMENT_TYPE_NODE`          | `10` | DOCTYPE 节点              |
-| `DOCUMENT_FRAGMENT_NODE`      | `11` | 文档片段节点                  |
-| `NOTATION_NODE`               | `12` | 表示 DTD 中的 notation（已弃用） |
->⚠️ 2、5、6、12 等节点类型基本已废弃或仅用于 XML。
-
-✅ 实际开发你只需要记住这些常用的：
-
-| 类型名                      | nodeType | 用途                      |
-| ------------------------ | -------- | ----------------------- |
-| `ELEMENT_NODE`           | `1`      | HTML 元素，如 `<div>`       |
-| `TEXT_NODE`              | `3`      | 文本，如 `"Hello"`          |
-| `COMMENT_NODE`           | `8`      | 注释，如 `<!-- comment -->` |
-| `DOCUMENT_NODE`          | `9`      | 整个文档对象 `document`       |
-| `DOCUMENT_FRAGMENT_NODE` | `11`     | 用于性能优化的 DOM 片段          |
-
 
 ### 1.获取父元素  
 
@@ -191,9 +189,46 @@ newDiv.appendChild(textNode);
 
 ## 四、插入元素（添加到页面）
 
+### 对比表
+
+**DOM 插入节点 API 对比表（精简版）**
+
+| 方法名              | 作用位置      | 接收参数类型           | 支持多个参数 | 支持字符串 | 返回值     |
+| ---------------- | --------- | ---------------- | ------ | ----- | ------- |
+| `appendChild()`  | 作为子元素最后插入 | 单个 Node          | ❌      | ❌     | 返回插入节点  |
+| `insertBefore()` | 插入到指定子元素前 | 插入 Node, 参照 Node | ❌      | ❌     | 返回插入节点  |
+| `replaceChild()` | 替换某个子节点   | 新节点，旧节点          | ❌      | ❌     | 返回被替换节点 |
+| `append()`       | 作为子元素最后插入 | Node 或字符串        | ✅      | ✅     | 无       |
+| `prepend()`      | 作为子元素最前插入 | Node 或字符串        | ✅      | ✅     | 无       |
+| `after()`        | 插入当前元素之后  | Node 或字符串        | ✅      | ✅     | 无       |
+| `before()`       | 插入当前元素之前  | Node 或字符串        | ✅      | ✅     | 无       |
+
+
+🔍 **使用建议（现代浏览器）**
+
+| 场景            | 推荐方法                         |
+| ------------- | ---------------------------- |
+| 插入一个节点（兼容性优先） | `.appendChild()`             |
+| 插入多个节点或文本     | `.append()` / `.prepend()`   |
+| 插入兄弟节点        | `.before()` / `.after()`     |
+| 精确控制插入位置      | `.insertBefore()`            |
+| 替换一个已有节点      | `.replaceChild()`            |
+| 插入纯字符串（文本）    | `.append()` / `.prepend()`   |
+| 插入 HTML（含标签）  | `.innerHTML = '...'`（不安全，慎用） |
+
+
 ### 1. appendChild()
 
 **作用**：添加为父元素的最后一个子元素。
+
+**注意**：
+
+| 问题                          | 回答                                               |
+| --------------------------- | ------------------------------------------------ |
+| `.appendChild()` 可以插入文本元素吗？ | ✅ 可以，但必须是通过 `document.createTextNode()` 创建的文本节点。 |
+| 可以直接传字符串吗？                  | ❌ 不行，需用 `createTextNode()` 包装成 Node。             |
+| 更推荐的方式？                     | ✅ 用 `.append()` 更灵活；用 `.textContent` 设置纯文本更简单。   |
+
 
 **示例**：
 
@@ -201,6 +236,7 @@ newDiv.appendChild(textNode);
 const container = document.getElementById('container');
 container.appendChild(newDiv);
 ```
+
 
 ### 2. prepend()（现代浏览器支持）
 
@@ -236,6 +272,34 @@ container.insertBefore(newDiv, container.firstChild);
 
 ```js
 el.insertAdjacentHTML('beforeend', '<p>Inserted</p>');
+```
+
+### 5. append(...nodesOrStrings)
+
+- 插入到子元素最后
+
+- 可同时插入多个节点或文本字符串
+
+- 不返回值
+
+```js
+parent.append('hello', document.createElement('span'));
+```
+
+### 6. after(...nodesOrStrings)
+
+- 不是子元素，是“当前元素后面”添加同级兄弟元素
+
+```js
+someElement.after('我是兄弟', anotherElement);
+```
+
+### 7. before(...nodesOrStrings)
+
+- 插入到当前元素前面作为兄弟元素
+
+```js
+someElement.before('我是前面的兄弟');
 ```
 
 

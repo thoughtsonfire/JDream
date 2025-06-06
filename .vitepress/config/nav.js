@@ -4,7 +4,7 @@ const nav = [
       // { text: 'JDream-ui使用文档', link: 'https://thoughtsonfire.github.io/jdream-ui-ed/' },
       { text: '学习笔记', items:[
         {text:'html',link:'/html/'},
-        {text:'css',link:'/css/'},
+        {text:'css',link:'/css/introduce/foreword.md'},
         {text:'js',link:'/js/introduce/foreword.md'},
         {text:'vue',link:'/vue/'},
         {text:'uni-app',link:'/uni-app/'},

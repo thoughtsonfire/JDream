@@ -19,8 +19,8 @@ const props = withDefaults(defineProps<Props>(), {
     <div class="linkcard">
         <a :href="props.url" target="_blank">
             <p class="description">{{ props.title }}<br><span>{{ props.description }}</span></p>
-            <div class="logo" >
-                <img :style="{visibility: props.logo? 'inherit':'hidden'}" alt="logo" width="70px" height="70px" :src="props.logo" />
+            <div class="logo" @click.stop>
+                <img style="cursor: pointer;" :style="{visibility: props.logo? 'inherit':'hidden'}" alt="logo" width="70px" height="70px" :src="props.logo"/>
             </div>
            
         </a>
