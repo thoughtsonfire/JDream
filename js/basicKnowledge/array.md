@@ -1067,6 +1067,10 @@ const result = arr.map(function(n) {
 console.log(result); // [10, 20, 30]
 ```
 
+**注意事项**  
+
+`new Array(4)` 会创建空槽数组（无法直接 `.map()`）
+
 ## forEach  
 
 `Array.forEach()`    遍历数组执行副作用操作
@@ -1255,6 +1259,52 @@ console.log(doubled); // [2, 4, 6]
 ```js
 [1, 2, 3].reduce((a, b) => a + b); // 6
 [].reduce((a, b) => a + b); // ❌ 报错：Reduce of empty array with no initial value
+```
+
+## fill  *
+
+`fill()` 是 `JavaScript` 数组的内置方法，用于填充数组的所有元素为指定的值。  
+
+`fill()` 会修改原数组，不是返回新数组。  
+
+🔍 **语法**  
+
+```js
+arr.fill(value, start?, end?)
+```  
+
+- `value`：用来填充的值
+
+- `start`（可选）：开始填充的索引（默认是 `0`）
+
+- `end`（可选）：停止填充的索引（不含 `end`，默认是数组长度）
+
+
+🔶 **示例**  
+
+:::details
+```js [填充整个数组]
+new Array(4).fill(0)
+// ➜ [0, 0, 0, 0]
+```
+```js [填充部分数组]
+[1, 2, 3, 4].fill(9, 1, 3)
+// ➜ [1, 9, 9, 4]
+```
+:::
+
+❗ **注意**  
+
+- `fill()` 会修改原数组，不是返回新数组。
+
+- 适合在创建或初始化数组时用。
+
+- 如果你 `fill({})`，每一项会引用同一个对象，需要注意：
+
+```js
+const arr = new Array(3).fill({})
+arr[0].a = 1
+console.log(arr) // 所有项都变成了 { a: 1 }（共享引用）
 ```
 
 

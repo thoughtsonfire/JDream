@@ -62,7 +62,8 @@ const sidebar =
           text:"简便JS包",
           collapsed:true,
           items:[
-            {text:"纸屑",link:"/js/greatJs/confetti.md"}
+            {text:"纸屑",link:"/js/greatJs/confetti.md"},
+            {text:"Lodash",link:"/js/greatJs/lodash.md"}
           ]
         },
         {

@@ -1098,3 +1098,5 @@ for (let [key,value] of Object.entries(obj)) {
 - object.valueOf() 在object有原始值时，为原始值，没有原始值时，是object自身
 
 - array.valueOf() 是array自身
+
+
