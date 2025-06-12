@@ -12,6 +12,7 @@ import HomeUnderLine from './component/HomeUnderLine.vue'
 import confetti from './component/confetti.vue'
 import MyLayout from './component/MyLayout.vue'
 import LinkCard from './component/LinkCard.vue'
+import Live2D from './component/live2D/Live2D.vue'
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import giscusTalk from 'vitepress-plugin-comment-with-giscus';
@@ -82,6 +83,7 @@ export default {
     app.component('confetti' , confetti)
     app.component('MyLayout' , MyLayout)
     app.component('LinkCard',LinkCard)
+    app.component('Live2D',Live2D)
   },
 }
 

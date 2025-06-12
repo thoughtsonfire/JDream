@@ -5,6 +5,7 @@ import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import { nextTick, provide } from 'vue'
 import MouseClick from "./MouseClick.vue";
+import live2d from './live2D/Live2D.vue'
 // import MouseFollower from "./MouseFollower.vue";
 import backtotop from "./backtotop.vue"
 // import notice from "./notice.vue"
@@ -60,6 +61,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
       <!-- <bsz /> -->
     </template>
   </DefaultTheme.Layout>
+   <live2d/>
 </template>
 
 <style>

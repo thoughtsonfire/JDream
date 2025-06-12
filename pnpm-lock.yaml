@@ -20,6 +20,9 @@ importers:
       jdream-ui:
         specifier: ^0.1.3
         version: 0.1.3
+      jquery:
+        specifier: ^3.7.1
+        version: 3.7.1
     devDependencies:
       markdown-it-task-checkbox:
         specifier: ^1.0.6
@@ -1114,6 +1117,9 @@ packages:
 
   jdream-ui@0.1.3:
     resolution: {integrity: sha512-xCSZupFyhdKhdVenLLcrK2gpZm7P2/phZysW8Kh6pIDrLwQflLz4eQoIvqmoAWTwZNnDkSRMLRNJGq2pjrtvYw==}
+
+  jquery@3.7.1:
+    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
 
   katex@0.16.21:
     resolution: {integrity: sha512-XvqR7FgOHtWupfMiigNzmh+MgUVmDGU2kXZm899ZkPfcuoPuFxyHmXsgATDpFZDAXCI8tvinaVcDo8PIIJSo4A==}
@@ -2613,6 +2619,8 @@ snapshots:
     dependencies:
       core-js: 3.37.1
       vue: 2.7.16
+
+  jquery@3.7.1: {}
 
   katex@0.16.21:
     dependencies:
