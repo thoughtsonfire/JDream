@@ -299,7 +299,7 @@ if(!norunFlag){
 					},
 					contentType: 'application/json',
 					data: JSON.stringify({
-						model: "gpt-4o",
+						model: "gpt-4.1",
 						messages: [{ role: 'user', content: info_ }]
 					}),
 					success: function(res) {
@@ -337,7 +337,7 @@ if(!norunFlag){
 						},
 						contentType: 'application/json',
 						data: JSON.stringify({
-							model: "gpt-4o",
+							model: "gpt-4.1",
 							messages: [{ role: 'user', content: info_ }]
 						}),
 						success: function(res) {
