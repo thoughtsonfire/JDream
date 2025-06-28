@@ -9,7 +9,7 @@ const nav = [
         {text:'vue',link:'/vue/'},
         {text:'uni-app',link:'/uni-app/'},
         {text:'java',link:'/java/'},
-        {text:'sql',link:'/sql/'},
+        {text:'sql',link:'/sql/mysql/basicUsage.md'},
         {text:'ol',link:'/ol/'},
         {text:'three.js',link:'/three-js/'},
         {text:'vite',link:'/vite/'},

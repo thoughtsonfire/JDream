@@ -107,6 +107,15 @@ const sidebar =
           ]
         },
       ],
+      "/sql":[
+        {
+          text:"mysql",
+          collapsed:false,
+          items:[
+            {text:"基础使用",link:"/sql/mysql/basicUsage.md"},
+          ]
+        },
+      ],
       "/jdream-plus/":{
         text:'jdream-plus',items:[
           {text:'jdream-plus',link:'/jdream-plus/'},

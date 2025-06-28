@@ -34,7 +34,7 @@
     ```
     请求头cookie中传入Set-Cookie存的JSESSIONID
 - 使用redis
-  ```java(Constants)
+  ```java (Constants)
   public class Constants {
   
       public static final  Integer REDIS_KEY_EXPIRES_ONE_MINUTE = 60000; //一分钟
@@ -45,7 +45,7 @@
   }
   ```
   
-  ```java(RedisComponent)
+  ```java (RedisComponent)
   @Component
   public class RedisComponent {
   
@@ -130,7 +130,7 @@ public enum UserStatusEnum {
 
 ## MyBatis 的 XML 映射
 
-```
+```xml
  <trim prefix="(" suffix=")" suffixOverrides=",">
   <if test="bean.userId != null">
      user_id,
