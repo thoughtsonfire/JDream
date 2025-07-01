@@ -26,6 +26,30 @@
                     <td>删除行 Delete line</td>
                 </tr>
                 <tr>
+                    <td>HOME</td>
+                    <td>光标跳到行首</td>
+                </tr>
+                <tr>
+                    <td>END</td>
+                    <td>光标跳到行尾</td>
+                </tr>
+                <tr>
+                    <td>Ctrl + HOME</td>
+                    <td>光标跳到文件首</td>
+                </tr>
+                <tr>
+                    <td>Ctrl + END</td>
+                    <td>光标跳到文件尾</td>
+                </tr>
+                <tr>
+                    <td>Shift + HOME</td>
+                    <td>选中当前光标位置到行首</td>
+                </tr>
+                <tr>
+                    <td>Shift + END</td>
+                    <td>选中当前光标位置到行尾</td>
+                </tr>
+                <tr>
                     <td>Alt+ ↑ / ↓</td>
                     <td>向上/向下移动行 Move line up/down</td>
                 </tr>
@@ -48,6 +72,10 @@
                 <tr>
                     <td>Ctrl + U</td>
                     <td>撤消上一个光标操作 Undo last cursor operation</td>
+                </tr>
+                <tr>
+                    <td>Ctrl + Shift + L</td>
+                    <td>选中相同内容</td>
                 </tr>
                 <tr>
                     <td>Ctrl + Shift + P，F1</td>

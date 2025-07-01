@@ -25,7 +25,8 @@ const nav = [
         {text:'vue2组件库快速搭建',link:'/vue2components/'},
         {text:'markdown',link:'/markdown/'},
         {text:'vitepress组件',link:'/vpcdoc/'},
-        {text:'面试题',link:'/interview/'}
+        {text:'快捷键',link:'/shortcut/vscode/index.md'},
+        {text:'面试题',link:'/interview/'},
       ]},
 ]
 

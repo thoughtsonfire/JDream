@@ -158,10 +158,11 @@ const sidebar =
           ]
       },
       "/shortcut":[
-        {text:'vscode',link:'/shortcut/vscode'},
-        {text:'chorme',link:'/shortcut/chorme'},
-        {text:'markdown',link:'/shortcut/markdown'},
-        {text:'cmd',link:'/shortcut/cmd'}
+        {text:'vscode',link:'/shortcut/vscode/index.md'},
+        {text:'chorme',link:'/shortcut/chorme/index.md'},
+        {text:'markdown',link:'/shortcut/markdown/index.md'},
+        {text:'cmd',link:'/shortcut/cmd/index.md'},
+        {text:'linux',link:'/shortcut/linux/index.md'}
       ],
       "/vpcdoc/":[
        {
