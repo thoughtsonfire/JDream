@@ -36,12 +36,34 @@ function export(blob,fileName){
 ## 后端返回数据为地址
 
 ```js
-/** */
+/** 后端添加了响应头允许下载*/
 function export(url,fileName){
     const a = document.createElement('a')
     a.href = url
     a.download = fileName  //XXX.csv
     a.click()
     URL.revokeObjectURL(url)
+}
+```
+
+```js
+/**后端没添加响应头允许下载 */
+function export(url,fileName){
+    fetch(url)
+    .then(response=>{
+        if(!response.ok) throw new Error('网络异常')
+        return response.blob()
+    }).then(blob=>{
+        const downloadUrl = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = fileName
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(downloadUrl)
+    }).catch(error=>{
+        console.log('下载失败',error)
+    })
 }
 ```
