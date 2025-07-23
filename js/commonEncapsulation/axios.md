@@ -123,14 +123,8 @@ import http from "./http"
 
 const api = {
     checkCode:(data?:any)=>http.post("/account/checkCodeUseRedis",data),        //获取图片验证码
-    login:(data?:any)=>http.post("/account/login",data),    //登录
-    logout:(data?:any)=>http.post("/account/logout",data),    //登出
-    loadCategory:(data?:any)=>http.post("/categoryInfo/loadCategory",data), //分类列表
-    uploadImage:(data?:any)=>http.post("/file/uploadImage",data),    //上传
-    getResoure:(data?: any, config?:any)=>http.post("/file/getResoure",data,config),    //读取
-    saveCategory:(data?:any)=>http.post("/categoryInfo/saveCategory",data),  //保存或修改 
-    delCategory:(data?:any)=>http.post("/categoryInfo/delCategory",data),  //删除
-    changeSort:(data?:any)=>http.post("/categoryInfo/changeSort",data),
+    loadVideoPost:(data?:any)=>http.post("/ucenter/loadVideoPost",data,{headers: {'Content-Type': 'multipart/form-data'}}),  //提交视频信息
+    getResoure:(data?: any)=>http.post("/file/getResoure",data,{ responseType: 'blob' }),    //读取
 }
 export default api
 ```
