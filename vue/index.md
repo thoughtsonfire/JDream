@@ -222,3 +222,20 @@ const dmList = reactive(dmJson)
     - any: 组件的 Slots 类型，any 表示任何类型的插槽。
     - export default component:
       将 component 常量作为模块的默认导出。这意味着在导入 .vue 文件时，你会得到一个 Vue 组件实例。
+
+### element-plus 
+
+#### ElEmessage bug
+
+- 解决方法
+
+方法一：
+
+```js
+import "element-plus/es/components/message/style/css";
+import "element-plus/es/components/message-box/style/css";
+```
+
+方法二：
+
+给父元素添加z-index
