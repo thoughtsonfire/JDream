@@ -3,6 +3,7 @@
     "markdown-it-task-checkbox": "^1.0.6",
     "medium-zoom": "^1.1.0",
     "mermaid": "^11.4.1",
+    "nprogress-v2": "^1.1.10",
     "vitepress": "^1.6.3",
     "vitepress-demo-plugin": "^1.4.4",
     "vitepress-plugin-comment-with-giscus": "^1.1.15",

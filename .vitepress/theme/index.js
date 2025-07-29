@@ -17,6 +17,9 @@ import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import giscusTalk from 'vitepress-plugin-comment-with-giscus';
 import { useData, useRoute } from 'vitepress';
+import { NProgress } from 'nprogress-v2/dist/index.js' // 进度条组件
+import 'nprogress-v2/dist/index.css' // 进度条样式
+import { inBrowser } from 'vitepress'
 export default {
   extends: DefaultTheme,
   setup() {
@@ -84,6 +87,15 @@ export default {
     app.component('MyLayout' , MyLayout)
     app.component('LinkCard',LinkCard)
     app.component('Live2D',Live2D)
+    if (inBrowser) {
+      NProgress.configure({ showSpinner: false })
+      router.onBeforeRouteChange = () => {
+        NProgress.start() // 开始进度条
+      }
+      router.onAfterRouteChanged = () => {
+         NProgress.done() // 停止进度条
+      }
+    }
   },
 }
 
