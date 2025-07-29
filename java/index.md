@@ -265,6 +265,33 @@ public class Eamil{
      ```
      在上面的例子中，includeFilters 指定了只包括带有 @Controller 和 @Service 注解的类，而 excludeFilters 指定了排除所有包含 "Test" 字符串的类。
 
+
+#### @Transactional(rollbackFor = Exception.class)
+
+```java
+@Transactional(rollbackFor = Exception.class)
+```
+- @Transactional：
+
+表示当前方法执行时，会开启一个事务，方法执行完成后提交，发生异常时回滚。
+
+- rollbackFor = Exception.class：
+
+默认 @Transactional 只会遇到 运行时异常（RuntimeException） 或 Error 时回滚。
+
+指定 rollbackFor = Exception.class 后，所有类型的异常（包括检查异常 Checked Exception）都会触发回滚。
+
+- **示例**  
+
+```java
+@Override
+@Transactional(rollbackFor = Exception.class)
+public void updateVideoInfo(Video video) {
+    videoDao.update(video);
+    // 如果这里抛出任何异常（Checked 或 Runtime），事务都会回滚
+}
+```
+
 ## Bean
 
 #### Bean扫描
@@ -283,4 +310,6 @@ public class Eamil{
 
 - 如果要注册的bean对象来自第三方（不是自定义的），是无法用@Component及其衍生注解声明bean的
 - 第三方bean 可以使用`@bean`和`@Import`
+
+
 
