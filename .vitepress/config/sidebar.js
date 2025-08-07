@@ -15,6 +15,7 @@ const sidebar =
           items:[
             {text:"常见概念",link:"/js/basicKnowledge/commonConcepts.md"},
             {text:"对象方法",link:"/js/basicKnowledge/object.md"},
+            {text:"字符串方法",link:"/js/basicKnowledge/string.md"},
             {text:"数组方法",link:"/js/basicKnowledge/array.md"},
             {text:"函数方法",link:"/js/basicKnowledge/function.md"},
             {text:"元素",link:"/js/basicKnowledge/element.md"},
