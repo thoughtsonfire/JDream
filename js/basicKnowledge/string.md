@@ -433,7 +433,17 @@ console.log(result); // null
 
 `replacement`  
 
-可以是字符串，也可以是函数
+- 可以是字符串  
+
+- 也可以是函数  函数时，有参数 （match,p1,p2,offset,original）  
+
+match: 匹配到的完整子串  
+
+p1、p2: 捕获组  
+
+offset: 匹配结果在原始字符串中的起始索引  
+
+original: 原字符串
 
 🔚 **返回值**  
 
@@ -485,6 +495,20 @@ console.log(result); // null
 ```js
 'apple banana'.replace(/\b\w+\b/g, (match) => match.toUpperCase())
 // => "APPLE BANANA"
+```
+
+```js
+let text = "Hello, World!";
+let newText = text.replace(/(Hello), (World)/, (match, p1, p2, offset, original) => {
+  console.log(match);      // "Hello, World"
+  console.log(p1);         // "Hello"
+  console.log(p2);         // "World"
+  console.log(offset);     // 0
+  console.log(original);   // "Hello, World!"
+  return p1 + " and " + p2; // 返回 "Hello and World"
+});
+console.log(newText);  // 输出: Hello and World!
+
 ```
 
 🎯 特殊的 `$` 替换符：  

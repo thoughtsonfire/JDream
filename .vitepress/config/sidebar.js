@@ -88,7 +88,8 @@ const sidebar =
           collapsed:false,
           items:[
             {text:"常见概念",link:"/css/basicKnowledge/commonConcepts.md"},
-            {text:"选择器",link:"/css/basicKnowledge/selector.md"}
+            {text:"选择器",link:"/css/basicKnowledge/selector.md"},
+            {text:"实用属性",link:"/css/basicKnowledge/practicalAttribute.md"}
           ]
         },
         {
