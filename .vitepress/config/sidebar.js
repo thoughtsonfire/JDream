@@ -182,6 +182,22 @@ const sidebar =
           ]
         },
       ],
+      "script":[
+        {
+          text:"开始",
+          collapsed:false,
+          items:[
+            {text:"快速上手",link:"/script/start.md"}
+          ]
+        },
+        {
+          text:"基础",
+          collapsed:false,
+          items:[
+            {text:"puppeteer",link:"/script/puppeteer.md"}
+          ]
+        },
+      ]
     }
 
 

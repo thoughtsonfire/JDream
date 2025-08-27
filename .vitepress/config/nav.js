@@ -7,6 +7,7 @@ const nav = [
         {text:'css',link:'/css/introduce/foreword.md'},
         {text:'js',link:'/js/introduce/foreword.md'},
         {text:'vue',link:'/vue/'},
+        {text:'script',link:'/script/start.md'},
         {text:'uni-app',link:'/uni-app/'},
         {text:'java',link:'/java/'},
         {text:'sql',link:'/sql/mysql/basicUsage.md'},
