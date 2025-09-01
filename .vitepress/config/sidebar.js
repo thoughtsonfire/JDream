@@ -182,7 +182,7 @@ const sidebar =
           ]
         },
       ],
-      "script":[
+      "/script/":[
         {
           text:"开始",
           collapsed:false,
@@ -195,6 +195,23 @@ const sidebar =
           collapsed:false,
           items:[
             {text:"puppeteer",link:"/script/puppeteer.md"}
+          ]
+        },
+      ],
+      "/python/":[
+        {
+          text:"基础",
+          collapsed:false,
+          items:[
+            {text:"环境",link:"/python/basic/install.md"},
+            {text:"基础语法",link:"/python/basic/instruction.md"},
+          ]
+        },
+        {
+          text:"进阶",
+          collapsed:false,
+          items:[
+            
           ]
         },
       ]

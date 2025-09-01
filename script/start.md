@@ -281,3 +281,34 @@ npm run build
 ```
 
 
+## 注意  
+
+打包后把exe移动到其他文件夹发现浏览器打不开了
+
+- 将exe和chrome-win放同一个目录下，将文件夹发给客户 
+
+```js
+const basePath = process.execPath.includes('node')
+  ? path.join(path.dirname(process.execPath), '..')       // 开发环境，回到项目根目录
+  : path.dirname(process.execPath);  // 打包后 exe 所在目录
+
+const chromePath = path.join(
+  basePath,
+  'chrome-win',
+  'chrome.exe'
+);
+```
+
+ 
+- puppeteer-extra-plugin-stealth 打包后跑不了
+
+```json
+  "pkg": {
+    "assets": [
+      "node_modules/puppeteer-extra-plugin-stealth/**/*.*"
+    ]
+  },
+```
+
+
+
