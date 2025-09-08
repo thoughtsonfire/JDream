@@ -205,6 +205,7 @@ const sidebar =
           items:[
             {text:"环境",link:"/python/basic/install.md"},
             {text:"基础语法",link:"/python/basic/instruction.md"},
+            {text:"re库",link:"/python/basic/re.md"},
           ]
         },
         {
