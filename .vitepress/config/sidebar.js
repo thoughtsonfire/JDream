@@ -205,6 +205,11 @@ const sidebar =
           items:[
             {text:"环境",link:"/python/basic/install.md"},
             {text:"基础语法",link:"/python/basic/instruction.md"},
+            {text:"数据类型",link:"/python/basic/dataType.md"},
+            {text:"python 数字",link:"/python/basic/number.md"},
+            {text:"python casting",link:"/python/basic/casting.md"},
+            {text:"python 字符串",link:"/python/basic/string.md"},
+            {text:"文件处理",link:"/python/basic/fileHandling.md"},
             {text:"re库",link:"/python/basic/re.md"},
           ]
         },
@@ -212,7 +217,9 @@ const sidebar =
           text:"进阶",
           collapsed:false,
           items:[
-            
+            {text:"xPath",link:"/python/profession/xPath.md"},
+            {text:"requests库",link:"/python/profession/requests.md"},
+            {text:"BeautifulSoup (bs4)库",link:"/python/profession/bs4.md"},
           ]
         },
       ]
