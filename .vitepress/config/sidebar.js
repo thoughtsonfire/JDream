@@ -220,6 +220,7 @@ const sidebar =
             {text:"xPath",link:"/python/profession/xPath.md"},
             {text:"requests库",link:"/python/profession/requests.md"},
             {text:"BeautifulSoup (bs4)库",link:"/python/profession/bs4.md"},
+            {text:"多线程",link:"/python/profession/threading.md"},
           ]
         },
       ]

@@ -134,3 +134,34 @@ SSL 验证
 requests.get("https://example.com", verify=False)  # 忽略证书
 ```
 
+## 积累  
+
+### 解决防盗链(400/403)
+
+Referer 是 HTTP 协议里的一种 请求头，用来告诉服务器：  
+
+👉 这个请求是从哪个页面点过来的。
+
+```py
+headers = {
+"Referer": "https://m.douban.com/",
+'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
+}
+```
+
+在请求头中加上`Referer`
+
+### pprint.pprint(response.json())
+
+使用pprint打印json数据，结构更清晰  
+
+```py
+import pprint
+
+...
+
+pprint.pprint(response.json())
+```
+
+
+
