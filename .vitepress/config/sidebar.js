@@ -194,7 +194,8 @@ const sidebar =
           text:"基础",
           collapsed:false,
           items:[
-            {text:"puppeteer",link:"/script/puppeteer.md"}
+            {text:"puppeteer",link:"/script/puppeteer.md"},
+            {text:"promise并发",link:"/script/promiseConcurrency.md"}
           ]
         },
       ],
@@ -211,6 +212,7 @@ const sidebar =
             {text:"python 字符串",link:"/python/basic/string.md"},
             {text:"文件处理",link:"/python/basic/fileHandling.md"},
             {text:"re库",link:"/python/basic/re.md"},
+            {text:"os库",link:"/python/basic/os.md"},
           ]
         },
         {
@@ -221,6 +223,8 @@ const sidebar =
             {text:"requests库",link:"/python/profession/requests.md"},
             {text:"BeautifulSoup (bs4)库",link:"/python/profession/bs4.md"},
             {text:"多线程",link:"/python/profession/threading.md"},
+            {text:"tkinter库",link:"/python/profession/tkinter.md"},
+            {text:"selenium库",link:"/python/profession/selenium.md"},
           ]
         },
       ]
