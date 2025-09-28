@@ -74,6 +74,13 @@ const sidebar =
             {text:"常见情况",link:"/js/ts/commonSituations.md"}
           ]
         },
+        {
+          text:"NodeJs",
+          collapsed:true,
+          items:[
+            {text:"process",link:"/js/nodejs/process.md"}
+          ]
+        },
       ],
       "/css":[
         {
@@ -106,6 +113,19 @@ const sidebar =
           items:[
             {text:"运算符",link:"/css/sass/operator.md"},
             {text:"公共样式",link:"/css/sass/commonStyle.md"},
+          ]
+        },
+      ],
+      "/vue":[
+        {
+          text:"随记",
+          link:"/vue/index.md"
+        },
+        {
+          text:"vue3",
+          collapsed:false,
+          items:[
+            {text:"自定义指令",link:"/vue/vue3/customDirectives.md"},
           ]
         },
       ],
@@ -213,6 +233,7 @@ const sidebar =
             {text:"文件处理",link:"/python/basic/fileHandling.md"},
             {text:"re库",link:"/python/basic/re.md"},
             {text:"os库",link:"/python/basic/os.md"},
+            {text:"subprocess库",link:"/python/basic/subprocess.md"},
           ]
         },
         {
@@ -225,6 +246,7 @@ const sidebar =
             {text:"多线程",link:"/python/profession/threading.md"},
             {text:"tkinter库",link:"/python/profession/tkinter.md"},
             {text:"selenium库",link:"/python/profession/selenium.md"},
+            {text:"execjs库",link:"/python/profession/execjs.md"},
           ]
         },
       ]

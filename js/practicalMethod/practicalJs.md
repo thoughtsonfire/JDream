@@ -53,3 +53,49 @@ console.log(text);
 ```
 
 - 图片，则在网络中找到，太多可以筛选，预览中以数据url复制
+
+
+## 前端获取文件夹内的文件名  
+
+| 功能   | Vite (`import.meta.glob`)      | Webpack (`require.context`) |
+| ---- | ------------------------------ | --------------------------- |
+| 静态分析 | ✅ 构建时扫描                        | ✅ 构建时扫描                     |
+| 懒加载  | 默认懒加载，`{ eager: true }` 变成立即导入 | 默认立即导入                      |
+| 语法   | `import.meta.glob("...")`      | `require.context("...")`    |
+| 输出结果 | 返回对象（路径 → 模块）                  | 返回上下文函数，可调用 `.keys()`       |
+
+
+使用示例（Vue3 + Vite）
+
+```ts
+// 会得到一个对象： key 是文件路径，value 是文件模块
+const svgs = import.meta.glob('@/assets/svg/mon/*.svg', { eager: true })
+
+// 文件路径数组
+const files = Object.keys(svgs)
+
+// 文件内容（取决于 vite-svg-loader 等插件怎么处理）
+console.log(files, svgs)
+```
+
+在 webpack 里  
+
+```js
+// 参数：目录, 是否递归, 匹配正则
+const svgs = require.context('@/assets/svg/mon', false, /\.svg$/)
+
+// 所有文件路径（相对路径）
+const files = svgs.keys()
+
+// 获取某个文件内容
+files.forEach((key) => {
+  const mod = svgs(key)
+  console.log(key, mod)
+})
+```
+
+⚠️ **注意**  
+
+- webpack 里 require.context 是 运行时可调用的函数，用 .keys() 得到所有匹配路径，再传入函数得到模块。
+
+- vite 的 import.meta.glob 则直接返回一个对象，更直观。
