@@ -13,7 +13,7 @@
     "vue": "^3.5.14"
   },
   "scripts": {
-    "docs:dev": "vitepress dev --host",
+    "docs:dev": "vitepress dev --host --port 5174",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
   },

@@ -25,6 +25,7 @@ const nav = [
         {text:'vitepress',link:'/vitepress/'},
         {text:'vuepress',link:'/vuepress/'},
         {text:'vue2组件库快速搭建',link:'/vue2components/'},
+        {text:'vue3组件库搭建',link:'/vue3components/basic/build.md'},
         {text:'markdown',link:'/markdown/'},
         {text:'vitepress组件',link:'/vpcdoc/'},
         {text:'快捷键',link:'/shortcut/vscode/index.md'},

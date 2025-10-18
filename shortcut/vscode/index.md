@@ -708,6 +708,28 @@
 
 ## 技巧
 
+### 快捷输入特殊字符
+
+如果你想按一个快捷键就插 └─，可以用 keybinding 调用插入片段：
+
+- 打开命令面板 Ctrl+Shift+P → 输入 Preferences: Open Keyboard Shortcuts (JSON) 并打开。
+
+- 在打开的 keybindings.json 里加入如下配置（示例用 Ctrl+Alt+\\，你可以改成喜欢的组合）：
+
+```json
+[
+  {
+    "key": "ctrl+alt+\\",
+    "command": "editor.action.insertSnippet",
+    "args": { "snippet": "└─ " },
+    "when": "editorTextFocus"
+  }
+]
+
+```
+
+保存后，在编辑器中按 Ctrl+Alt+\ 就会直接插入 └─ 。
+
 ### 插件 Live Server
 
 >安装这个插件后，你可以：
