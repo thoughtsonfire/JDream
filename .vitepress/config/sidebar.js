@@ -230,12 +230,21 @@ const sidebar = {
       collapsed: false,
       items: [
         { text: "xPath", link: "/python/profession/xPath.md" },
+        { text: "pyquery", link: "/python/profession/pyquery.md" },
         { text: "requests库", link: "/python/profession/requests.md" },
         { text: "BeautifulSoup (bs4)库", link: "/python/profession/bs4.md" },
         { text: "多线程", link: "/python/profession/threading.md" },
+        { text: "多进程", link: "/python/profession/multiprocessing.md" },
         { text: "tkinter库", link: "/python/profession/tkinter.md" },
         { text: "selenium库", link: "/python/profession/selenium.md" },
         { text: "execjs库", link: "/python/profession/execjs.md" },
+      ],
+    },
+    {
+      text: "积累",
+      collapsed: true,
+      items: [
+        { text: "网络请求", link: "/python/accumulation/network-request.md" },
       ],
     },
   ],
