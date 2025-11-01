@@ -125,6 +125,11 @@ const sidebar = {
       collapsed: false,
       items: [{ text: "基础使用", link: "/sql/mysql/basicUsage.md" }],
     },
+    {
+      text: "mongo",
+      collapsed: false,
+      items: [{ text: "基础使用", link: "/sql/mongo/basic.md" }],
+    },
   ],
   "/jdream-plus/": {
     text: "jdream-plus",
@@ -219,9 +224,11 @@ const sidebar = {
         { text: "python 数字", link: "/python/basic/number.md" },
         { text: "python casting", link: "/python/basic/casting.md" },
         { text: "python 字符串", link: "/python/basic/string.md" },
+        { text: "yield 关键字", link: "/python/basic/yield.md" },
         { text: "文件处理", link: "/python/basic/fileHandling.md" },
         { text: "re库", link: "/python/basic/re.md" },
         { text: "os库", link: "/python/basic/os.md" },
+        { text: "logging库", link: "/python/basic/logging.md" },
         { text: "subprocess库", link: "/python/basic/subprocess.md" },
       ],
     },
@@ -238,6 +245,7 @@ const sidebar = {
         { text: "tkinter库", link: "/python/profession/tkinter.md" },
         { text: "selenium库", link: "/python/profession/selenium.md" },
         { text: "execjs库", link: "/python/profession/execjs.md" },
+        { text: "pymongo", link: "/python/profession/pymongo.md" },
       ],
     },
     {
