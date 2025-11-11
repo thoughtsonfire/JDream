@@ -116,6 +116,23 @@ with open("img.png", "wb") as f:
 
 <br>
 
+### 代理配合忽略 SSL 验证
+
+```py
+import requests
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+proxies = {
+    'http': 'http://127.0.0.1:7891',
+    'https': 'http://127.0.0.1:7891'  # 注意：requests 对 https 使用的是 HTTP 代理通过 CONNECT 隧道
+}
+
+resp = requests.get('https://www.bilibili.com/',proxies=proxies,verify=False, timeout=30)
+print('httpbin ip (http):', resp.text)
+```
+
 ### 其它常用功能
 
 超时设置

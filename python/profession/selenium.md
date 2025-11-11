@@ -260,6 +260,38 @@ driver.back() # 后退
 driver.forward() # 前进
 ```
 
+## 无头浏览器
+
+> [!NOTE] 无头模式
+> 在运行时不再弹出浏览器窗口  
+> 减少了干扰，而且减少了一些资源的加载  
+> 如图片等资源  
+> 在一定程度上节省了资源加载时间和网络带宽
+
+```py 6,7
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+import os
+
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
+service = ChromeService(ChromeDriverManager().install())
+
+browser = webdriver.Chrome(service=service,options=options)
+
+browser.set_window_size(1024, 768)
+
+browser.get('https://www.baidu.com')
+imgs_path =os.path.abspath("imgs")
+os.makedirs(imgs_path, exist_ok=True)
+
+
+png_path = os.path.join(imgs_path,"preview.png")
+
+browser.get_screenshot_as_file(png_path)
+```
+
 ## 高级技巧
 
 ### 1. 模拟键盘操作
@@ -335,6 +367,8 @@ Object.defineProperty(navigator, "webdriver", { get: () => undefined });
 > 然后传入上文 JavaScript 代码即可  
 > 这样我们就可以每次页面加载之前将 webdriver 属性置空了
 
+### 常用反屏蔽代码
+
 ```py
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -355,6 +389,73 @@ driver.execute_cdp_cmd(
     "Page.addScriptToEvaluateOnNewDocument",
     {"source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"}
 )
+```
+
+```py
+import time
+import random
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+
+def create_stealth_driver():
+    options = webdriver.ChromeOptions()
+    options.add_argument("--start-maximized")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-infobars")  # 尝试隐藏 infobar（新版 chrome 可能忽略）
+    # 覆盖 user-agent
+    ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+    options.add_argument(f"--user-agent={ua}")
+
+    # 去掉 "Chrome is being controlled by automated test software"
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option("useAutomationExtension", False)
+    service = ChromeService(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+
+    # 通过 CDP 注入页面脚本（在 document 被创建前执行）
+    driver.execute_cdp_cmd(
+        "Page.addScriptToEvaluateOnNewDocument",
+        {"source": """
+            Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+            Object.defineProperty(navigator, 'languages', { get: () => ['zh-CN', 'zh'] });
+            Object.defineProperty(navigator, 'plugins', { get: () => [1,2,3,4] });
+            window.chrome = window.chrome || { runtime: {} };
+            try { delete navigator.__proto__.webdriver; } catch(e) {}
+        """}
+    )
+    # 设置 Accept-Language 头（CDP）
+    driver.execute_cdp_cmd('Network.setExtraHTTPHeaders', {'headers': {'Accept-Language': 'zh-CN,zh;q=0.9'}})
+
+    return driver
+
+def example_usage():
+    driver = create_stealth_driver()
+    try:
+        driver.get("https://www.maoyan.com/films?showType=1")
+        wait = WebDriverWait(driver, 30)
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".channel-detail.movie-item-title>a")))
+
+        # 模拟一点人类行为：随机小滚动、等待
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight/4);")
+        time.sleep(random.uniform(0.3, 1.0))
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
+        time.sleep(random.uniform(0.3, 1.0))
+
+        elems = driver.find_elements(By.CSS_SELECTOR, ".channel-detail.movie-item-title>a")
+        names = [e.text for e in elems]
+        print("抓取到名字数量：", len(names))
+        print(names[:20])
+    finally:
+        driver.quit()
+
+if __name__ == "__main__":
+    example_usage()
+
 ```
 
 > options.add_experimental_option("useAutomationExtension", False)  

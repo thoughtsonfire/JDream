@@ -34,13 +34,13 @@ mysql -u 用户名 -p
 ## 数据操作
 
 | 功能         | 命令                                                 |
-| ------------ | ---------------------------------------------------- | ------ |
+| ------------ | ---------------------------------------------------- |
 | 插入数据     | `INSERT INTO 表名 (字段1, 字段2) VALUES (值1, 值2);` |
 | 查询所有数据 | `SELECT * FROM 表名;`                                |
 | 条件查询     | `SELECT * FROM 表名 WHERE 条件;`                     |
 | 更新数据     | `UPDATE 表名 SET 字段=新值 WHERE 条件;`              |
 | 删除数据     | `DELETE FROM 表名 WHERE 条件;`                       |
-| 排序查询     | `SELECT \* FROM 表名 ORDER BY 字段 ASC               | DESC;` |
+| 排序查询     | `SELECT * FROM 表名 ORDER BY 字段 ASC \| DESC;`      |
 | 限制条数     | `SELECT * FROM 表名 LIMIT 10;`                       |
 
 ## 高级查询
