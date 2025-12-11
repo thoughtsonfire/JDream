@@ -191,3 +191,57 @@ for user in collection.find():
 
 client.close()
 ```
+
+## 封装成类
+
+```py
+from pymongo import MongoClient
+from config import CLIENT_PATH,DB_NAME
+import time
+class MongoDB:
+    def __init__(self, uri=CLIENT_PATH, db_name=DB_NAME):
+        self.client = MongoClient(uri)
+        self.db = self.client[db_name]
+        self.products = self.db["products"]
+
+
+    def save_record(self, data):
+        """
+        data 包括：
+                'sku':sku,
+                'goods_name': goods_name,
+                'goods_url':goods_url,
+                'goods_price': goods_price,
+                'goods_img': goods_img,
+                'shop_name' : shop_name,
+                'shop_url' : shop_url,
+        """
+
+        base_info = {
+            "goods_name": data["goods_name"],
+            "goods_url": data["goods_url"],
+            "goods_img": data["goods_img"],
+            "shop_name": data["shop_name"],
+            "shop_url": data["shop_url"],
+        }
+
+        price_record = {
+            "goods_price": data["goods_price"],
+            "time": time.strftime("%Y-%m-%d %H:%M:%S")
+        }
+
+        self.products.update_one(
+            {"sku": data["sku"]},
+            {
+                # 更新商品基础信息（不重复）
+                "$set": base_info,
+                # 往价格数组添加一条
+                "$push": {"history_prices": price_record}
+            },
+            upsert=True
+        )
+
+    def get_all(self):
+        product_list = list(self.products.find())
+        return product_list
+```

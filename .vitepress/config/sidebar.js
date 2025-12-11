@@ -178,6 +178,7 @@ const sidebar = {
       { text: "常用方法", link: "/java/常用方法" },
       { text: "抽象类和接口", link: "/java/抽象类和接口" },
       { text: "easylive_study", link: "/java/easylive_study" },
+      { text: "struct2项目", link: "/java/struct2项目" },
     ],
   },
   "/shortcut": [
@@ -217,7 +218,7 @@ const sidebar = {
   "/python/": [
     {
       text: "基础",
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: "环境", link: "/python/basic/install.md" },
         { text: "基础语法", link: "/python/basic/instruction.md" },
@@ -235,7 +236,7 @@ const sidebar = {
     },
     {
       text: "进阶",
-      collapsed: false,
+      collapsed: true,
       items: [
         { text: "xPath", link: "/python/profession/xPath.md" },
         { text: "pyquery", link: "/python/profession/pyquery.md" },
@@ -250,6 +251,9 @@ const sidebar = {
         { text: "pyppeteer库", link: "/python/profession/pyppeteer.md" },
         { text: "execjs库", link: "/python/profession/execjs.md" },
         { text: "pymongo", link: "/python/profession/pymongo.md" },
+        { text: "pandas", link: "/python/profession/pandas.md" },
+        { text: "plotly", link: "/python/profession/plotly.md" },
+        { text: "drissionpage", link: "/python/profession/drissionpage.md" },
       ],
     },
     {
