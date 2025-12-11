@@ -64,7 +64,7 @@ app.router.add_get('/', handle)
 web.run_app(app, port=8080)
 ```
 
-访问 http://localhost:8080
+访问 `http://localhost:8080`
 
 → 浏览器会显示：
 
