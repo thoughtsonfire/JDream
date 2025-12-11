@@ -253,7 +253,7 @@ const sidebar = {
         { text: "pymongo", link: "/python/profession/pymongo.md" },
         { text: "pandas", link: "/python/profession/pandas.md" },
         { text: "plotly", link: "/python/profession/plotly.md" },
-        { text: "drissionpage", link: "/python/profession/drissionpage.md" },
+        // { text: "drissionpage", link: "/python/profession/drissionpage.md" },
       ],
     },
     {
