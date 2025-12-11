@@ -1,4 +1,4 @@
-# Plotly
+<!-- # Plotly
 
 **两个比较好用的中文网站**
 
@@ -75,4 +75,4 @@ df = pd.DataFrame({
 
 fig = px.bar(df, x="city", y="population", title="柱状图")
 fig.show()
-```
+``` -->
