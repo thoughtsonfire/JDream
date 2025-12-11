@@ -178,7 +178,7 @@ const sidebar = {
       { text: "常用方法", link: "/java/常用方法" },
       { text: "抽象类和接口", link: "/java/抽象类和接口" },
       { text: "easylive_study", link: "/java/easylive_study" },
-      // { text: "struct2项目", link: "/java/struct2项目" },
+      { text: "struct2项目", link: "/java/struct2项目" },
     ],
   },
   "/shortcut": [
@@ -253,7 +253,7 @@ const sidebar = {
         { text: "pymongo", link: "/python/profession/pymongo.md" },
         { text: "pandas", link: "/python/profession/pandas.md" },
         { text: "plotly", link: "/python/profession/plotly.md" },
-        // { text: "drissionpage", link: "/python/profession/drissionpage.md" },
+        { text: "drissionpage", link: "/python/profession/drissionpage.md" },
       ],
     },
     {

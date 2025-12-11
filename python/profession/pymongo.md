@@ -1,4 +1,4 @@
-<!-- # pymongo
+# pymongo
 
 ## 安装
 
@@ -244,4 +244,4 @@ class MongoDB:
     def get_all(self):
         product_list = list(self.products.find())
         return product_list
-``` -->
+```
