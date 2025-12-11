@@ -177,8 +177,8 @@ const sidebar = {
       { text: "switch", link: "/java/switch" },
       { text: "常用方法", link: "/java/常用方法" },
       { text: "抽象类和接口", link: "/java/抽象类和接口" },
-      { text: "easylive_study", link: "/java/easylive_study" },
-      { text: "struct2项目", link: "/java/struct2" },
+      { text: "easylive_study", link: "/java/easylive_study.md" },
+      { text: "struct2项目", link: "/java/struct2.md" },
     ],
   },
   "/shortcut": [
@@ -287,3 +287,4 @@ const sidebar = {
 };
 
 export default sidebar;
+
