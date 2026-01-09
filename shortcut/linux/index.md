@@ -350,3 +350,111 @@ sudo systemctl enable mongod      # 开机自启
 sudo systemctl restart mongod     # 启动服务
 sudo systemctl status mongod      # 查看状态
 ```
+
+## 命令实例
+
+### 找到文件位置
+
+```bash
+sudo find / -type f -name nginx 2>/dev/null
+```
+
+超实用速查表
+
+| 目的         | 命令                          |
+| ------------ | ----------------------------- |
+| 模糊查 nginx | `find / -iname '*nginx*'`     |
+| 忽略大小写   | `-iname`                      |
+| 只找文件     | `-type f`                     |
+| 只找目录     | `-type d`                     |
+| 全系统查     | `sudo find / ... 2>/dev/null` |
+| 精确查       | `-name nginx`                 |
+
+- `sudo` 以管理员（root）权限执行
+
+普通用户很多目录（如 /root、/proc、/var/lib）没权限
+不加 sudo 会大量报错：Permission denied
+👉 加 sudo = 查得更全
+
+- `find` 查找
+  在指定目录中，按条件递归查找文件或目录
+
+- `/` 表示从系统根目录开始找
+  查找起点目录
+
+```text
+/
+├── bin
+├── etc
+├── home
+├── usr
+├── var
+└── ...
+```
+
+- `-type f` 只查找“普通文件”
+
+| 参数 | 含义     |
+| ---- | -------- |
+| `f`  | 普通文件 |
+| `d`  | 目录     |
+| `l`  | 软链接   |
+| `c`  | 字符设备 |
+| `b`  | 块设备   |
+
+- `-name nginx`
+
+按文件名精确匹配
+
+- 只匹配 文件名正好等于 nginx
+
+- 不包含路径
+
+- 区分大小写
+
+比如能找到：
+
+```text
+/usr/sbin/nginx
+/home/jack/nginx
+```
+
+但找不到：
+
+```text
+nginx.conf
+nginx.exe
+nginx.old
+```
+
+- `2>/dev/null`
+
+把错误信息“丢掉”
+
+这是很多人不太懂的一段，重点来了 👇
+
+Linux 的三种标准流
+
+| 编号 | 含义               |
+| ---- | ------------------ |
+| `0`  | stdin（输入）      |
+| `1`  | stdout（正常输出） |
+| `2`  | stderr（错误输出） |
+
+这段的意思：
+
+```bash
+2> /dev/null
+```
+
+- `2>`：重定向 错误输出
+
+- `/dev/null`：Linux 的“黑洞”
+
+所有权限错误、警告信息直接丢弃
+
+👉 效果：
+
+- 终端只显示 真正找到的结果
+
+- 不被 Permission denied 刷屏
