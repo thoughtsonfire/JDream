@@ -69,7 +69,10 @@ const sidebar = {
     {
       text: "TS",
       collapsed: true,
-      items: [{ text: "常见情况", link: "/js/ts/commonSituations.md" }],
+      items: [
+        { text: "常见情况", link: "/js/ts/commonSituations.md" },
+        { text: "declare", link: "/js/ts/declare.md" },
+      ],
     },
     {
       text: "NodeJs",
@@ -287,4 +290,3 @@ const sidebar = {
 };
 
 export default sidebar;
-
