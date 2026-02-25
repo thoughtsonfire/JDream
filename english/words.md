@@ -81,3 +81,9 @@
 | 命令          | command           | Linux/Windows 终端命令、数据库命令、编程语言的指令 |
 | 指令          | instruction       | CPU 指令、汇编语言、底层操作                       |
 | 函数调用/方法 | function / method | 高级编程语言里的调用行为                           |
+
+<br>
+
+#### outline n.大纲 / ˈaʊtlaɪn /
+
+<br>

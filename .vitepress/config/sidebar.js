@@ -166,7 +166,18 @@ const sidebar = {
       { text: "搜索", link: "/vitepress/搜索" },
     ],
   },
-  "/english/": set_sidebar("/english/"),
+  "/english/": [
+    {
+      text: "基础",
+      collapsed: false,
+      items: [{ text: "单词", link: "/english/words.md" }],
+    },
+    {
+      text: "软件",
+      collapsed: false,
+      items: [{ text: "blender", link: "/english/blender.md" }],
+    },
+  ],
   //"/java/":set_sidebar("/java/"),//自动生成侧边栏，效果不佳
   "/java/": {
     text: "java",
