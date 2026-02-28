@@ -87,3 +87,17 @@
 #### outline n.大纲 / ˈaʊtlaɪn /
 
 <br>
+
+#### browse 随意翻阅
+
+> browse
+>
+> 英 / braʊz /;美 / braʊz /
+>
+> v. 随意翻阅；（动物）吃草；（在商店里）随便看看；浏览信息
+>
+> n. 随意的看，浏览；（动物吃的）植物
+>
+> 【名】 （Browse）（英）布劳斯（人名）
+>
+> 第三人称单数 browses;现在分词 browsing;过去式 browsed;过去分词 browsed

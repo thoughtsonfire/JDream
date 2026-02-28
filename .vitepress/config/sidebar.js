@@ -298,6 +298,13 @@ const sidebar = {
       ],
     },
   ],
+  "/browse/": [
+    {
+      text: "管子",
+      collapsed: true,
+      items: [{ text: "牧民", link: "/browse/guanzi/mumin.md" }],
+    },
+  ],
 };
 
 export default sidebar;
