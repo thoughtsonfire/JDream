@@ -302,7 +302,7 @@ const sidebar = {
     {
       text: "管子",
       collapsed: true,
-      items: [{ text: "牧民", link: "/browse/guanzi/mumin.md" }],
+      items: [{ text: "牧民第一", link: "/browse/guanzi/mumin.md" }],
     },
   ],
 };

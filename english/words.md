@@ -101,3 +101,15 @@
 > 【名】 （Browse）（英）布劳斯（人名）
 >
 > 第三人称单数 browses;现在分词 browsing;过去式 browsed;过去分词 browsed
+
+#### bulletin 简报
+
+> [!TIP] bulletin
+>
+> 英 / ˈbʊlətɪn /; 美 / ˈbʊlətɪn /;
+>
+> n. （广播或电视中的）新闻简报；公告，布告；（机构或社团的）通讯，刊物
+>
+> v. 通过公告公布或告知
+>
+> 复数 bulletins;第三人称单数 bulletins;现在分词 bulletining;过去式 bulletined;过去分词 bulletined
