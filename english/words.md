@@ -113,3 +113,17 @@
 > v. 通过公告公布或告知
 >
 > 复数 bulletins;第三人称单数 bulletins;现在分词 bulletining;过去式 bulletined;过去分词 bulletined
+
+#### battle 战争、较量
+
+> [!TIP] battle
+>
+> 英 / ˈbæt(ə)l /;美 / ˈbæt(ə)l /;
+>
+> n.战役，战争；争论，斗争；竞赛，较量；拼搏，奋斗
+>
+> v.与……作战，和……斗争；搏斗，奋斗；争吵，争论；阻止，打败
+>
+> 【名】 （Battle）（英）巴特尔，（法）巴特勒，（西）巴特莱（人名）
+>
+> 复数 battles;第三人称单数 battles;现在分词 battling;过去式 battled;过去分词 battled
