@@ -77,7 +77,10 @@ const sidebar = {
     {
       text: "NodeJs",
       collapsed: true,
-      items: [{ text: "process", link: "/js/nodejs/process.md" }],
+      items: [
+        { text: "process", link: "/js/nodejs/process.md" },
+        { text: "koa", link: "/js/nodejs/koa.md" },
+      ],
     },
   ],
   "/css": [
