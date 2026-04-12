@@ -14,6 +14,7 @@ const sidebar = {
         { text: "对象方法", link: "/js/basicKnowledge/object.md" },
         { text: "字符串方法", link: "/js/basicKnowledge/string.md" },
         { text: "数组方法", link: "/js/basicKnowledge/array.md" },
+        { text: "Map", link: "/js/basicKnowledge/Map.md" },
         { text: "函数方法", link: "/js/basicKnowledge/function.md" },
         { text: "元素", link: "/js/basicKnowledge/element.md" },
         { text: "ES6", link: "/js/basicKnowledge/es6.md" },
@@ -306,6 +307,16 @@ const sidebar = {
       text: "管子",
       collapsed: true,
       items: [{ text: "牧民第一", link: "/browse/guanzi/mumin.md" }],
+    },
+  ],
+  "/data-structure/": [
+    {
+      text: "复杂度",
+      link: "/data-structure/complexity.md",
+    },
+    {
+      text: "哈希表",
+      link: "/data-structure/hash-table.md",
     },
   ],
 };
