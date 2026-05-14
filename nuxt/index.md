@@ -488,3 +488,493 @@ composables 是什么意思？
 - useState + composable：轻量、SSR 友好、按 key 全局共享，适合简单共享数据。
 - defineStore（你现在的 app/stores/myStore.ts）：更适合复杂逻辑、持久化、插件等。
   两者可以并存：简单共享用 composable 包一层 useState；复杂状态继续用 Pinia。
+
+## Nuxt中的接口请求数据获取
+
+> 类似vue3中的axios封装
+
+> Nuxt 提供了useFetch、useLazyFetch、useAsyncData和useLazyAsyncData 四个组合式API以及一个全局辅助函数$fetch来处理应用程序中的数据获取。
+
+> useFetch可以实现其它三个API的全部功能,实际开发中，我们只需要使用useFetch 一个API.
+
+### 简单使用
+
+```ts
+const { data, status, error, refresh, clear } = await useFetch<{
+  title: string;
+}>("https://api.nuxt.com/modules", {
+  pick: ["title"],
+  server: false,
+});
+
+const param1 = ref("value1");
+const {
+  data: data2,
+  status: status2,
+  error: error2,
+  refresh: refresh2,
+} = await useFetch("https://api.nuxt.com/modules", {
+  query: { param1, param2: "value2" },
+  server: false,
+});
+```
+
+### 基础封装
+
+```ts
+import type { FetchContext, FetchOptions, FetchResponse } from "ofetch";
+
+/** 与 method、body、query 拆开，由 data / 各方法自行组装 */
+type HttpConfig = Omit<FetchOptions, "method" | "body" | "query">;
+
+type ResponseCtx = FetchContext & {
+  response: FetchResponse<unknown>;
+};
+
+type RequestErrorCtx = FetchContext & { error: Error };
+
+/**
+ * 统一调用形态：(url, data?, config?)
+ * - GET / DELETE：data → query（查询参数）
+ * - POST / PUT / PATCH：data → body
+ *
+ * baseURL：runtimeConfig.public.apiBase，环境变量 NUXT_PUBLIC_API_BASE
+ *
+ * 拦截器（ofetch 钩子，执行顺序见下方数组顺序）：
+ * - onRequest：发请求前
+ * - onResponse：成功且已解析 body 到 response._data 后
+ * - onResponseError：HTTP 4xx/5xx
+ * - onRequestError：网络失败、被 abort 等（未拿到响应）
+ */
+export function useHttpFetch() {
+  const { public: pub } = useRuntimeConfig();
+  const baseURL = (pub.apiBase as string) || "";
+
+  /** 无 JSON 类型时对普通对象 body 补 Content-Type */
+  function applyJsonContentType({ options }: FetchContext) {
+    const headers = new Headers(options.headers as HeadersInit | undefined);
+    if (
+      options.body !== undefined &&
+      typeof options.body === "object" &&
+      !(options.body instanceof FormData) &&
+      !(options.body instanceof Blob) &&
+      !(options.body instanceof ArrayBuffer)
+    ) {
+      if (!headers.has("Content-Type")) {
+        headers.set("Content-Type", "application/json");
+      }
+    }
+    options.headers = headers;
+  }
+
+  /** 请求拦截：鉴权、公共头、traceId 等 */
+  function interceptRequest(_ctx: FetchContext) {
+    // 示例：useCookie / useAuthState 仅在此 composable 内使用
+    // const token = useCookie<string | null>("token");
+    // if (token.value) {
+    //   const h = new Headers(_ctx.options.headers as HeadersInit | undefined);
+    //   h.set("Authorization", `Bearer ${token.value}`);
+    //   _ctx.options.headers = h;
+    // }
+  }
+
+  /** 响应拦截：可改写 response._data（如后端 { code, data } 统一解包） */
+  function interceptResponse(_ctx: ResponseCtx) {
+    // const raw = _ctx.response._data;
+    // if (isBizEnvelope(raw)) _ctx.response._data = raw.data;
+  }
+
+  /** HTTP 错误拦截：4xx/5xx（执行后仍会按 ofetch 规则抛出 FetchError） */
+  function interceptResponseError(_ctx: ResponseCtx) {
+    // if (_ctx.response.status === 401) navigateTo("/login");
+  }
+
+  /** 请求阶段失败：无 response（网络、超时、abort 等） */
+  function interceptRequestError(_ctx: RequestErrorCtx) {
+    // console.error("[http]", _ctx.error);
+  }
+
+  const client = $fetch.create({
+    baseURL,
+    retry: 0,
+    onRequest: [applyJsonContentType, interceptRequest],
+    onResponse: [interceptResponse],
+    onResponseError: [interceptResponseError],
+    onRequestError: [interceptRequestError],
+  });
+
+  function fetchQuery<T>(
+    method: "GET" | "DELETE",
+    url: string,
+    data?: FetchOptions["query"],
+    config?: HttpConfig,
+  ) {
+    return client<T>(url, {
+      ...config,
+      method,
+      query: data,
+    });
+  }
+
+  type RequestBody = NonNullable<FetchOptions["body"]>;
+
+  function fetchBody<T>(
+    method: "POST" | "PUT" | "PATCH",
+    url: string,
+    data?: RequestBody,
+    config?: HttpConfig,
+  ) {
+    return client<T>(url, {
+      ...config,
+      method,
+      body: data,
+    });
+  }
+
+  return {
+    get: <T = unknown>(
+      url: string,
+      data?: FetchOptions["query"],
+      config?: HttpConfig,
+    ) => fetchQuery<T>("GET", url, data, config),
+
+    delete: <T = unknown>(
+      url: string,
+      data?: FetchOptions["query"],
+      config?: HttpConfig,
+    ) => fetchQuery<T>("DELETE", url, data, config),
+
+    post: <T = unknown>(url: string, data?: RequestBody, config?: HttpConfig) =>
+      fetchBody<T>("POST", url, data, config),
+
+    put: <T = unknown>(url: string, data?: RequestBody, config?: HttpConfig) =>
+      fetchBody<T>("PUT", url, data, config),
+
+    patch: <T = unknown>(
+      url: string,
+      data?: RequestBody,
+      config?: HttpConfig,
+    ) => fetchBody<T>("PATCH", url, data, config),
+  };
+}
+```
+
+- 使用：
+
+```vue
+<script setup lang="ts">
+const { get } = useHttpFetch();
+onMounted(async () => {
+  const info = await get("/info", { param1: "value1", param2: "value2" });
+  console.log(info);
+});
+</script>
+
+<template>
+  <div>index</div>
+</template>
+```
+
+## 服务端server
+
+在根目录下创建 server目录，这里边放服务端的内容
+
+## 接口
+
+在server目录下创建api文件夹，里边的文件就是接口
+
+接口类型由文件名决定,默认get
+
+```ts [/server/api/user.post.ts]
+//接口路径 /api/user
+export default defineEventHandler((event) => {
+  return {
+    message: "Hello World",
+  };
+});
+```
+
+在server目录下，创建routes目录，里边也可以放接口，不会带routes前缀
+
+```ts [/server/routes/user.ts]
+//接口路径 /user
+export default defineEventHandler((event) => {
+  return {
+    message: "Hello World",
+  };
+});
+```
+
+## 服务端中间件
+
+/server/middleware 目录下
+
+## 数据库
+
+### 安装插件
+
+```bash
+pnpm install mysql2
+```
+
+### 创建连接池，并导出
+
+```ts [/server/db/index.ts]
+import mysql from "mysql2/promise";
+import type { Pool, PoolOptions } from "mysql2/promise";
+
+/**
+ * Nitro 服务端 MySQL 连接池（Nuxt 会加载项目根目录 `.env`）。
+ *
+ * 环境变量：MYSQL_HOST、MYSQL_PORT（可选，默认 3306）、MYSQL_USER、MYSQL_PASSWORD、MYSQL_DATABASE
+ *
+ * - `getMysqlPool()` / 默认导出：取同一惰性单例
+ * - `pool`：代理到该单例，供 repository / service 直接 `pool.execute(...)`
+ */
+let poolInstance: Pool | null = null;
+
+function resolvePoolOptions(): PoolOptions {
+  const host = process.env.MYSQL_HOST;
+  const user = process.env.MYSQL_USER;
+  const database = process.env.MYSQL_DATABASE;
+
+  if (!host || !user || !database) {
+    throw new Error(
+      "MySQL: 请在 .env 中配置 MYSQL_HOST、MYSQL_USER、MYSQL_DATABASE",
+    );
+  }
+
+  return {
+    host,
+    port: Number(process.env.MYSQL_PORT || 3306),
+    user,
+    password: process.env.MYSQL_PASSWORD ?? "",
+    database,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+  };
+}
+
+/** 唯一创建点：首次调用时 `mysql.createPool` */
+export function getMysqlPool(): Pool {
+  if (!poolInstance) {
+    poolInstance = mysql.createPool(resolvePoolOptions());
+  }
+  return poolInstance;
+}
+
+/**
+ * 与 `getMysqlPool()` 同一实例，惰性创建。
+ * 不要对 `pool` 重新赋值；仅通过属性访问转发到真实 Pool。
+ */
+export const pool: Pool = new Proxy({} as Pool, {
+  get(_target, prop) {
+    const p = getMysqlPool();
+    const v = Reflect.get(p, prop, p);
+    return typeof v === "function"
+      ? (v as (...a: unknown[]) => unknown).bind(p)
+      : v;
+  },
+});
+
+/** 手动探测（如启动插件、健康检查）；不会在 import 时自动执行 */
+export async function testMysqlConnection(): Promise<boolean> {
+  try {
+    const [rows] = await getMysqlPool().execute("SELECT 1 + 1 AS result");
+    const first = (rows as Array<{ result: number }>)[0];
+    console.log("[mysql] 连接成功", first?.result);
+    return true;
+  } catch (err) {
+    console.error("[mysql] 连接失败", (err as Error).message);
+    return false;
+  }
+}
+
+export default pool;
+```
+
+### 封装crud
+
+```ts [/server/db/crud.ts]
+import type { ResultSetHeader } from "mysql2";
+import pool from "./index";
+
+/** 连接池在 ./index 创建；此处只引用 `pool` */
+type QuerySuccess<T> = { success: true; data: T[] };
+type QueryFail = { success: false; msg: string };
+type QueryResult<T> = QuerySuccess<T> | QueryFail;
+
+export const query = async <T = Record<string, unknown>>(
+  sql: string,
+  params: unknown[],
+): Promise<QueryResult<T>> => {
+  try {
+    const [rows] = await pool.execute(sql, params as never[]);
+    return { success: true, data: rows as T[] };
+  } catch (err) {
+    const error = err as Error;
+    console.error("查询异常", error);
+    return { success: false, msg: error.message };
+  }
+};
+
+export const add = async (
+  table: string,
+  data: Record<string, unknown>,
+): Promise<{ success: true; insertId: number } | QueryFail> => {
+  const keys = Object.keys(data);
+  const values = Object.values(data);
+  const placeholders = keys.map(() => "?").join(",");
+  const sql = `insert into ${table} (${keys.join(",")}) values (${placeholders})`;
+
+  try {
+    const [result] = await pool.execute(sql, values as never[]);
+    const header = result as ResultSetHeader;
+    return { success: true, insertId: header.insertId };
+  } catch (err) {
+    const error = err as Error;
+    console.error("新增异常", error);
+    return { success: false, msg: error.message };
+  }
+};
+
+export const update = async (
+  table: string,
+  data: Record<string, unknown>,
+  where: Record<string, unknown>,
+): Promise<{ success: true; affectedRows: number } | QueryFail> => {
+  const setStr = Object.keys(data)
+    .map((key) => `${key}=?`)
+    .join(",");
+  const whereStr = Object.keys(where)
+    .map((key) => `${key}=?`)
+    .join(",");
+  const params = [...Object.values(data), ...Object.values(where)];
+  const sql = `update ${table} set ${setStr} where ${whereStr}`;
+
+  try {
+    const [result] = await pool.execute(sql, params as never[]);
+    const header = result as ResultSetHeader;
+    return { success: true, affectedRows: header.affectedRows };
+  } catch (err) {
+    const error = err as Error;
+    console.error("更新异常", error);
+    return { success: false, msg: error.message };
+  }
+};
+
+export const del = async (
+  table: string,
+  where: Record<string, unknown>,
+): Promise<{ success: true; affectedRows: number } | QueryFail> => {
+  const whereStr = Object.keys(where)
+    .map((key) => `${key}=?`)
+    .join(",");
+  const params = [...Object.values(where)];
+  const sql = `delete from ${table} where ${whereStr}`;
+
+  try {
+    const [result] = await pool.execute(sql, params as never[]);
+    const header = result as ResultSetHeader;
+    return { success: true, affectedRows: header.affectedRows };
+  } catch (err) {
+    const error = err as Error;
+    console.error("删除异常", error);
+    return { success: false, msg: error.message };
+  }
+};
+```
+
+## 校验数据 joi库
+
+```bash
+pnpm install joi
+```
+
+```js
+const schema = joi.object({
+  nickname: joi.string().required(),
+  phone: joi
+    .string()
+    .pattern(/^1[3-9]\d{9}$/)
+    .required(),
+  password: joi.string().required(),
+});
+
+try {
+  const value = await schema.validateAsync({
+    body,
+  });
+} catch (err) {
+  return {
+    code: 400,
+    message: "参数错误",
+    data: {},
+  };
+}
+```
+
+## md5加密
+
+```bash
+pnpm install md5
+```
+
+## 图标
+
+- 按需加载图标插件
+
+```bash
+pnpm install unplugin-icons
+```
+
+```bash
+pnpm install unplugin-vue-components
+```
+
+- 图标库
+
+```bash
+pnpm install @iconify/json
+```
+
+- 配置
+
+```ts [nuxt.config.ts]
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
+import Components from "unplugin-vue-components/vite";
+
+export default defineNuxtConfig({
+  vite: {
+    plugins: [
+      Components({
+        resolvers: [
+          IconsResolver({
+            prefix: "icon",
+            enabledCollections: ["mdi", "ep", "ant-design"],
+          }),
+        ],
+      }),
+      Icons({
+        autoInstall: true,
+      }),
+    ],
+  },
+});
+```
+
+## nuxt页面级组件
+
+```ts
+export default defineNuxtConfig({
+  pages: {
+    pattern: ["**/*.vue", "!**/components/**"],
+  },
+  components: [
+    { path: "~/components" },
+    { path: "~/pages", pattern: "**/components/**/*.vue", pathPrefix: true }, //带路径前缀
+  ],
+});
+```

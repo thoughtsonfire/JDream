@@ -183,22 +183,54 @@ const sidebar = {
     },
   ],
   //"/java/":set_sidebar("/java/"),//自动生成侧边栏，效果不佳
-  "/java/": {
-    text: "java",
-    items: [
-      { text: "java", link: "/java/" },
-      { text: "常用cmd命令", link: "/java/常用cmd命令" },
-      { text: "常用字符", link: "/java/常用字符" },
-      { text: "jdk", link: "/java/jdk" },
-      { text: "IDEA", link: "/java/IDEA" },
-      { text: "数据类型", link: "/java/数据类型" },
-      { text: "switch", link: "/java/switch" },
-      { text: "常用方法", link: "/java/常用方法" },
-      { text: "抽象类和接口", link: "/java/抽象类和接口" },
-      { text: "easylive_study", link: "/java/easylive_study.md" },
-      { text: "struct2项目", link: "/java/struct2.md" },
-    ],
-  },
+  "/java/": [
+    {
+      text: "基础知识",
+      collapsed: true,
+      items: [
+        { text: "概述", link: "/java/basic/overview.md" },
+        { text: "创建", link: "/java/basic/create.md" },
+        { text: "变量", link: "/java/basic/variable.md" },
+        { text: "数据类型", link: "/java/basic/data-type.md" },
+        { text: "运算符", link: "/java/basic/operator.md" },
+        { text: "流程控制", link: "/java/basic/control-flow.md" },
+        { text: "数组", link: "/java/basic/array.md" },
+        { text: "面向对象", link: "/java/basic/object-oriented.md" },
+      ],
+    },
+    {
+      text: "零散",
+      collapsed: true,
+      items: [
+        { text: "java", link: "/java/" },
+        { text: "常用cmd命令", link: "/java/常用cmd命令" },
+        { text: "常用字符", link: "/java/常用字符" },
+        { text: "jdk", link: "/java/jdk" },
+        { text: "IDEA", link: "/java/IDEA" },
+        { text: "数据类型", link: "/java/数据类型" },
+        { text: "switch", link: "/java/switch" },
+        { text: "常用方法", link: "/java/常用方法" },
+        { text: "抽象类和接口", link: "/java/抽象类和接口" },
+        { text: "easylive_study", link: "/java/easylive_study.md" },
+        { text: "struct2项目", link: "/java/struct2.md" },
+      ],
+    },
+  ],
+  "/nest": [
+    {
+      text: "介绍",
+      collapsed: false,
+      items: [{ text: "前言", link: "/nest/index.md" }],
+    },
+    {
+      text: "基础",
+      collapsed: false,
+      items: [
+        { text: "创建项目", link: "/nest/basic/create.md" },
+        { text: "规范", link: "/nest/basic/normalize.md" },
+      ],
+    },
+  ],
   "/shortcut": [
     { text: "vscode", link: "/shortcut/vscode/index.md" },
     { text: "chorme", link: "/shortcut/chorme/index.md" },

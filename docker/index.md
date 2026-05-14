@@ -96,3 +96,9 @@ docker save -o node-server.tar node-server:latest
 ```bash
 docker load -i node-server.tar
 ```
+
+## MinIO
+
+```bash
+docker pull minio/minio:RELEASE.2025-04-08T15-41-24Z
+```

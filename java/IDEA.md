@@ -1,15 +1,17 @@
-# IDEA 
+# IDEA
 
 ## IDEA 项目结构介绍
 
- project(项目)
+project(项目)
 
- module(模块)
+module(模块)
 
- package(包)
- 
- class(类)
+package(包)
+
+class(类)
 
 ## IDEA常用快捷键
- - 代码生成菜单 `Alt`+`Insert`
- - 删除未使用的导入 `Ctrl`+`ALT`+`O`
+
+- 代码生成菜单 `Alt`+`Insert`
+- 删除未使用的导入 `Ctrl`+`ALT`+`O`
+- 光标放在有问题的地方`Ctrl`+`I`
