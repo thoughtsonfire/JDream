@@ -177,9 +177,12 @@ const sidebar = {
       items: [{ text: "单词", link: "/english/words.md" }],
     },
     {
-      text: "软件",
+      text: "相关",
       collapsed: false,
-      items: [{ text: "blender", link: "/english/blender.md" }],
+      items: [
+        { text: "blender", link: "/english/blender.md" },
+        { text: "Java", link: "/english/java.md" },
+      ],
     },
   ],
   //"/java/":set_sidebar("/java/"),//自动生成侧边栏，效果不佳
@@ -196,6 +199,7 @@ const sidebar = {
         { text: "流程控制", link: "/java/basic/control-flow.md" },
         { text: "数组", link: "/java/basic/array.md" },
         { text: "面向对象", link: "/java/basic/object-oriented.md" },
+        { text: "多线程", link: "/java/basic/thread.md" },
       ],
     },
     {

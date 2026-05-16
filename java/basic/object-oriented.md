@@ -648,6 +648,19 @@ Number的子类：Byte、Short、Integer、Long、Float、Double
 
 拆箱：将包装类对象转化为基本数据类型
 
+### 包装类和基础类的自动转化
+
+| 场景           | 会不会自动转换 |
+| -------------- | -------------- |
+| 赋值           | 会             |
+| 参数传递       | 会             |
+| 返回值         | 会             |
+| 运算           | 会             |
+| 反射 getMethod | 不会           |
+| Class 比较     | 不会           |
+| 泛型           | 不会           |
+| instanceof     | 不会           |
+
 ## 异常
 
 ### 什么是异常
@@ -723,4 +736,100 @@ public class Test2 {
 
 ```java
 Integer num = new Integer("abc");
+```
+
+### 异常使用
+
+try-catch
+
+try:监听可能会抛出异常的代码，一旦出现错误，JDK会自动创建一个错误对应的异常对象，抛出该异常对象。
+
+catch:用来捕获JDK创建的异常对象，进行后续处理
+
+```java
+try{
+
+}catch(Exception e){
+
+}
+
+//e.printStackTrace() 可以查看错误的调用链
+```
+
+```java
+public class Test7 {
+    public static void main(String[] args) {
+        Integer num = test();
+        System.out.println(num);
+    }
+
+    public static Integer test() {
+        try {
+            System.out.println("try");
+            return 10;
+        }finally {
+            System.out.println("finally");
+            return 20;
+        }
+    }
+}
+// try
+// finally
+// 20
+
+
+//finally 里边的代码一定会执行，即使前面有中断
+//这里finally里的return 覆盖率try里边的
+```
+
+### throw 和 throws
+
+throw 和 throws 是Java 在处理异常时使用的两个关键字，都是用来抛出异常的，但是使用方式和表示的含义完全不同。
+
+Java中抛出异常的方式有3种：
+
+- try-catch 是一种防范机制，代码可能会出现异常，如果抛出异常则捕获，补抛出异常则成句继续执行
+
+- throw 是开发这主动窗机一个错误对象，并抛出
+
+- throws 是标注方法，用来描述该方法可能会抛出的异常
+
+通过throws声明的方法，在调用的时候必须强制使用try-catch进行代码处理，或者再往上抛
+
+### 自定义异常
+
+定义一个方法，对传入的参数进行++ 操作并返回结果，同时要求参数必须是整数类型的，如果传入的参数不是整数类型，则抛出自定义异常
+
+自定义的类继承Exception,就成为了一个异常类
+
+```java
+public class NumberException extends Exception {
+    public NumberException(String message) {
+        super(message);
+    }
+}
+```
+
+```java
+public class Test8 {
+    public static void main(String[] args) {
+        try{
+            int i = test("aaa");
+            System.out.println(i);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static Integer test(Object obj) throws NumberException {
+        if(!(obj instanceof Integer)){
+            throw new NumberException("参数类型不为Integer");
+        }
+        Integer i = (Integer)obj;
+        return ++i;
+    }
+}
+
+// exception.NumberException: 参数类型不为Integer
+// 	at exception.Test8.test(Test8.java:14)
+// 	at exception.Test8.main(Test8.java:6)
 ```
