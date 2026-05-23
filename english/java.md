@@ -1,5 +1,7 @@
 # Java 相关的单词
 
+## lambda
+
 > [!TIP] lambda
 >
 > 英 / ˈlæmdə /; 美 / ˈlæmdə /
@@ -11,3 +13,13 @@
 > n. 匿名函数; Java中有 Lambda表达式
 >
 > 复数lambdas
+
+## synchronized
+
+> [!TIP] synchronized
+>
+> 英 / ˈsɪŋkrənaɪzd /;美 / ˈsɪŋkrənaɪzd /
+>
+> adj. 同步的；同步化的;
+>
+> v. 使协调（synchronize 的过去分词）；同时发生；校准

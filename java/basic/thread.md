@@ -385,3 +385,270 @@ join()方法存在重载`join(long millis)`
 通过`join()`进行的，则并挤奶的线程会一直占用CPU资源，直到结束才会释放CPU资源
 
 通过`join(long millis)`,会占用`millis`时间，或者该线程结束。如果没结束，就继续并发执行。
+
+### 线程同步
+
+多线程同时访问同一资源，可能会导致数据不准确的情况1出现，所以需要线程同步来解决这一问题。
+
+```java
+public class Account implements Runnable {
+
+    private static int num;
+
+    @Override
+    public void run() {
+        num++;
+        System.out.println(Thread.currentThread().getName()+"是当前的第"+num+"位访客");
+    }
+}
+
+public class Test6 {
+    public static void main(String[] args) {
+        Account account = new Account();
+        Thread t1 = new Thread(account,"线程1");
+        Thread t2 = new Thread(account,"线程2");
+
+        t1.start();
+        t2.start();
+    }
+}
+
+
+// 线程2是当前的第2位访客
+// 线程1是当前的第2位访客
+
+```
+
+通过线程锁 `synchronized` 来锁定
+
+#### 方法一 锁类对象（推荐理解）
+
+```java
+public class Account implements Runnable {
+
+    private static int num;
+
+    @Override
+    public void run() {
+        synchronized (Account.class) {
+            num++;
+            System.out.println(Thread.currentThread().getName()
+                    + "是当前的第" + num + "位访客");
+        }//锁类
+    }
+}
+```
+
+这里：
+
+```java
+synchronized (Account.class)
+```
+
+表示：
+
+```
+锁的是 Account 这个类
+JVM 中类对象只有一份
+所有线程都会竞争同一把锁
+```
+
+因此真正保护了：
+
+```java
+static int num
+```
+
+#### 方法二 使用 static synchronized
+
+```java
+public class Account implements Runnable {
+
+    private static int num;
+
+    @Override
+    public void run() {
+        add();
+    }
+
+    public static synchronized void add() {
+        num++;
+        System.out.println(Thread.currentThread().getName()
+                + "是当前的第" + num + "位访客");
+    }
+}
+```
+
+这里：
+
+```java
+static synchronized
+```
+
+锁的也是：
+
+```java
+Account.class
+```
+
+本质和上面一样。
+
+| 数据           | 应该锁什么          |
+| -------------- | ------------------- |
+| 普通成员变量   | this                |
+| static静态变量 | 类对象（xxx.class） |
+
+`synchronized` 可以修饰实例方法，也可以修饰静态方法
+
+```java
+public class SynchronizedTest {
+    public static void main(String[] args) {
+        for (int i = 0; i < 5; i++) {
+            Thread thread = new Thread(()->{
+                SynchronizedTest.test();
+            });
+            thread.start();
+        }
+    }
+
+    public static synchronized  void test() {
+        System.out.println("start...");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("end...");
+    }
+}
+```
+
+### 线程安全的单例模式
+
+单例模式，核心思想是一个类只有一个实例化对象。
+
+如何实现单例模式
+
+1. 禁止通过构造器来创建对象，如何实现？
+
+如何禁止外部调用构造器？把构造器私有化。
+
+2. 如何确保对象只有一个？
+
+创建对象的方法，先验证是否有对象
+
+```java
+//只有单线程这样可以，多线程就不行了
+public class Sample {
+
+    private static Sample sample;
+
+    private  Sample(){
+        System.out.println("创建了Sample对象");
+    }
+
+    public static Sample getInstance(){
+        if(sample == null){  //可能多个线程进入了判断里边，但创建对象并未开始
+            sample = new Sample();
+        }
+        return sample;
+    }
+}
+```
+
+```java
+//多线程也行了
+public class Sample {
+
+    private static Sample sample;
+
+    private  Sample(){
+        System.out.println("创建了Sample对象");
+    }
+
+    public static synchronized Sample getInstance(){
+        if(sample == null){
+            sample = new Sample();
+        }
+        return sample;
+    }
+}
+```
+
+### 死锁
+
+死锁：多个线程因为争夺统一资源，而形成的一种互斥状态，导致每个线程都无法继续执行。
+如：A、B需要data1,data2,它们一人拿了一个
+
+```java
+package thread;
+
+public class DeadLockRannable implements Runnable {
+    public int num;
+
+    private static Data data1 = new Data();
+    private static Data data2 = new Data();
+
+    @Override
+    public void run() {
+
+        if(num ==1){
+            synchronized (data1){
+                System.out.println(Thread.currentThread().getName()+"获取了data1,等待data2");
+                try {
+                    Thread.sleep(100);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+                synchronized (data2){
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(Thread.currentThread().getName()+"任务完成");
+                }
+            }
+        }
+
+        if(num ==2){
+            synchronized (data2){
+                System.out.println(Thread.currentThread().getName()+"获取了data2,等待data1");
+                try {
+                    Thread.sleep(100);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+                synchronized (data1){
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(Thread.currentThread().getName()+"任务完成");
+                }
+            }
+        }
+    }
+}
+```
+
+```java
+package thread;
+
+public class Test9 {
+    public static void main(String[] args) {
+        DeadLockRannable rannable1 = new DeadLockRannable();
+        rannable1.num=1;
+        DeadLockRannable rannable2 = new DeadLockRannable();
+        rannable2.num=2;
+        Thread thread1 = new Thread(rannable1,"Thread1");
+        Thread thread2 = new Thread(rannable2,"Thread2");
+        thread1.start();
+        thread2.start();
+    }
+}
+//卡住
+```

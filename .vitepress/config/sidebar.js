@@ -182,6 +182,7 @@ const sidebar = {
       items: [
         { text: "blender", link: "/english/blender.md" },
         { text: "Java", link: "/english/java.md" },
+        { text: "业务", link: "/english/service.md" },
       ],
     },
   ],
