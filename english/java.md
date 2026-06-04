@@ -23,3 +23,12 @@
 > adj. 同步的；同步化的;
 >
 > v. 使协调（synchronize 的过去分词）；同时发生；校准
+
+## ReentrantLock
+
+> [!TIP] ReentrantLock
+>
+> - Reentrant：/riˈentrənt/
+> - Lock：/lɑːk/
+>
+> 可重入锁

@@ -652,3 +652,235 @@ public class Test9 {
 }
 //卡住
 ```
+
+### 重入锁
+
+ReentrantLock 是对 synchronized的升级，synchronized是通过JVM实现，ReentrantLock是通过JDK实现（用方法调用的形式来使用）
+
+重入锁的特点是可以重复上锁
+
+synchronized 是自动上锁，自动解锁
+
+ReentrantLock 是手动上锁，手动解锁，可以上多次锁，解锁也需要多次
+
+```java
+import java.util.concurrent.locks.ReentrantLock;
+
+public class UseReentrantLockRannable implements Runnable{
+
+    private static int num;
+
+    private ReentrantLock reentrantLock = new ReentrantLock();
+
+    @Override
+    public void run() {
+        reentrantLock.lock();
+        num++;
+        try{
+            Thread.sleep(1);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread().getName() + "是当前的第" + num + "位访客");
+        reentrantLock.unlock();
+    }
+}
+```
+
+```java
+public class Test10 {
+    public static void main(String[] args) {
+        UseReentrantLockRannable useReentrantLockRannable = new UseReentrantLockRannable();
+
+        Thread thread1 = new Thread(useReentrantLockRannable,"张三");
+        Thread thread2 = new Thread(useReentrantLockRannable,"李四");
+
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+
+`ReentrantLock` 还具备限时性的特点，指可以判断某个线程在一定时间内能否获取锁
+
+`tryLock(Long timeout,TimeUnit unit)`
+
+```java
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class TimeLock implements Runnable{
+
+    private ReentrantLock reentrantLock = new ReentrantLock();
+
+    @Override
+    public void run() {
+        try{
+            if(reentrantLock.tryLock(3, TimeUnit.SECONDS)){
+                System.out.println(Thread.currentThread().getName() + "获取到了锁");
+                Thread.sleep(5000);
+            }
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }finally {
+            if(reentrantLock.isHeldByCurrentThread()){
+                reentrantLock.unlock();
+            }
+        }
+    }
+}
+```
+
+```java
+public class Test11 {
+    public static void main(String[] args) {
+        TimeLock timeLock = new TimeLock();
+        Thread t1 = new Thread(timeLock,"张三");
+        Thread t2 = new Thread(timeLock,"李四");
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+### 生产者消费者模式
+
+```java
+package product_custom_model;
+
+public class Hamburger {
+    private int id;
+
+    public Hamburger(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Hamburger{" +
+                "id=" + id +
+                '}';
+    }
+}
+```
+
+```java
+package product_custom_model;
+
+public class Container {
+    public Hamburger[] array = new Hamburger[6];
+    public int index = 0;
+
+    public synchronized void push(Hamburger hamburger) {
+        while (index == array.length) {
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        this.notify();
+        array[index] = hamburger;
+        index++;
+        System.out.println("生产了一个汉堡"+hamburger);
+    }
+    public synchronized Hamburger pop() {
+        while (index == 0) {
+            try{
+                this.wait();
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        this.notify();
+        index--;
+        System.out.println("消费一个汉堡"+array[index]);
+        return array[index];
+    }
+}
+```
+
+```java
+package product_custom_model;
+
+public class Producer implements Runnable {
+
+    private Container container;
+
+    public Producer(Container container) {
+        this.container = container;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 30; i++) {
+            Hamburger hamburger = new Hamburger(i);
+            this.container.push(hamburger);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+}
+```
+
+```java
+package product_custom_model;
+
+public class Customer implements Runnable{
+
+    private Container container;
+
+    public Customer(Container container) {
+        this.container = container;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 30; i++) {
+            this.container.pop();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
+```
+
+```java
+package product_custom_model;
+
+public class Test {
+    public static void main(String[] args) {
+        Container container = new Container();
+        Producer producer = new Producer(container);
+        Customer customer = new Customer(container);
+        new Thread(producer).start();
+        new Thread(producer).start();
+        new Thread(customer).start();
+    }
+}
+```
+
+### sleep和wait
+
+sleep 和 wait 的功能类似，都是让线程暂停执行任务。
+
+sleep 是Thread 类提供的方法，wait是Object 类提供的方法
+
+sleep 是直接作用于线程对象本身的，wait 作用于线程正在访问的资源
+
+调用A对象的wait： 让当前正在访问A对象的线程休眠，同时它有一个前提，当前线程必须拥有A对象，所以wait方法只能在同步方法或同步代码块中调用。
