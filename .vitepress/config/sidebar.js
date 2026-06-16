@@ -201,6 +201,7 @@ const sidebar = {
         { text: "数组", link: "/java/basic/array.md" },
         { text: "面向对象", link: "/java/basic/object-oriented.md" },
         { text: "多线程", link: "/java/basic/thread.md" },
+        { text: "集合框架", link: "/java/basic/collection.md" },
       ],
     },
     {

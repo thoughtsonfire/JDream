@@ -884,3 +884,874 @@ sleep 是Thread 类提供的方法，wait是Object 类提供的方法
 sleep 是直接作用于线程对象本身的，wait 作用于线程正在访问的资源
 
 调用A对象的wait： 让当前正在访问A对象的线程休眠，同时它有一个前提，当前线程必须拥有A对象，所以wait方法只能在同步方法或同步代码块中调用。
+
+wait 会释放锁，sleep不会释放锁
+
+```java
+package wait;
+
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+    public static void main(String[] args) {
+        A a = new A();
+        new Thread(()->{
+            for (int i = 0; i < 10; i++) {
+                a.test(i);
+            }
+        }).start();
+    }
+}
+
+class A {
+    public synchronized void test(int i){
+        if(i ==5){
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(i+"________________");
+    }
+}
+```
+
+- i==5，调用A的wait方法，会让正在访问A的线程休眠，并且永远不会解除阻塞。
+
+如何让线程解除阻塞？
+
+1. 指定wait的时间，wait(long millis),millis 之后会自动解除阻塞，类似sleep
+
+wait 来自 Object
+
+A 继承了Object，A中自带wait方法
+
+sleep 是来自 Thread 的静态方法
+
+2. 通过调用notify 方法唤醒线程
+
+```java
+package wait;
+
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+    public static void main(String[] args) {
+        A a = new A();
+        new Thread(()->{
+            for (int i = 0; i < 10; i++) {
+                a.test(i);
+            }
+        }).start();
+
+        new Thread(()->{
+            try {
+                TimeUnit.SECONDS.sleep(7);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            a.test2();
+        }).start();
+    }
+}
+
+class A {
+    public synchronized void test(int i){
+        if(i ==5){
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(i+"________________");
+    }
+
+    public synchronized void test2(){
+        this.notify();
+    }
+}
+```
+
+无论 wait 还是notify方法，都必须放到同步方法或者同步代码块中才能正常调用，否则会抛出异常。
+
+### synchronized 锁定的是谁
+
+> synchronized 修饰非静态方法，锁定的是方法的调用者
+
+```java
+package _synchronized;
+
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+    public static void main(String[] args) {
+        Data data = new Data();
+        new Thread(() -> {
+            data.func1();
+        },"A").start();
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        new Thread(() -> {
+            data.func2();
+        },"B").start();
+    }
+}
+
+class Data {
+    public synchronized void func1(){
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("1...");
+    }
+    public synchronized void func2(){
+        System.out.println("2...");
+    }
+}
+
+// 1...
+// 2...
+```
+
+首先判断方法是否添加了`synchronized`关键字，如果没有添加，则不需要考虑线程同步的问题，如果添加了，则需要考虑线程同步的问题，看当前锁定的资源在内存中有几分，如果只有一份，则多个线程会同步，如果有多分，则多个线程不需要同步。
+
+> 如果`synchronized`修饰的是静态方法，则锁定的是类，无论有多少个对象，都会同步
+
+```java
+package _synchronized;
+
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+    public static void main(String[] args) {
+        Data data1 = new Data();
+        Data data2 = new Data();
+        new Thread(() -> {
+            data1.func1();
+        },"A").start();
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        new Thread(() -> {
+            data2.func2();
+        },"B").start();
+    }
+}
+
+class Data {
+    public synchronized static void func1(){
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("1...");
+    }
+    public synchronized static void func2(){
+        System.out.println("2...");
+    }
+}
+```
+
+> 如果synchronized 静态方法和实例方法同时存在，静态方法锁定的是类，实例方法锁定的是对象。
+
+```java
+package _synchronized;
+
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+    public static void main(String[] args) {
+        Data data1 = new Data();
+        Data data2 = new Data();
+        new Thread(() -> {
+            data1.func1();
+        },"A").start();
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        new Thread(() -> {
+            data1.func2();
+        },"B").start();
+    }
+}
+
+class Data {
+    public synchronized static void func1(){
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("1...");
+    }
+    public synchronized  void func2(){
+        System.out.println("2...");
+    }
+}
+// 2...
+// 1...
+```
+
+> 如果synchronized 修饰的是代码块，则锁定的是传入的对象。
+
+```java
+package _synchronized;
+
+import java.util.concurrent.TimeUnit;
+
+public class Test2 {
+    public static void main(String[] args) {
+        Data2 data2 = new Data2();
+        for (int i = 0; i < 5; i++) {
+            Integer num = Integer.valueOf(i);
+            new Thread(()->{
+                data2.func(num);
+            }).start();
+        }
+    }
+}
+
+class Data2 {
+    public void func(Integer num){
+        synchronized (num){
+            System.out.println("start...");
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("end...");
+        }
+    }
+}
+
+// start...
+// start...
+// start...
+// start...
+// start...
+// end...
+// end...
+// end...
+// end...
+// end...
+```
+
+```java
+package _synchronized;
+
+import java.util.concurrent.TimeUnit;
+
+public class Test2 {
+    public static void main(String[] args) {
+        Data2 data2 = new Data2();
+        for (int i = 0; i < 5; i++) {
+            Integer num = 1;
+            new Thread(()->{
+                data2.func(num);
+            }).start();
+        }
+    }
+}
+
+class Data2 {
+    public void func(Integer num){
+        synchronized (num){
+            System.out.println("start...");
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("end...");
+        }
+    }
+}
+// start...
+// end...
+// start...
+// end...
+// start...
+// end...
+// start...
+// end...
+// start...
+// end...
+```
+
+### ConcurrentModificationException 并发修改异常
+
+ArrayList 是线程不安全的集合，当多个线程同时操作集合时，会出现数据不准确的情况
+
+如何解决？
+
+1. 将ArrayList 替换成线程安全的集合Vector
+
+```java [ArrayList]
+    public boolean add(E e) {
+        ensureCapacityInternal(size + 1);  // Increments modCount!!
+        elementData[size++] = e;
+        return true;
+    }
+```
+
+```java [Vector]
+    public synchronized boolean add(E e) {
+        modCount++;
+        ensureCapacityHelper(elementCount + 1);
+        elementData[elementCount++] = e;
+        return true;
+    }
+```
+
+2. 使用Collections.synchronizedList
+
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+    public static void main(String[] args) {
+        List<String> list = Collections.synchronizedList(new ArrayList<String>());
+
+        for (int i = 0; i < 10; i++) {
+            new Thread(()->{
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                list.add("1");
+                System.out.println(list);
+            }).start();
+        }
+    }
+}
+```
+
+3. JUC 工具类 CopyOnWriteArrayList
+
+java.util.concurrent JDK的一个包，存放的都是关于并发的工具类
+
+CopyOnWriteArrayList 写时复制,当我们往一个容器中添加元素的时候，不直接往当前容器中添加，而是将当前容器进行复制，向新容器中添加元素，添加完成之后，再将原容器的引用指向新容器
+
+可以对CopyOnWrite容器进行并发的读，而不需要加锁，因为当前容器不会添加任何元素，添加元素都是针对复制出来的新集合进行操作，所以CopyOnWrite容器也是一种读写分离的思想，读和写操作的是不同的容器。（读的时候，要么读到旧地址，要么读到新地址，因为 Java 规范保证对象引用的读写是原子的，这是 JVM 和 CPU 共同保证的）
+
+```java
+    public boolean add(E e) {
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            Object[] elements = getArray();
+            int len = elements.length;
+            Object[] newElements = Arrays.copyOf(elements, len + 1);
+            newElements[len] = e;
+            setArray(newElements);
+            return true;
+        } finally {
+            lock.unlock();
+        }
+    }
+```
+
+```java
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+    public static void main(String[] args) {
+        List<String> list = new CopyOnWriteArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            new Thread(()->{
+                try {
+                    TimeUnit.MILLISECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                list.add("1");
+                System.out.println(list);
+            }).start();
+        }
+    }
+}
+```
+
+## JUC 并发编程工具包
+
+java.util.concurrent JDK的一个包，存放的都是关于并发的工具类
+
+### CountDownLatch
+
+减法计数器，JUC的工具类，可以用来倒计时，当两个线程同时执行时，如果我们要确保一个线程先执行，设置一个计数器，当计数器清零的时候，再执行另一个线程。
+
+```java
+import java.util.concurrent.CountDownLatch;
+
+public class CountDownLatchTest {
+    public static void main(String[] args) {
+
+        CountDownLatch countDownLatch = new CountDownLatch(100);
+        new Thread(()->{
+            for (int i = 0; i < 100; i++) {
+                System.out.println("++++++++++++++Thread");
+                countDownLatch.countDown();
+            }
+        }).start();
+
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int i = 0; i < 100; i++) {
+            System.out.println("main------------------------");
+        }
+    }
+}
+```
+
+### CyclicBarrier
+
+加法计数器
+
+```java
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
+public class CyclicBarrierTest {
+    public static void main(String[] args) {
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(10,()->{
+            System.out.println("放行");
+        });
+
+        for (int i = 0; i < 30; i++) {
+            final int temp = i;
+            new Thread(()->{
+                System.out.println("-->" + temp);
+
+                try {
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (BrokenBarrierException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        }
+    }
+}
+//输出三次放行
+```
+
+### Semaphore
+
+计数信号量，实际开发中主要用来完成限流操作，即限制可以访问某些资源的线程数量。
+
+- 初始化
+- 获取许可
+- 释放
+
+```java
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+
+public class SemaphoreTest {
+    public static void main(String[] args) {
+        Semaphore semaphore = new Semaphore(5);
+
+        for (int i = 0; i < 15; i++) {
+            new Thread(()->{
+                try {
+                    semaphore.acquire();
+                    System.out.println(Thread.currentThread().getName()+"进店消费...");
+                    TimeUnit.SECONDS.sleep(2);
+                    System.out.println(Thread.currentThread().getName()+"出店...");
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }finally {
+                    semaphore.release();
+                }
+            },String.valueOf(i)).start();
+        }
+    }
+}
+// 1进店消费...
+// 2进店消费...
+// 0进店消费...
+// 3进店消费...
+// 6进店消费...
+// 1出店...
+// 0出店...
+// 6出店...
+// 2出店...
+// 3出店...
+// 10进店消费...
+// 5进店消费...
+// 4进店消费...
+// 7进店消费...
+// 11进店消费...
+// 7出店...
+// 11出店...
+// 5出店...
+// 4出店...
+// 10出店...
+// 13进店消费...
+// 12进店消费...
+// 9进店消费...
+// 8进店消费...
+// 14进店消费...
+// 13出店...
+// 12出店...
+// 8出店...
+// 14出店...
+// 9出店...
+```
+
+### ReentrantReadWriteLock
+
+读写锁
+
+接口 ReadWriteLock, 实现类ReentrantReadWriteLock，可以多线程同时读，但是同一时间只能有一个线程进行写入操作。
+
+```java
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+public class ReadWriteLockTest {
+    public static void main(String[] args) {
+        Cache cache = new Cache();
+        for (int i = 0; i < 5; i++) {
+            //Lambda 捕获的是局部变量的值，而不是变量本身。
+            //Lambda 表达式只能捕获 final 或 effectively final 的局部变量
+            final int temp = i;
+            new Thread(()-> {
+                cache.write(temp,String.valueOf(temp));
+            }).start();
+        }
+        for (int i = 0; i < 5; i++) {
+            final int temp = i;
+            new Thread(()-> {
+                cache.read(temp);
+            }).start();
+        }
+    }
+}
+
+class Cache{
+    private Map<Integer,String> map = new HashMap<>();
+    ReadWriteLock lock = new ReentrantReadWriteLock();
+
+    //写操作
+    public void write(Integer key,String value){
+        lock.writeLock().lock();
+        System.out.println(key + "开始写入");
+        map.put(key,value);
+        System.out.println(key + "写入完毕");
+        lock.writeLock().unlock();
+    }
+
+    //读操作
+    public void read(Integer key){
+        lock.readLock().lock();
+        System.out.println(key + "开始读取");
+        map.get(key);
+        System.out.println(key + "读取完毕");
+        lock.readLock().unlock();
+    }
+}
+```
+
+### ForkJoin 框架
+
+ForkJoin 框架是JDK1.7 之后提供的一个多线程并发处理框架，本质上是对线程池的一种补充，它的核心思想是将一个大型任务拆分成多个小任务，分别执行，最终将小任务的结果进行汇总，形成最终的结果。
+
+拆分
+
+多个任务+多个线程
+
+- ForkJoinTask 表示任务
+- ForkJoinPool 表示线程（线程池的一种扩展）
+
+1. 创建ForkJoinTask任务，ForkJoinTask 是一个抽象类，需要创建一个类来继承ForkJoinTask子类RecursiveTask，实现抽象方法compute，拆分的逻辑写在compute方法里。
+
+2. 任务要通过ForkJoinPool来执行，将任务直接放入ForkJoinPool中，直接获取结果即可。
+
+```java
+import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.RecursiveTask;
+
+public class ForkJoinDemo extends RecursiveTask<Long> {
+
+    private Long start;
+    private Long end;
+    private Long temp = 100_0000L;
+
+    public ForkJoinDemo(Long start, Long end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    protected Long compute() {
+        if(end - start <= temp) {
+            Long sun = 0L;
+            for(Long i = start;i <= end;i++) {
+                sun += i;
+            }
+            return sun;
+        }else{
+            Long avg = (end + start) / 2;
+            ForkJoinDemo task1 = new ForkJoinDemo(start, avg);
+            ForkJoinDemo task2 = new ForkJoinDemo(avg+1, end);
+            task1.fork();
+            task2.fork();
+            return task1.join() + task2.join();
+        }
+
+    }
+}
+```
+
+```java
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+
+public class Test1 {
+    public static void main(String[] args) {
+        Long sun = 0L;
+        Long startTime = System.currentTimeMillis();
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        ForkJoinTask<Long> task = new ForkJoinDemo(0L,20_000_000L);
+        forkJoinPool.execute(task);
+        try {
+            sun = task.get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+        Long endTime = System.currentTimeMillis();
+        Long totalTime = endTime - startTime;
+        System.out.println(sun+"消耗了"+totalTime+"毫秒");
+
+    }
+}
+```
+
+## 线程池
+
+预先创建好一定数量的线程对象，存入缓冲池，需要用的时候直接从缓冲池中取出，用完之后不要销毁，还回到缓冲池中，供下次任务使用。
+
+优点：
+
+- 提高线程的利用率
+- 提高响应速度
+- 便于统一管理线程对象
+- 可控制最大并发量
+
+工作流程：
+
+- 初始化线程池，创建默认数量的线程对象
+- 当任务过多的时候，额外补充线程数量
+- 当任务趋于正常的时候，额外补充的线程自动销毁
+
+初始化线程数量
+最大化线程数量
+
+### 线程池的实现有三种方式：
+
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ExecutorServiceTest {
+    public static void main(String[] args) {
+        //单例线程池，只有一个线程对象
+//        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        //多力线程池，手动指定数量
+//        ExecutorService executorService = Executors.newFixedThreadPool(5);
+
+
+        //缓存线程池，根据电脑配置，自行决定线程数量
+        ExecutorService executorService = Executors.newCachedThreadPool();
+
+        for (int i = 0; i < 10; i++) {
+            final int temp = i;
+            executorService.execute(()->{
+                System.out.println(Thread.currentThread().getName() + ":" + temp);
+            });
+        }
+        executorService.shutdown();
+    }
+}
+```
+
+::: code-group
+
+```java [newSingleThreadExecutor]
+public static ExecutorService newSingleThreadExecutor() {
+    return new FinalizableDelegatedExecutorService
+        (new ThreadPoolExecutor(1, 1,
+                                0L, TimeUnit.MILLISECONDS,
+                                new LinkedBlockingQueue<Runnable>()));
+}
+```
+
+```java [newFixedThreadPool]
+public static ExecutorService newFixedThreadPool(int nThreads) {
+    return new ThreadPoolExecutor(nThreads, nThreads,
+                                    0L, TimeUnit.MILLISECONDS,
+                                    new LinkedBlockingQueue<Runnable>());
+}
+```
+
+```java [newCachedThreadPool]
+public static ExecutorService newCachedThreadPool() {
+    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                    60L, TimeUnit.SECONDS,
+                                    new SynchronousQueue<Runnable>());
+}
+```
+
+:::
+
+### ThreadPoolExecutor
+
+`ThreadPoolExecutor` 才是线程池的原生类
+
+核心参数：
+
+- corePoolSize: 核心池大小
+- maximumPoolSize: 线程池最大线程数
+- keepAliveTime: 空闲线程的存活时间
+- unit: 时间单位
+- workQueue: 阻塞队列
+- threadFactory: 线程工厂
+- handler: 拒绝策略
+
+### 自定义线程池
+
+```java
+import java.util.concurrent.*;
+
+public class CustomThreadPool {
+    public static void main(String[] args) {
+        ExecutorService executorService = new ThreadPoolExecutor(
+                2,5,1L, TimeUnit.SECONDS,new ArrayBlockingQueue<>(3),
+                Executors.defaultThreadFactory(),new ThreadPoolExecutor.AbortPolicy()
+        );
+
+        for (int i = 0; i < 8; i++) {
+            executorService.execute(()->{
+                try {
+                    TimeUnit.MILLISECONDS.sleep(200);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(Thread.currentThread().getName() + "===>正在办理业务");
+            });
+        }
+        executorService.shutdown();
+    }
+}
+```
+
+## volatile 关键字
+
+```java
+package _volatile;
+
+public class SingletonDemo {
+    private volatile static SingletonDemo singletonDemo;
+    private SingletonDemo() {
+        System.out.println("创建了singletonDemo");
+    }
+
+    public static SingletonDemo getInstance() {
+        synchronized (SingletonDemo.class) {
+            if (singletonDemo == null) {
+                singletonDemo = new SingletonDemo();
+            }
+        }
+        return singletonDemo;
+    }
+
+}
+```
+
+volatile 关键字的作用是可以使内存中的数据对线程可见
+
+Java 内存模型 JMM Java Memory Model
+
+一个线程在访问内存数据的时候，其实不是拿到数据本身，而是将数据复制保存到工作内存中，相当于使用的是一个副本，对工作内存中的数据进行修改，修改完成之后再保存到主内存中，主内存对线程不可见
+
+```java
+import java.util.concurrent.TimeUnit;
+
+public class Test1 {
+    private static Integer num = 0;
+    public static void main(String[] args) {
+        new Thread(()->{
+            while (num==0){
+
+            }
+        }).start();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        num = 1;
+        System.out.println(num);
+    }
+}
+```
+
+输出1，子线程不会结束，主内存对线程不可见，子线程从主内存中取出num=0 放到工作内存中，主线程从主内存中取出num=0,放到工作内存中，执行num=1,然后将num=1还回到主内存中，但此时，子线程的工作内存中的num=0,所以循环不会结束。
+
+解决方法
+
+```java
+private static volatile Integer num = 0;
+```
+
+直接操作主内存中的，省掉了复制到工作内存的步骤
