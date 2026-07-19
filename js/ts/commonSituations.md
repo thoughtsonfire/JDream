@@ -57,3 +57,18 @@ export type AnyKey = {
   [key: string]: any;
 };
 ```
+
+## 强制类型转换bug
+
+比如预期是`string`
+
+```ts
+let data = arr.map((item) => {
+  return {
+    a: item.a,
+    b: (item.b as string).split(","),
+  };
+});
+```
+
+如果`item.b` 是`null` ,也不报错，`data`值也拿不到

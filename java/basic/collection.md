@@ -396,3 +396,211 @@ Map接口是与Collection 接口完全独立的另一个体系。
 | Set entrySet()                      | 将Map转换成Set对象             |
 | int hashCode()                      | 获取集合的散列码               |
 | boolean equals(Object o)            | 比较两个集合是否相等           |
+
+## Map接口的实现类
+
+- HashMap: 存储一组无序、key不可重复、value可重复的元素
+- Hashtable: 存储一组无序、key不可重复，value可重复的元素
+- TreeMap: 存储一组有序、key不可重复、value可重复的元素，可以按照key来排序
+
+### HashMap
+
+HashMap 是线程不安全的
+
+```java
+public V put(K key, V value) {
+    return putVal(hash(key), key, value, false, true);
+}
+```
+
+```java
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
+public class HashMapTest {
+    public static void main(String[] args) {
+        HashMap hashMap = new HashMap();
+        hashMap.put("h", "Hello");
+        hashMap.put("w", "World");
+        hashMap.put("j", "Java");
+        System.out.println(hashMap);
+        hashMap.remove("h");
+        System.out.println(hashMap);
+        hashMap.put("j", "JavaEE");
+        System.out.println(hashMap);
+        hashMap.put("e", "JavaEE");
+        System.out.println(hashMap);
+        System.out.println(hashMap.containsKey("j"));
+        System.out.println(hashMap.containsValue("JavaEE"));
+        Set set = hashMap.entrySet();
+        Iterator iterator = set.iterator();
+        while(iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+        Set keySet = hashMap.keySet();
+        Iterator iterator2 = keySet.iterator();
+        while(iterator2.hasNext()){
+            System.out.println(iterator2.next());
+        }
+        Collection collection = hashMap.values();
+        Iterator iterator3 = collection.iterator();
+        while(iterator3.hasNext()){
+            System.out.println(iterator3.next());
+        }
+    }
+}
+```
+
+### Hashtable
+
+Hashtable 是线程安全的，HashMap 是线程不安全的
+
+```java
+public synchronized V put(K key, V value) {
+    // Make sure the value is not null
+    if (value == null) {
+        throw new NullPointerException();
+    }
+
+    // Makes sure the key is not already in the hashtable.
+    Entry<?,?> tab[] = table;
+    int hash = key.hashCode();
+    int index = (hash & 0x7FFFFFFF) % tab.length;
+    @SuppressWarnings("unchecked")
+    Entry<K,V> entry = (Entry<K,V>)tab[index];
+    for(; entry != null ; entry = entry.next) {
+        if ((entry.hash == hash) && entry.key.equals(key)) {
+            V old = entry.value;
+            entry.value = value;
+            return old;
+        }
+    }
+
+    addEntry(hash, key, value, index);
+    return null;
+}
+```
+
+```java
+package _collection;
+
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
+
+public class HashtableTest {
+    public static void main(String[] args) {
+        Hashtable hashtable = new Hashtable();
+        hashtable.put("h", "Hello");
+        hashtable.put("w", "World");
+        hashtable.put("j", "Java");
+        hashtable.put("s", "JavaSE");
+        System.out.println(hashtable);
+        hashtable.remove("h");
+        System.out.println(hashtable);
+        hashtable.put("s", "JavaEE");
+        System.out.println(hashtable);
+        System.out.println(hashtable.containsKey("h"));
+        System.out.println(hashtable.containsValue("Java"));
+        Set keySet = hashtable.keySet();
+        Iterator iterator2 = keySet.iterator();
+        while(iterator2.hasNext()){
+            System.out.println(iterator2.next());
+        }
+        Collection collection = hashtable.values();
+        Iterator iterator3 = collection.iterator();
+        while(iterator3.hasNext()){
+            System.out.println(iterator3.next());
+        }
+        Set entrySet = hashtable.entrySet();
+        Iterator iterator4 = entrySet.iterator();
+        while(iterator4.hasNext()){
+            System.out.println(iterator4.next());
+        }
+    }
+}
+```
+
+## Collections 工具类
+
+Collections 工具类是专门用来操作集合的，添加元素、对对象进行排序、替换元素等
+
+Collections 常用方法
+
+| 方法                                                                | 描述                                           |
+| :------------------------------------------------------------------ | :--------------------------------------------- |
+| public static void sort(List list,Comparator)                       | 根据Comparator 接口进行排序                    |
+| public static int binarySearch(List list,Object k)                  | 查找元素在集合中的下标，要求集合必须是升序排列 |
+| public static Object get(int index)                                 | 根据下标找到元素                               |
+| public static void reverse(List list)                               | 对集合元素的顺序进行反转                       |
+| public static void fill(List list,Object o)                         | 将集合中的元素全部替换为o                      |
+| public static void min(List list)                                   | 返回集合中的最小值                             |
+| public static void max(List list)                                   | 返回集合中的最大值                             |
+| public static boolean replaceAll(List list,Objetc oldV,Object newV) | 将集合中所有的oldV 替换成newV                  |
+| public static boolean addAll(List list,Object... o)                 | 向集合中添加元素                               |
+| public static void swap(List list,int index1,int Index2)            | 交换集合中两个元素的位置                       |
+
+```java
+public static <T> boolean addAll(Collection<? super T> c, T... elements) {
+    boolean result = false;
+    for (T element : elements)
+        result |= c.add(element);
+    return result;
+}
+```
+
+```java
+package _collection;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class CollectionTest {
+    public static void main(String[] args) {
+        ArrayList list = new ArrayList();
+        list.add("Hello");
+        list.add("World");
+        System.out.println(list);
+        Collections.addAll(list, "Java", "C++", "Python");
+        System.out.println(list);
+        Collections.reverse(list);
+        System.out.println(list);
+        Collections.swap(list, 0, 1);
+        System.out.println(list);
+        Collections.sort(list);
+        System.out.println(list);
+        System.out.println(Collections.binarySearch(list, "Java"));//binarySearch 必须是list升序排列的，不然结果可能不对
+        Collections.replaceAll(list, "Java", "Test");
+        System.out.println(list);
+        Collections.sort(list, new Comparator<String>(){
+            /**
+             * 1 o1>o2
+             * 0 01==o2
+             * -1 01<o2
+             * 升序
+             * @param o1 the first object to be compared.
+             * @param o2 the second object to be compared.
+             * @return
+             */
+            @Override
+            public int compare(String o1, String o2) {
+                if(o1.length() > o2.length()){
+                    return 1;
+                }
+                else if(o1.length() < o2.length()){
+                    return -1;
+                }
+                return 0;
+            }
+        });
+        System.out.println(list);
+        Collections.fill(list, "Test");
+        System.out.println(list);
+    }
+
+}
+```

@@ -202,6 +202,13 @@ const sidebar = {
         { text: "面向对象", link: "/java/basic/object-oriented.md" },
         { text: "多线程", link: "/java/basic/thread.md" },
         { text: "集合框架", link: "/java/basic/collection.md" },
+        { text: "泛型", link: "/java/basic/genericity.md" },
+        { text: "实用类", link: "/java/basic/pratical-class.md" },
+        { text: "IO流", link: "/java/basic/io.md" },
+        { text: "反射", link: "/java/basic/reflection.md" },
+        { text: "JavaWeb", link: "/java/basic/java-web.md" },
+        { text: "数据库", link: "/java/basic/sql.md" },
+        { text: "Spring", link: "/java/basic/spring.md" },
       ],
     },
     {
