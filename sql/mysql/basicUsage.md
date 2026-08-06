@@ -26,9 +26,10 @@ mysql -u 用户名 -p
 | 查看表结构             | `DESC 表名;` 或 `SHOW COLUMNS FROM 表名;`                                              |
 | 创建表                 | `sql CREATE TABLE 表名 (id INT PRIMARY KEY AUTO_INCREMENT,name VARCHAR(100),age INT);` |
 | 删除表                 | `DROP TABLE 表名;`                                                                     |
-| 修改表结构（加字段）   | `ALTER TABLE 表名 ADD 列名 数据类型;`                                                  |
+| 修改表结构（加字段）   | `ALTER TABLE 表名 ADD COLUMN 列名 数据类型;`                                           |
 | 修改字段类型           | `ALTER TABLE 表名 MODIFY 列名 新数据类型;`                                             |
-| 删除字段               | `ALTER TABLE 表名 DROP 列名;`                                                          |
+| 修改字段名             | `ALTER TABLE 表名 CHANGE  旧列名 新列名 新数据类型;`                                   |
+| 删除字段               | `ALTER TABLE 表名 DROP COLUMN 列名;`                                                   |
 | 重命名表               | `RENAME TABLE 原表名 TO 新表名;`                                                       |
 
 ## 数据操作

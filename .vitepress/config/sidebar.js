@@ -212,6 +212,16 @@ const sidebar = {
       ],
     },
     {
+      text: "进阶",
+      collapsed: true,
+      items: [{ text: "Mybatis", link: "/java/profession/mybatis.md" }],
+    },
+    {
+      text: "积累",
+      collapsed: true,
+      items: [{ text: "bug", link: "/java/amass/bug.md" }],
+    },
+    {
       text: "零散",
       collapsed: true,
       items: [
