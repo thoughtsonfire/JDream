@@ -731,7 +731,7 @@ knife4j:
 
 访问地址
 
-```
+```md
 http://localhost:8080/doc.html
 ```
 
@@ -1412,7 +1412,7 @@ hashOperations.put(hashMap3,key3,value3);
 
 | 注解        | 作用                       |
 | ----------- | -------------------------- |
-| `@NotNull`  | 不能为 null                |
+| `@NotNull`  | 不能为 `null`              |
 | `@NotBlank` | 字符串不能为空且不能全空格 |
 | `@NotEmpty` | 集合、数组、字符串不能为空 |
 | `@Min`      | 最小值                     |
