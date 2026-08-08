@@ -126,6 +126,12 @@ public class Accout {
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+
+    <settings>
+        <!--打印SQL-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
     <!-- 配置mybatis的运行环境    -->
     <environments default="development">
         <environment id="development">
@@ -190,7 +196,7 @@ Mybatis框架需要开发者自定义SQL语句，写在Mapper.xml文件中，实
 
 ### 注册mapper.xml
 
-```xml [config.xml]{23-26}
+```xml [config.xml]{29-35}
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!DOCTYPE configuration
@@ -198,6 +204,12 @@ Mybatis框架需要开发者自定义SQL语句，写在Mapper.xml文件中，实
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+
+    <settings>
+        <!--打印SQL-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
     <!-- 配置mybatis的运行环境    -->
     <environments default="development">
         <environment id="development">
@@ -215,7 +227,10 @@ Mybatis框架需要开发者自定义SQL语句，写在Mapper.xml文件中，实
 
     <!-- 注册mapper.xml-->
     <mappers>
+        <!-- 单个文件注册 -->
         <mapper resource="com/test/mapper/AccountMapper.xml" />
+        <!-- 也可以，注册整个文件夹自动扫描 -->
+        <!-- <package name="com.test.repository"/> -->
     </mappers>
 </configuration>
 ```
@@ -386,7 +401,7 @@ MyBatis 框架会根据规则自动创建接口实现类的代理对象。
 
 在config.xml文件中注册
 
-```xml {26}
+```xml {23-27}
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!DOCTYPE configuration
@@ -546,6 +561,16 @@ delete 标签表示执行删除操作。
 > ```
 >
 > :::
+>
+> 多参，字段映射
+>
+> `column="{classId=class_id,schoolId=school_id}"`
+>
+> `column="{Java参数名=数据库字段}"`
+>
+> 结果字段映射，可以用`resultMap`
+>
+> ` <association property="clazz" resultMap="clazzMap"/>`
 
 #### collection
 
@@ -958,4 +983,533 @@ public interface ClassRepository {
 
 #### 多对多
 
-aaa
+- sql
+
+:::code-group
+
+```sql [customer]
+CREATE TABLE `customer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '客户id',
+  `name` varchar(255) DEFAULT NULL COMMENT '客户姓名',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='客户表';
+```
+
+```sql [goods]
+CREATE TABLE `goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+```sql [customer_goods]
+CREATE TABLE `customer_goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `cid` int(11) NOT NULL COMMENT '客户id',
+  `gid` int(11) NOT NULL COMMENT '商品id',
+  PRIMARY KEY (`id`),
+  KEY `cid` (`cid`),
+  KEY `gid` (`gid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+:::
+
+- entity
+
+:::code-group
+
+```java [Customer]
+package com.test.entity;
+
+import lombok.Data;
+
+@Data
+public class Customer {
+    private int id;
+    private String name;
+}
+```
+
+```java [Goods]
+package com.test.entity;
+
+import lombok.Data;
+
+@Data
+public class Goods {
+    private int id;
+    private String name;
+}
+```
+
+```java [CustomerGoods]
+package com.test.entity;
+
+import lombok.Data;
+
+@Data
+public class CustomerGoods {
+    private int id;
+    private int cid;
+    private int gid;
+}
+```
+
+:::
+
+- vo
+
+:::code-group
+
+```java [CustomerVO]
+package com.test.vo;
+
+import com.test.entity.Goods;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class CustomerVO {
+    private int id;
+    private String name;
+    private List<Goods> goods;
+}
+```
+
+```java [GoodsVO]
+package com.test.vo;
+
+import com.test.entity.Customer;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class GoodsVO {
+    private int id;
+    private String name;
+    private List<Customer> customers;
+}
+```
+
+:::
+
+- repository
+
+:::code-group
+
+```java [CustomerRepository.java]
+package com.test.repository;
+
+import com.test.vo.CustomerVO;
+
+public interface CustomerRepository {
+    public CustomerVO findCustomerById(int id);
+}
+```
+
+```xml [CustomerRepository.xml]
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.test.repository.CustomerRepository">
+    <resultMap id="CustomerMap" type="com.test.vo.CustomerVO">
+        <id column="id" property="id" />
+        <result property="name" column="name" />
+        <collection property="goods" ofType="com.test.entity.Goods">
+            <id column="gid" property="id" />
+            <result property="name" column="gname" />
+        </collection>
+    </resultMap>
+    <select id="findCustomerById" resultMap="CustomerMap">
+        select c.id,c.name,g.id as gid,g.name as gname
+        from customer c
+        left join customer_goods cg on c.id = cg.cid
+        left join goods g on cg.gid = g.id
+        where c.id = #{id}
+    </select>
+</mapper>
+```
+
+```java [GoodsRepository.java]
+package com.test.repository;
+
+import com.test.vo.GoodsVO;
+
+public interface GoodsRepository {
+    public GoodsVO findGoodsById(int id);
+}
+```
+
+```xml [GoodsRepository.xml]
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.test.repository.GoodsRepository">
+
+    <resultMap id="GoodsMap" type="com.test.vo.GoodsVO">
+        <id column="id" property="id"/>
+        <result property="name" column="name"/>
+        <collection property="customers" ofType="com.test.entity.Customer">
+            <id column="cid" property="id"/>
+            <result property="name" column="cname"/>
+        </collection>
+    </resultMap>
+
+    <select id="findGoodsById" resultMap="GoodsMap">
+        select g.id,g.name,c.id as cid,c.name as cname
+        from goods g
+        left join customer_goods gc on g.id = gc.gid
+        left join customer c on gc.cid = c.id
+        where g.id = #{id}
+    </select>
+</mapper>
+```
+
+:::
+
+- 相关知识 [`连接查询 SQL JOIN`](/sql/mysql/basicUsage.html#join)
+
+## 延迟加载
+
+- 什么是延迟加载？
+
+延迟加载也叫懒加载、惰性加载，使用延迟加载可以提高程序的运行效率，针对数据持久层的操作，在某些特定的情况下去访问特定的数据库，在其他情况下可以不访问某些表，从一定程度上减少Java应用与数据库的交互次数。
+
+查询学生和班级的时候，学生和班级是两张不同的表，如果当前需求只获取学生的信息，那么查询学生单表即可，如果需要通过学生获取对应的班级信息，则必须查询两张表。
+
+不同业务需求，需要查询不同的表，根据具体业务需求来动态减少查询的工作就是延迟加载。
+
+- 在配置文件中开启懒加载
+
+```xml [config] {13}
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <settings>
+        <!--打印SQL-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--开启延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+
+    <!-- 配置mybatis的运行环境    -->
+    <environments default="development">
+        <environment id="development">
+            <!-- 配置JDBC事务管理-->
+            <transactionManager type="JDBC"/>
+            <!--POOLED配置JDBC数据源连接处-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=utf8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 注册mapper.xml-->
+    <mappers>
+<!--        <mapper resource="com/test/mapper/AccountMapper.xml" />-->
+<!--        <mapper resource="com/test/repository/AccountRepository.xml" />-->
+<!--        <mapper resource="com/test/repository/StudentRepository.xml" />-->
+<!--        <mapper resource="com/test/repository/ClassRepository.xml" />-->
+<!--        <mapper resource="com/test/repository/CustomerRepository.xml" />-->
+<!--        <mapper resource="com/test/repository/GoodsRepository.xml" />-->
+        <package name="com.test.repository"/>
+    </mappers>
+</configuration>
+```
+
+- 使用嵌套查询，系统自动判断需不需要后续查询
+
+::: code-group
+
+```xml [StudentRepository.xml]
+    <resultMap id="StudentLazyMap" type="com.test.vo.StudentVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="clazz" javaType="com.test.entity.Class" column="class_id" select="com.test.repository.ClassRepository.findClassById" />
+    </resultMap>
+    <select id="findByIdLazy" resultMap="StudentLazyMap">
+        select * from student where id = #{id}
+    </select>
+```
+
+```xml [ClassRepository.xml]
+    <select id="findClassById" resultType="com.test.entity.Class">
+        select * from class where id = #{id}
+    </select>
+```
+
+```java [StudentTest.java]
+package com.test;
+
+import com.test.repository.StudentRepository;
+import com.test.vo.StudentVO;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import java.io.InputStream;
+
+public class StudentTest {
+    public static void main(String[] args) {
+        //加载 MyBatis 配置文件
+        InputStream resourceAsStream = Test.class.getClassLoader().getResourceAsStream("config.xml");
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(resourceAsStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        //获取实现接口的代理对象
+        StudentRepository mapper = sqlSession.getMapper(StudentRepository.class);
+        StudentVO student = mapper.findByIdLazy(1);
+        System.out.println(
+                student.getName()
+        );
+        sqlSession.close();
+    }
+}
+
+```
+
+:::
+
+输出：
+
+```bash
+==>  Preparing: select * from student where id = ?
+==> Parameters: 1(Integer)
+<==    Columns: id, name, class_id
+<==        Row: 1, 张三, 1
+<==      Total: 1
+张三
+```
+
+只调用一次sql
+
+相关知识 [`<association/>`](#association)
+
+## MyBatis 缓存
+
+- 什么是MyBatis 缓存
+
+使用缓存可以减少Java应用与数据库的交互次数，从而提升程序的运行效率。比如查询出 id=1 的对象，第一次查询出来之后会自动将该对象保存到缓存中，当下一次查询时，直接从缓存中取出对象即可，无需再次访问数据库。
+
+- MyBatis 缓存分类
+
+### 一级缓存
+
+一级缓存：SqlSession 级别，默认开启，并且不能关闭。
+
+操作数据库时需要创建SqlSession对象，在对象中有一个HashMap 用于存储缓存数据，不同的SqlSession 之间缓存数据区域互不影响。
+
+一级缓存的作用域是SqlSession 范围的，当在同一个SqlSession 中执行两次相同的SQL 语句时，第一次执行完毕会将结果保存到缓存中，第二次查询时直接从缓存中获取。
+
+需要注意的是，如果SqlSession执行了DML操作（insert、update、delete），MyBatis 必须将缓存清空以保证数据的准确性。
+
+```java
+package com.test;
+
+import com.test.entity.Account;
+import com.test.repository.AccountRepository;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import java.io.InputStream;
+import java.util.List;
+
+public class AccountTest {
+    public static void main(String[] args) {
+        //加载 MyBatis 配置文件
+        InputStream resourceAsStream = Test.class.getClassLoader().getResourceAsStream("config.xml");
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(resourceAsStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        //获取实现接口的代理对象
+        AccountRepository mapper = sqlSession.getMapper(AccountRepository.class);
+        List<Account> accounts = mapper.findAll();
+        List<Account> accounts1 = mapper.findAll();
+        //两个实际只调用了一次sql
+        System.out.println(accounts);
+        System.out.println(accounts1);
+
+        sqlSession.close();
+    }
+}
+```
+
+### 二级缓存
+
+二级缓存：Mapper级别，默认关闭，可以开启。
+
+使用二级缓存时，多个SqlSession使用同一个Mapper的SQL语句操作数据库，得到的数据会存在二级缓存区，同样是使用HashMap进行数据存储，相比较于一级缓存，二级缓存的范围更大，多个SqlSession可以共用二级缓存，二级缓存是跨SqlSession的。
+
+二级缓存是多个SqlSession共享的，其作用域是Mapper的同一个namespace,不同的SqlSession再次执行相同的namespace下的SQL语句，参数也相等，则第一次执行成功之后会将数据保存到二级缓存中，第二次可直接从二级缓存中取出数据。
+
+> [!Note] MyBatis 自带的二级缓存
+>
+> 1.  config.xml 配置开启二级缓存
+>
+> ```xml [config.xml]
+>     <!--开启二级缓存-->
+>     <setting name="cacheEnabled" value="true"/>
+> ```
+>
+> 2.  Mapper.xml 中配置二级缓存
+>
+> 就添加个`<cache/>`标签就行
+>
+> ```xml [AccountRepository]{9-10}
+> <?xml version="1.0" encoding="UTF-8" ?>
+>
+> <!DOCTYPE mapper
+>        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+>        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+>
+>
+> <mapper namespace="com.test.repository.AccountRepository">
+>    <!--添加二级缓存-->
+>    <cache/>
+>
+>    <insert id="save">
+>        insert into t_account(username,password,age) values(#{username},#{password},#{age})
+>    </insert>
+>    <update id="update">
+>        update t_account set username = #{username},password = #{password},age=#{age} where id = #{id}
+>    </update>
+>    <delete id="delete">
+>        delete from t_account where id = #{id}
+>    </delete>
+>    <select id="findAll" resultType="com.test.entity.Account">
+>        select * from t_account
+>    </select>
+>    <select id="findById" resultType="com.test.entity.Account">
+>        select * from t_account where id = #{id}
+>    </select>
+>    <select id="findByNameAndAge" resultType="com.test.entity.Account">
+>        select * from t_account where username = #{arg0} and age = #{arg1}
+>    </select>
+> </mapper>
+> ```
+>
+> 3.  实体类序列化
+>
+> ```java [Account]
+> package com.test.entity;
+>
+> import lombok.Data;
+>
+> import java.io.Serializable;
+>
+> @Data
+> public class Account implements Serializable {
+>    private long id;
+>    private String username;
+>    private String password;
+>    private int age;
+> }
+> ```
+>
+> 例子：
+>
+> ```java [AccountTest]
+> package com.test;
+>
+> import com.test.entity.Account;
+> import com.test.repository.AccountRepository;
+> import org.apache.ibatis.session.SqlSession;
+> import org.apache.ibatis.session.SqlSessionFactory;
+> import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+>
+> import java.io.InputStream;
+> import java.util.List;
+>
+> public class AccountTest {
+>    public static void main(String[] args) {
+>        //加载 MyBatis 配置文件
+>        InputStream resourceAsStream = Test.class.getClassLoader().getResourceAsStream("config.xml");
+>        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+>        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(resourceAsStream);
+>        SqlSession sqlSession = sqlSessionFactory.openSession();
+>
+>        //获取实现接口的代理对象
+>        AccountRepository mapper = sqlSession.getMapper(AccountRepository.class);
+>        List<Account> accounts = mapper.findAll();
+>        List<Account> accounts1 = mapper.findAll();
+>        System.out.println(accounts);
+>        System.out.println(accounts1);
+>
+>        sqlSession.close();
+>
+>        sqlSession = sqlSessionFactory.openSession();
+>        mapper = sqlSession.getMapper(AccountRepository.class);
+>        accounts = mapper.findAll();
+>        System.out.println(accounts);
+>        sqlSession.close();
+>    }
+> }
+> ```
+>
+> 结果：
+>
+> 总共只调用了一次sql，sqlSession关闭重启，缓存还在
+
+> [!NOTE] 第三方 Ehcache
+>
+> 1.  安装依赖
+>
+> ```xml [pom.xml]
+>        <!--ehcache二级缓存-->
+>        <dependency>
+>            <groupId>org.mybatis</groupId>
+>            <artifactId>mybatis-ehcache</artifactId>
+>            <version>1.0.0</version>
+>        </dependency>
+> ```
+>
+> 2.  添加ehcache.xml 配置文件
+>
+> ```xml
+> <?xml version="1.0" encoding="UTF-8" ?>
+>
+> <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+>    <diskStore/>
+>    <!-- 默认缓存配置 -->
+>    <defaultCache
+>            maxElementsInMemory="1000"
+>            maxElementsOnDisk="10000000"
+>            eternal="false"
+>            overflowToDisk="true"
+>            timeToIdleSeconds="300"
+>            timeToLiveSeconds="600"
+>            diskExpiryThreadIntervalSeconds="120"
+>            memoryStoreEvictionPolicy="LRU"/>
+>
+> </ehcache>
+> ```
+>
+> 3.  config.xml 配置开启二级缓存
+>
+> ```xml
+>    <!--开启二级缓存-->
+>    <setting name="cacheEnabled" value="true"/>
+> ```
