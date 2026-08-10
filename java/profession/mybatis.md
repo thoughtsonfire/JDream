@@ -1478,21 +1478,29 @@ public class AccountTest {
 > 1.  安装依赖
 >
 > ```xml [pom.xml]
->        <!--ehcache二级缓存-->
->        <dependency>
->            <groupId>org.mybatis</groupId>
->            <artifactId>mybatis-ehcache</artifactId>
->            <version>1.0.0</version>
->        </dependency>
+>    <!--ehcache二级缓存-->
+>    <dependency>
+>        <groupId>org.mybatis</groupId>
+>        <artifactId>mybatis-ehcache</artifactId>
+>        <version>1.0.0</version>
+>    </dependency>
+>    <dependency>
+>        <groupId>net.sf.ehcache</groupId>
+>        <artifactId>ehcache-core</artifactId>
+>        <version>2.4.3</version>
+>    </dependency>
 > ```
 >
 > 2.  添加ehcache.xml 配置文件
+>
+> 自动读取，不需要手动读取
 >
 > ```xml
 > <?xml version="1.0" encoding="UTF-8" ?>
 >
 > <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
->    <diskStore/>
+>    <!--java.io.tmpdir → 使用 JVM 临时目录-->
+>    <diskStore path="java.io.tmpdir"/>
 >    <!-- 默认缓存配置 -->
 >    <defaultCache
 >            maxElementsInMemory="1000"
@@ -1513,3 +1521,175 @@ public class AccountTest {
 >    <!--开启二级缓存-->
 >    <setting name="cacheEnabled" value="true"/>
 > ```
+>
+> 4. Mapper.xml 中配置二级缓存
+>
+> ```xml
+>    <cache type="org.mybatis.caches.ehcache.EhcacheCache">
+>        <!--缓存创建之后，最后一次访问缓存的时间至缓存失效的时间-->
+>        <property name="timeToIdleSeconds" value="3600"/>
+>        <!--缓存自创建时间起至失效的时间间隔-->
+>        <property name="TimeToLiveSeconds" value="3600"/>
+>        <!--缓存回收策略，LRU表示移除近期使用最少的对象-->
+>        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+>    </cache>
+> ```
+>
+> 5.  实体类不需要实例化接口
+>
+> 例子：
+>
+> ```java
+> package com.test;
+>
+> import com.test.repository.StudentRepository;
+> import com.test.vo.StudentVO;
+> import org.apache.ibatis.session.SqlSession;
+> import org.apache.ibatis.session.SqlSessionFactory;
+> import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+>
+> import java.io.InputStream;
+>
+> public class StudentTest {
+>    public static void main(String[] args) {
+>        //加载 MyBatis 配置文件
+>        InputStream resourceAsStream = Test.class.getClassLoader().getResourceAsStream("config.xml");
+>        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+>        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(resourceAsStream);
+>        SqlSession sqlSession = sqlSessionFactory.openSession();
+>
+>        //获取实现接口的代理对象
+>        StudentRepository mapper = sqlSession.getMapper(StudentRepository.class);
+>
+> //        StudentVO studenInfo = mapper.findById(1);
+> //        System.out.println(studenInfo);
+>        StudentVO student = mapper.findByIdLazy(1);
+>        StudentVO student2 = mapper.findByIdLazy(1);
+>        System.out.println(student.getName());
+>        System.out.println(student2.getName());
+>        sqlSession.close();
+>
+>        sqlSession = sqlSessionFactory.openSession();
+>        mapper = sqlSession.getMapper(StudentRepository.class);
+>        student = mapper.findByIdLazy(1);
+>        System.out.println(student.getName());
+>        sqlSession.close();
+>    }
+> }
+> ```
+>
+> 结果：
+>
+> ```bash
+> Cache Hit Ratio [com.test.repository.StudentRepository]: 0.0
+> Opening JDBC Connection
+> Created connection 1543237999.
+> Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@5bfbf16f]
+> ==>  Preparing: select * from student where id = ?
+> ==> Parameters: 1(Integer)
+> <==    Columns: id, name, class_id
+> <==        Row: 1, 张三, 1
+> <==      Total: 1
+> Cache Hit Ratio [com.test.repository.StudentRepository]: 0.0
+> 张三
+> 张三
+> Resetting autocommit to true on JDBC Connection [com.mysql.jdbc.JDBC4Connection@5bfbf16f]
+> Closing JDBC Connection [com.mysql.jdbc.JDBC4Connection@5bfbf16f]
+> Returned connection 1543237999 to pool.
+> Cache Hit Ratio [com.test.repository.StudentRepository]: 0.3333333333333333
+> 张三
+> ```
+
+## 动态SQL
+
+使用动态SQL可简化代码的开发，减少开发者的工作量，程序可以自动根据业务参数来决定SQL的组成。
+
+### `if` 标签
+
+```xml
+    <select id="findByAccount" resultType="com.test.entity.Account">
+        select * from t_account
+        <where>
+            <if test="id!=0">
+                id=#{id}
+            </if>
+            <if test="username!=null">
+                and username = #{username}
+            </if>
+            <if test="password!=null">
+                and password = #{password}
+            </if>
+            <if test="age!=0">
+                and age = #{age}
+            </if>
+        </where>
+    </select>
+```
+
+- if 标签可以自动根据表达式的结果来决定是否将对应的语句添加到SQL中，如果条件不成立则不添加，如果条件成立则添加
+
+### `where` 标签
+
+```xml
+    <select id="findByAccount" resultType="com.test.entity.Account">
+        select * from t_account
+        <where>
+            <if test="id!=0">
+                id=#{id}
+            </if>
+            <if test="username!=null">
+                and username = #{username}
+            </if>
+            <if test="password!=null">
+                and password = #{password}
+            </if>
+            <if test="age!=0">
+                and age = #{age}
+            </if>
+        </where>
+    </select>
+```
+
+- where标签可以自动判断是否要删除语句块中的and关键字，如果检测到where直接跟and拼接，则自动删除and,通常情况下if和where结合起来使用。
+
+### `choose` 标签
+
+```xml
+    <select id="chooseByAccount" resultType="com.test.entity.Account">
+        select * from t_account
+        <where>
+            <choose>
+                <when test="id!=0">
+                    id=#{id}
+                </when>
+                <when test="username!=null">
+                    username = #{username}
+                </when>
+                <when test="password!=null">
+                    password = #{password}
+                </when>
+                <when test="age!=0">
+                    age = #{age}
+                </when>
+                <otherwise>
+                    age = 18
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+```
+
+- `<if>` 是独立判断, `<choose><when><otherwise>`：多个条件只能选择一个分支类似`switch`
+
+### `trim` 标签
+
+trim 标签中的 prefix 和suffix属性会被用于生成实际的SQL语句，会和标签内部的语句进行拼接，如果语句前后出现了prefixOverrides 或者suffixOverrides 属性中指定的值，MyBatis 框架会自动将其删除。
+
+MyBatis 的 `<trim>` 是动态 SQL 拼接辅助标签，主要作用是：
+
+1. 自动添加前缀（prefix）
+2. 自动删除多余内容（prefixOverrides）
+3. 自动添加后缀（suffix）
+4. 自动删除多余内容（suffixOverrides）
+
+它经常用来替代 `<where>`、`<set>`，或者处理复杂 SQL。
