@@ -1,4 +1,4 @@
-# Mybatis
+# MyBatis
 
 ## 概述
 
@@ -1685,6 +1685,8 @@ public class AccountTest {
 
 trim 标签中的 prefix 和suffix属性会被用于生成实际的SQL语句，会和标签内部的语句进行拼接，如果语句前后出现了prefixOverrides 或者suffixOverrides 属性中指定的值，MyBatis 框架会自动将其删除。
 
+> 简单讲就是,自动添加prefix，prefix直接连接prefixOverrides时，就删掉prefixOverrides
+
 MyBatis 的 `<trim>` 是动态 SQL 拼接辅助标签，主要作用是：
 
 1. 自动添加前缀（prefix）
@@ -1693,3 +1695,107 @@ MyBatis 的 `<trim>` 是动态 SQL 拼接辅助标签，主要作用是：
 4. 自动删除多余内容（suffixOverrides）
 
 它经常用来替代 `<where>`、`<set>`，或者处理复杂 SQL。
+
+```xml
+    <select id="trimByAccount" resultType="com.test.entity.Account">
+        select * from t_account
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id!=0">
+                and id = #{id}
+            </if>
+            <if test="username!=null">
+                and username = #{username}
+            </if>
+            <if test="password!=null">
+                and password = #{password}
+            </if>
+            <if test="age!=0">
+                and age = #{age}
+            </if>
+        </trim>
+    </select>
+```
+
+### `set` 标签
+
+`set` 标签用于update操作，会自动根据参数选择生成SQL语句。
+
+```xml
+    <update id="updateUseSetByAccount">
+        update t_account
+        <set>
+            <if test="username!=null">
+                username = #{username},
+            </if>
+            <if test="password!=null">
+                password = #{password},
+            </if>
+            <if test="age!=0">
+                age = #{age}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+```
+
+`set` 会去掉结尾多余的`,`，`trim` 可以实现`set`、`where`的功能
+
+### `foreach` 标签
+
+| 需求       | foreach用途                 |
+| ---------- | --------------------------- |
+| 多个ID查询 | `in (?,?,?)` ⭐⭐⭐         |
+| 批量新增   | `values (),(),()` ⭐⭐⭐    |
+| 批量删除   | `delete where id in` ⭐⭐⭐ |
+
+单个参数`collection`接收的传值
+
+| Java 参数类型 | foreach 的 collection 默认值 |
+| ------------- | ---------------------------- |
+| `List`        | `list`                       |
+| `Collection`  | `collection`                 |
+| `Set`         | `collection`                 |
+| 数组          | `array`                      |
+| 使用 `@Param` | `@Param` 里的名字            |
+
+| 属性       | 作用                 |
+| ---------- | -------------------- |
+| collection | 要遍历的集合         |
+| item       | 每次循环的元素变量名 |
+| index      | 当前下标             |
+| open       | 开始拼接的字符串     |
+| close      | 结束拼接的字符串     |
+| separator  | 每次循环之间的分隔符 |
+
+:::code-group
+
+```java [interface]
+    public List<Account> findByIds(List<Long> ids);
+    public void batchInsert(List<Account> accounts);
+```
+
+```xml [in查询]
+    <select id="findByIds" resultType="com.test.entity.Account">
+        select * from t_account
+        where id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+```
+
+```xml [批量插入]
+    <insert id="batchInsert">
+        insert into t_account (username,password,age)
+        values
+        <foreach collection="list" item="account" separator=",">
+            (
+            #{account.username},
+            #{account.password},
+            #{account.age}
+            )
+        </foreach>
+    </insert>
+```
+
+:::

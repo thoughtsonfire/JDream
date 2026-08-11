@@ -214,7 +214,10 @@ const sidebar = {
     {
       text: "进阶",
       collapsed: true,
-      items: [{ text: "Mybatis", link: "/java/profession/mybatis.md" }],
+      items: [
+        { text: "MyBatis", link: "/java/profession/mybatis.md" },
+        { text: "MyBatis Plus", link: "/java/profession/mybatis-plus.md" },
+      ],
     },
     {
       text: "积累",

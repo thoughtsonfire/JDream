@@ -64,3 +64,15 @@
 > n.贮藏室，仓库；自然资源丰富的地区；（电脑）数据库；喻为知识宝库的人（或物）
 >
 > 复数repositories
+
+## batch
+
+> [!TIP] batch
+>
+> 英 / bætʃ /;美 / bætʃ /
+>
+> n.一批，一批生产量
+>
+> v.分批处理
+>
+> 复数 batches; 第三人称单数 batches; 现在分词batching; 过去式 batched; 过去分词 batche
